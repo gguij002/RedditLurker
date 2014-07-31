@@ -1,16 +1,21 @@
 package com.gery.redditlurker;
 
+import com.gery.redditlurker.R.id;
+
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -18,7 +23,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private TabsPagerAdapter mAdapter;
     private ActionBar actionBar;
     // Tab titles
-    private String[] tabs = { "Top Rated", "Games"};
+    private String[] tabs = { "SubReddits", "Favorite SubReddits"};
 
 	
 	@Override
@@ -62,11 +67,27 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
         });
 	}
+	
+	@Override
+	 public boolean onSearchRequested() {
+
+		 Intent i = new Intent(MainActivity.this, SubRedditActivity.class);
+         startActivity(i);
+
+	     return false;  // don't go ahead and show the search box
+	 }
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_main_actions, menu);
+     // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search_widget)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()));
+        
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -78,11 +99,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // Take appropriate action for each action item click
         switch (item.getItemId()) {
         case R.id.action_search_widget:
-            // search action
+        	item.getActionView().findViewById(id.action_search_widget);
+        	goToSubReddit();
             return true;
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+    
+    public void goToSubReddit()
+    {
+    	 Intent i = new Intent(MainActivity.this, SubRedditActivity.class);
+         startActivity(i);
     }
 
     @Override
