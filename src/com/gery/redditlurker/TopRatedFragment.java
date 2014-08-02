@@ -38,18 +38,7 @@ public class TopRatedFragment extends Fragment {
         new LoadInbox(inflater.getContext()).execute();
     	
 	    rootView = inflater.inflate(R.layout.fragment_top_rated, container, false);
-	    final ListView storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);;
-	    storiesListView.setOnItemClickListener(new OnItemClickListener() {
-  	         @Override
-  	         public void onItemClick(AdapterView<?> a, View v, int position, long id) { 
-  	        	  SubReddit subReddit = (SubReddit) subRedditsList.get(position);
-  		          
-  		          Intent nextActivity = new Intent(inflater.getContext(), SubRedditItemActivity.class);
-              	  nextActivity.putExtra("subReddit", subReddit.link);
-              	  startActivity(nextActivity); 
-  		     }  
-  	    });
-        return rootView;
+	    return rootView;
     }
     
 	/**
@@ -104,8 +93,18 @@ public class TopRatedFragment extends Fragment {
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all products
             pDialog.dismiss();
-            final ListView storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);;
-            // updating UI from Background Thread
+            final ListView storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);
+            storiesListView.setOnItemClickListener(new OnItemClickListener() {
+      	         @Override
+      	         public void onItemClick(AdapterView<?> a, View v, int position, long id) { 
+      	        	  SubReddit subReddit = (SubReddit) subRedditsList.get(position);
+      	        	  Intent nextActivity = new Intent(fragmentContext, SubRedditItemActivity.class);
+                  	  nextActivity.putExtra("subReddit", subReddit.link);
+                  	  startActivity(nextActivity); 
+      		     }  
+      	    });
+            
+	        // updating UI from Background Thread
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                 	SubRedditCustomBaseAdapter var = new SubRedditCustomBaseAdapter(fragmentContext, subRedditsList);

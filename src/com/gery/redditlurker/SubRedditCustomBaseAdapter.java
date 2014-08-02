@@ -19,7 +19,7 @@ public class SubRedditCustomBaseAdapter extends BaseAdapter {
 	 private static List<SubReddit> list;
 	 
 	 private LayoutInflater mInflater;
-
+	 
 	 public SubRedditCustomBaseAdapter(Context context, List<SubReddit> listItems) {
 	  list = listItems;
 	  mInflater = LayoutInflater.from(context);
@@ -43,27 +43,26 @@ public class SubRedditCustomBaseAdapter extends BaseAdapter {
 	   convertView = mInflater.inflate(R.layout.all_aubreddit_list_item, null);
 	   holder = new ViewHolder();
 	   holder.txtTitle = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_title_text);
+	   holder.txtTitle.setText(list.get(position).title);
+	   
 	   holder.txtLink = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_link_text);
-	//   holder.thumbView = (ImageView) convertView.findViewById(R.id.date);
-
-	   convertView.setTag(holder);
-	  } else {
-	   holder = (ViewHolder) convertView.getTag();
-	  }
-	  
-	  //COME BACK EHREE
-	  ImageButton button = (ImageButton)convertView.findViewById(R.id.imagebutton_go);
-	  button.setOnClickListener(new OnClickListener() {
+	   String link = list.get(position).link;
+	   holder.txtLink.setText(link.substring(0, link.length()-1));
+	   
+	   holder.goButton = (ImageButton) convertView.findViewById(R.id.imagebutton_go);
+	   holder.goButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				 Intent i = new Intent(mInflater.getContext(), SubRedditActivity.class);
 				 mInflater.getContext().startActivity(i);
 			}
 	  });
-	  
-	  holder.txtTitle.setText(list.get(position).title);
-	  String link = list.get(position).link;
-	  holder.txtLink.setText(link.substring(0, link.length()-1));
+	   
+	//   holder.thumbView = (ImageView) convertView.findViewById(R.id.date);
+	   convertView.setTag(holder);
+	  } else {
+	   holder = (ViewHolder) convertView.getTag();
+	  }
 	  
 //	  if(list.get(position).thumbUrl != null)
 //		  new DownloadImageTask(holder.thumbView)
@@ -78,5 +77,6 @@ public class SubRedditCustomBaseAdapter extends BaseAdapter {
 	  TextView txtLink;
 	  ImageView thumbView;
 	  TextView comment;
+	  ImageButton goButton;
 	 }
 	}
