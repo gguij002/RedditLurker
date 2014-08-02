@@ -22,19 +22,28 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_action_search=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int ic_search_button=0x7f020002;
+        public static final int ic_go_button=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int ic_launcherd=0x7f020003;
+        public static final int ic_search_button=0x7f020004;
     }
     public static final class id {
-        public static final int action_search_widget=0x7f090002;
+        public static final int action_search_widget=0x7f090007;
+        public static final int all_subreddit_list=0x7f090006;
+        public static final int imagebutton_go=0x7f090004;
         public static final int pager=0x7f090000;
+        public static final int sub_reddit_list_item_link_text=0x7f090003;
+        public static final int sub_reddit_list_item_title_text=0x7f090005;
+        public static final int subreddit_thumb_view=0x7f090002;
         public static final int txtQuery=0x7f090001;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_subreddit=0x7f030001;
-        public static final int fragment_games=0x7f030002;
-        public static final int fragment_top_rated=0x7f030003;
+        public static final int activity_subreddit_item=0x7f030002;
+        public static final int all_aubreddit_list_item=0x7f030003;
+        public static final int fragment_games=0x7f030004;
+        public static final int fragment_top_rated=0x7f030005;
     }
     public static final class menu {
         public static final int activity_main_actions=0x7f080000;
@@ -45,6 +54,7 @@ public final class R {
         public static final int app_name=0x7f060000;
         public static final int hello_world=0x7f060002;
         public static final int search_hint=0x7f060004;
+        public static final int subreddit_thumbview_desc=0x7f060005;
     }
     public static final class style {
         /** 

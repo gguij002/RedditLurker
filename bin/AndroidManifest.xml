@@ -26,6 +26,10 @@
                 android:resource="@xml/searchable" />
         </activity>
         
+         <activity android:name=".SubRedditItemActivity"
+            android:parentActivityName="info.androidhive.actionbar.MainActivity" >
+        </activity>
+        
         <activity
             android:name="com.gery.redditlurker.MainActivity"
             android:label="@string/app_name" >

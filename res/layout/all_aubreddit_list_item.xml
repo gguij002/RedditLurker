@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+ 
+    
+    <ImageView
+     android:id="@+id/subreddit_thumb_view"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:contentDescription="@string/subreddit_thumbview_desc"
+     android:layout_centerInParent="true"
+     android:layout_alignParentLeft="true"
+     android:src="@drawable/ic_launcher" />
+    
+    
+      <!-- Mail Subject -->
+    <TextView android:id="@+id/sub_reddit_list_item_link_text"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingTop="8dip"
+        android:paddingLeft="8dip"
+        android:layout_toRightOf="@+id/subreddit_thumb_view"
+        android:layout_toLeftOf="@+id/imagebutton_go"
+        android:textStyle="bold"
+        android:text="KAKALink"
+        android:textSize="20dip"
+        
+        />
+    
+    <!-- From Label -->
+    <TextView
+        android:id="@+id/sub_reddit_list_item_title_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dip"
+        android:paddingBottom="4dip"
+        android:textSize="16dip"
+        android:layout_toRightOf="@+id/subreddit_thumb_view"
+        android:layout_toLeftOf="@+id/imagebutton_go"
+        android:text="KAKA"
+        android:layout_below="@id/sub_reddit_list_item_link_text"
+        android:textStyle="bold" />
+   
+    
+    
+     
+    <!-- Mail Subject 
+    <TextView android:id="@+id/subject"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingLeft="8dip"
+        android:paddingBottom="6dip"
+        android:textSize="15dip"
+        android:layout_below="@id/from"/>
+        -->
+     
+    <!-- Mail date 
+    <TextView android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="8dip"/>
+        -->
+
+    <ImageButton
+        android:id="@+id/imagebutton_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:background="@null"
+        android:src="@android:drawable/ic_menu_view" />
+
+  
+
+</RelativeLayout>

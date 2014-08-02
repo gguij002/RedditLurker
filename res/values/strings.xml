@@ -6,4 +6,5 @@
     <string name="hello_world">Hello world!</string>
 	<string name="action_search">Search</string>
 	<string name="search_hint">Search SubReddit</string>
+	<string name="subreddit_thumbview_desc">Thumb Desc</string>
 </resources>
