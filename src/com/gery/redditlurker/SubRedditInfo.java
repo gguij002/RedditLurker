@@ -1,9 +1,6 @@
 package com.gery.redditlurker;
 
 import org.json.simple.JSONObject;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import android.widget.ImageView;
 
 public class SubRedditInfo 
@@ -14,6 +11,7 @@ public class SubRedditInfo
 	String header_img;
 	String url;
 	String public_description;
+	String name;
 	ImageView image;
 	JSONObject jsonObject;
 	
@@ -24,12 +22,13 @@ public class SubRedditInfo
 	
 	public SubRedditInfo execute()
 	{
-		this.header_title = ((String) jsonObject.get("header_title")).trim();
-		this.public_description = ((String) jsonObject.get("public_description")).trim();
-		this.url = ((String) jsonObject.get("url")).trim();
-		this.display_name = ((String) jsonObject.get("display_name")).trim();
-		this.id = ((String) jsonObject.get("id")).trim();
-		this.header_img = ((String) jsonObject.get("header_img")).trim();
+		this.header_title = (String) jsonObject.get("header_title");
+		this.public_description = (String) jsonObject.get("public_description");
+		this.url = (String) jsonObject.get("url");
+		this.display_name = ((String) jsonObject.get("display_name"));
+		this.id = ((String) jsonObject.get("id"));
+		this.header_img = (String) jsonObject.get("header_img");
+		this.name = (String) jsonObject.get("name");
 		
 		return this;
 	}

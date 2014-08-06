@@ -22,33 +22,35 @@ public class RedditRSSReader
 	
 	public JSONObject execute()
 	{
-		BufferedReader streamReader = null;
+		String jsonString = null;
 		try {
 			URL url = new URL(URL);
 			URLConnection conn = url.openConnection();
 			InputStream input = conn.getInputStream();
-			streamReader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
-		} catch (Exception e1) {
-			System.out.println("Error at URL");
-			e1.printStackTrace();
-		}
-		
-		StringBuilder responseStrBuilder = new StringBuilder();
-		String inputStr = null;
-		try {
-			while ((inputStr = streamReader.readLine()) != null)
-			    responseStrBuilder.append(inputStr);
+			jsonString = getStringfromInputReader(input);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-	    
+		
 	    JSONParser parser = new JSONParser();
 	    JSONObject jsonObject = null;
     	try {
-    		jsonObject = (JSONObject)parser.parse(inputStr.toString());
+    		jsonObject = (JSONObject)parser.parse(jsonString);
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
     	return jsonObject;
  }
+	
+	private String getStringfromInputReader(InputStream in) throws IOException
+	{
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        StringBuilder out = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            out.append(line);
+        }
+        reader.close();
+        return out.toString();
+	}
 }
