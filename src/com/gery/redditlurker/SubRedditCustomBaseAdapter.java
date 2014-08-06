@@ -16,11 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SubRedditCustomBaseAdapter extends BaseAdapter {
-	 private static List<SubReddit> list;
+	 private static List<SubRedditInfo> list;
 	 
 	 private LayoutInflater mInflater;
 	 
-	 public SubRedditCustomBaseAdapter(Context context, List<SubReddit> listItems) {
+	 public SubRedditCustomBaseAdapter(Context context, List<SubRedditInfo> listItems) {
 	  list = listItems;
 	  mInflater = LayoutInflater.from(context);
 	 }
@@ -43,10 +43,10 @@ public class SubRedditCustomBaseAdapter extends BaseAdapter {
 	   convertView = mInflater.inflate(R.layout.all_aubreddit_list_item, null);
 	   holder = new ViewHolder();
 	   holder.txtTitle = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_title_text);
-	   holder.txtTitle.setText(list.get(position).title);
+	   holder.txtTitle.setText(list.get(position).header_title);
 	   
 	   holder.txtLink = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_link_text);
-	   String link = list.get(position).link;
+	   String link = list.get(position).url;
 	   holder.txtLink.setText(link.substring(0, link.length()-1));
 	   
 	   holder.goButton = (ImageButton) convertView.findViewById(R.id.imagebutton_go);

@@ -16,10 +16,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
         switch (index) {
         case 0:
             // List Subreddits
-            return new TopRatedFragment();
+            return new AllSubRedditsFragment();
         case 1:
             //Entered Subreddits
-            return new GamesFragment();
+            return new VisitedSubRedditsFragment();
         }
  
         return null;

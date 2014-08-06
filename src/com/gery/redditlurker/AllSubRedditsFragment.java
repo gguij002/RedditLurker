@@ -3,6 +3,8 @@ package com.gery.redditlurker;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -27,7 +29,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class TopRatedFragment extends Fragment implements OnScrollListener
+public class AllSubRedditsFragment extends Fragment implements OnScrollListener
 {
 	//List Items 
 	int currentFirstVisibleItem = 0;
@@ -40,14 +42,14 @@ public class TopRatedFragment extends Fragment implements OnScrollListener
 	View footerView;
 	//List Items
 	
-	List<SubReddit> subRedditsList;
+	List<SubRedditInfo> subRedditsList;
     private ProgressDialog pDialog;
     View rootView;
 	
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
-        subRedditsList = new ArrayList<SubReddit>();
+        subRedditsList = new ArrayList<SubRedditInfo>();
         new LoadInbox(inflater.getContext()).execute();
         rootView = inflater.inflate(R.layout.fragment_top_rated, container, false);
         setOnItemClickListener(inflater.getContext());
@@ -85,9 +87,9 @@ public class TopRatedFragment extends Fragment implements OnScrollListener
     	storiesListView.setOnItemClickListener(new OnItemClickListener() {
  	         @Override
  	         public void onItemClick(AdapterView<?> a, View v, int position, long id) { 
- 	        	  SubReddit subReddit = (SubReddit) subRedditsList.get(position);
+ 	        	  SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
  	        	  Intent nextActivity = new Intent(context, SubRedditItemActivity.class);
-             	  nextActivity.putExtra("subReddit", subReddit.link);
+             	  nextActivity.putExtra("subReddit", subReddit.url);
              	  startActivity(nextActivity); 
  		     }  
  	    });
@@ -97,7 +99,7 @@ public class TopRatedFragment extends Fragment implements OnScrollListener
 	/**
 	 * Background Async Task to Load all INBOX messages by making HTTP Request
 	 * */
-	class LoadInbox extends AsyncTask<String, String, List<SubReddit>> 
+	class LoadInbox extends AsyncTask<String, String, List<SubRedditInfo>> 
 	{
 		private Context fragmentContext;
 		
@@ -124,19 +126,21 @@ public class TopRatedFragment extends Fragment implements OnScrollListener
 	    /**
          * getting SubReddits
          * */
-        protected List<SubReddit> doInBackground(String... args) 
+        protected List<SubRedditInfo> doInBackground(String... args) 
         {
         	//"http://reddit.com/r/reddits.rss?limit=[limit]&after=[after]";
         	final String REDDIT_SUBREDDITS_URL = URLCreate(startIndex.intValue(), offset.intValue());
 
-        	List<SubReddit> listOfSubReddits = new ArrayList<SubReddit>();
+        	List<SubRedditInfo> listOfSubReddits = new ArrayList<SubRedditInfo>();
              
             //Create List Of Subreddits
-            Document subRedditsDocument = new RedditRSSReader(REDDIT_SUBREDDITS_URL).execute();
-            NodeList listOfSubredditsRaw = subRedditsDocument.getElementsByTagName("item");
-            int length = listOfSubredditsRaw.getLength();
+            JSONObject subRedditsJSON = new RedditRSSReader(REDDIT_SUBREDDITS_URL).execute();
+            JSONArray listOfSubredditsRaw= (JSONArray) subRedditsJSON.get("data");
+
+            
+            int length = listOfSubredditsRaw.size();
             for (int i = 0; i < length; i++) {
-            	SubReddit item = new SubReddit((Element)listOfSubredditsRaw.item(i)).execute();	
+            	SubRedditInfo item = new SubRedditInfo((JSONObject)listOfSubredditsRaw.get(i)).execute();	
             	listOfSubReddits.add(item);
    	   		}
             subRedditsList.addAll(startIndex.intValue(),listOfSubReddits);
@@ -151,7 +155,7 @@ public class TopRatedFragment extends Fragment implements OnScrollListener
         /**
          * After completing background task Dismiss the progress dialog
          * **/
-        protected void onPostExecute(final List<SubReddit> listOfSubReddits) {
+        protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) {
             // dismiss the dialog after getting all products
             pDialog.dismiss();
             loadingMore = false;
