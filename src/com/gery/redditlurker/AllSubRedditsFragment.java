@@ -69,7 +69,6 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener
             }
         }
     }
-
     
     private void setOnItemClickListener(final Context context)
     {
@@ -87,7 +86,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener
     }
     
 	/**
-	 * Background Async Task to Load all INBOX messages by making HTTP Request
+	 * Background Async Task to Load subreddits by making HTTP Request
 	 * */
 	class LoadInbox extends AsyncTask<String, String, List<SubRedditInfo>> 
 	{
