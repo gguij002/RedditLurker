@@ -1,7 +1,8 @@
 package com.gery.redditlurker;
 
 import org.json.simple.JSONObject;
-import android.widget.ImageView;
+
+import android.graphics.Bitmap;
 
 public class SubRedditInfo 
 {
@@ -12,7 +13,7 @@ public class SubRedditInfo
 	String url;
 	String public_description;
 	String name;
-	ImageView image;
+	Bitmap imageBitMap = null;
 	JSONObject jsonObject;
 	
 	public SubRedditInfo(JSONObject jsonObject)

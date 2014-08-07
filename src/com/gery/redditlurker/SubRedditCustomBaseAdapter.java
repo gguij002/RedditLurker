@@ -1,9 +1,10 @@
 package com.gery.redditlurker;
+
 import java.util.List;
 
-import android.R.mipmap;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,72 +12,90 @@ import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SubRedditCustomBaseAdapter extends BaseAdapter {
-	 private static List<SubRedditInfo> list;
-	 
-	 private LayoutInflater mInflater;
-	 
-	 public SubRedditCustomBaseAdapter(Context context, List<SubRedditInfo> listItems) {
-	  list = listItems;
-	  mInflater = LayoutInflater.from(context);
-	 }
+	private static List<SubRedditInfo> list;
 
-	 public int getCount() {
-	  return list.size();
-	 }
+	private LayoutInflater mInflater;
 
-	 public Object getItem(int position) {
-	  return list.get(position);
-	 }
+	public SubRedditCustomBaseAdapter(Context context,
+			List<SubRedditInfo> listItems) {
+		list = listItems;
+		mInflater = LayoutInflater.from(context);
+	}
 
-	 public long getItemId(int position) {
-	  return position;
-	 }
+	public int getCount() {
+		return list.size();
+	}
 
-	 public View getView(int position, View convertView, ViewGroup parent) {
-	  ViewHolder holder;
-	  if (convertView == null) {
-	   convertView = mInflater.inflate(R.layout.all_aubreddit_list_item, null);
-	   holder = new ViewHolder();
-	   holder.txtTitle = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_title_text);
-	   holder.txtTitle.setText(list.get(position).header_title);
-	   
-	   holder.txtLink = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_link_text);
-	   String link = list.get(position).url;
-	   holder.txtLink.setText(link.substring(0, link.length()-1));
-	   
-	   holder.goButton = (ImageButton) convertView.findViewById(R.id.imagebutton_go);
-	   holder.goButton.setOnClickListener(new OnClickListener() {
+	public Object getItem(int position) {
+		return list.get(position);
+	}
+
+	public long getItemId(int position) {
+		return position;
+	}
+
+	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder holder;
+		if (convertView == null) {
+			convertView = mInflater.inflate(R.layout.all_aubreddit_list_item,
+					null);
+			holder = new ViewHolder();
+			holder.displayName = (TextView) convertView
+					.findViewById(R.id.sub_reddit_list_item_displayName_text);
+			holder.txtLink = (TextView) convertView
+					.findViewById(R.id.sub_reddit_list_item_link_text);
+			holder.goButton = (ImageButton) convertView
+					.findViewById(R.id.imagebutton_go);
+			holder.goButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					Intent i = new Intent(mInflater.getContext(),
+							SubRedditActivity.class);
+					mInflater.getContext().startActivity(i);
+				}
+			});
+
+			holder.thumbView = (ImageView) convertView
+					.findViewById(R.id.subreddit_thumb_view);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
+
+		// Second TextView in the list item
+		String header_title_text = list.get(position).header_title;
+		if (header_title_text != null && !header_title_text.isEmpty())
+			holder.displayName.setText(header_title_text);
+		else
+			holder.displayName.setText(list.get(position).display_name);
+
+		String link = list.get(position).url;
+		holder.txtLink.setText(link.substring(0, link.length() - 1));
+
+		holder.goButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				 Intent i = new Intent(mInflater.getContext(), SubRedditActivity.class);
-				 mInflater.getContext().startActivity(i);
+				Intent i = new Intent(mInflater.getContext(),
+						SubRedditActivity.class);
+				mInflater.getContext().startActivity(i);
 			}
-	  });
-	   
-	//   holder.thumbView = (ImageView) convertView.findViewById(R.id.date);
-	   convertView.setTag(holder);
-	  } else {
-	   holder = (ViewHolder) convertView.getTag();
-	  }
-	  
-//	  if(list.get(position).thumbUrl != null)
-//		  new DownloadImageTask(holder.thumbView)
-//	      .execute(list.get(position).thumbUrl);
-//	  holder.comment.setText(list.get(position).comments);
-	  
-	  return convertView;
-	 }
+		});
+		  
+		Bitmap image_bits = list.get(position).imageBitMap;
+		if (image_bits != null)
+			holder.thumbView.setImageBitmap(image_bits);
 
-	 static class ViewHolder {
-	  TextView txtTitle;
-	  TextView txtLink;
-	  ImageView thumbView;
-	  TextView comment;
-	  ImageButton goButton;
-	 }
+		return convertView;
 	}
+
+	static class ViewHolder {
+		TextView displayName;
+		TextView txtLink;
+		ImageView thumbView;
+		TextView comment;
+		ImageButton goButton;
+	}
+}

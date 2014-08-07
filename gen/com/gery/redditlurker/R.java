@@ -32,8 +32,8 @@ public final class R {
         public static final int all_subreddit_list=0x7f090006;
         public static final int imagebutton_go=0x7f090004;
         public static final int pager=0x7f090000;
+        public static final int sub_reddit_list_item_displayName_text=0x7f090005;
         public static final int sub_reddit_list_item_link_text=0x7f090003;
-        public static final int sub_reddit_list_item_title_text=0x7f090005;
         public static final int subreddit_thumb_view=0x7f090002;
         public static final int txtQuery=0x7f090001;
     }

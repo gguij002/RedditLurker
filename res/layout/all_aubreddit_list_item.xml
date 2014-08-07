@@ -15,8 +15,6 @@
      android:layout_alignParentLeft="true"
      android:src="@drawable/ic_launcher" />
     
-    
-      <!-- Mail Subject -->
     <TextView android:id="@+id/sub_reddit_list_item_link_text"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -27,12 +25,10 @@
         android:textStyle="bold"
         android:text="KAKALink"
         android:textSize="20dip"
-        
         />
     
-    <!-- From Label -->
     <TextView
-        android:id="@+id/sub_reddit_list_item_title_text"
+        android:id="@+id/sub_reddit_list_item_displayName_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="8dip"
@@ -45,25 +41,7 @@
         android:textStyle="bold" />
    
     
-    
-     
-    <!-- Mail Subject 
-    <TextView android:id="@+id/subject"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:paddingLeft="8dip"
-        android:paddingBottom="6dip"
-        android:textSize="15dip"
-        android:layout_below="@id/from"/>
-        -->
-     
-    <!-- Mail date 
-    <TextView android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:padding="8dip"/>
-  -->
+
 
     <ImageButton
         android:id="@+id/imagebutton_go"
