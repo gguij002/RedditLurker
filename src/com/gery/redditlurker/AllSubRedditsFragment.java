@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import com.gery.userpreferences.UserPrefs;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -40,11 +43,11 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	View rootView;
 
 	@Override
-	public View onCreateView(final LayoutInflater inflater,
-			ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
+		
 		subRedditsList = new ArrayList<SubRedditInfo>();
-		new LoadInbox(inflater.getContext()).execute();
-		rootView = inflater.inflate(R.layout.fragment_top_rated, container,
+		new LoadSubReddits(inflater.getContext()).execute();
+		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container,
 				false);
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
@@ -74,7 +77,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			/*** do the work for load more date! ***/
 			if (!loadingMore) {
 				loadingMore = true;
-				new LoadInbox(context).execute();
+				new LoadSubReddits(context).execute();
 			}
 		}
 	}
@@ -88,6 +91,8 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				Intent nextActivity = new Intent(context,
 						SubRedditItemActivity.class);
 				nextActivity.putExtra("subReddit", subReddit.url);
+//				UserPrefs prefs = new UserPrefs(context);
+//				prefs.setUser(subReddit);
 				startActivity(nextActivity);
 			}
 		});
@@ -97,10 +102,10 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	/**
 	 * Background Async Task to Load subreddits by making HTTP Request
 	 * */
-	class LoadInbox extends AsyncTask<String, String, List<SubRedditInfo>> {
+	class LoadSubReddits extends AsyncTask<String, String, List<SubRedditInfo>> {
 		private Context fragmentContext;
 
-		public LoadInbox(Context context) {
+		public LoadSubReddits(Context context) {
 			this.fragmentContext = context;
 			loadingMore = true;
 		}
