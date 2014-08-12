@@ -7,7 +7,7 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.gery.userpreferences.UserPrefs;
+import com.gery.database.SubRedditsDataSource;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,8 +35,10 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	int totalItemCount = 0;
 	int currentScrollState = 0;
 	boolean loadingMore = false;
-	Long offset = 20L;
+	Long offset = 1L;
 	// List Items
+	
+	private SubRedditsDataSource srDataSource;
 
 	List<SubRedditInfo> subRedditsList;
 	private ProgressDialog pDialog;
@@ -44,6 +46,9 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
+		
+		srDataSource = new SubRedditsDataSource(inflater.getContext());
+		srDataSource.open();
 		
 		subRedditsList = new ArrayList<SubRedditInfo>();
 		new LoadSubReddits(inflater.getContext()).execute();
@@ -90,6 +95,10 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 				Intent nextActivity = new Intent(context,
 						SubRedditItemActivity.class);
+				
+				
+				srDataSource.createSubReddit(subReddit);
+				
 				nextActivity.putExtra("subReddit", subReddit.url);
 //				UserPrefs prefs = new UserPrefs(context);
 //				prefs.setUser(subReddit);
