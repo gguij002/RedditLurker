@@ -38,6 +38,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	Long offset = 1L;
 	// List Items
 	
+	public static boolean addedItem = false;
 	private SubRedditsDataSource srDataSource;
 
 	List<SubRedditInfo> subRedditsList;
@@ -93,12 +94,12 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		@Override
 		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
-				Intent nextActivity = new Intent(context,
-						SubRedditItemActivity.class);
+				Intent nextActivity = new Intent(context, SubRedditItemActivity.class);
 				
 				
-				srDataSource.createSubReddit(subReddit);
-				
+				srDataSource.addSubRedditToDB(subReddit);
+				addedItem = true;
+				srDataSource.close();
 				nextActivity.putExtra("subReddit", subReddit.url);
 //				UserPrefs prefs = new UserPrefs(context);
 //				prefs.setUser(subReddit);
@@ -209,7 +210,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			// updating UI from Background Thread
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
-					SubRedditCustomBaseAdapter var = new SubRedditCustomBaseAdapter(
+					AllSubRedditCustomBaseAdapter var = new AllSubRedditCustomBaseAdapter(
 							fragmentContext, subRedditsList);
 					storiesListView.setAdapter(var);
 					storiesListView.setSelection(positionToSave);

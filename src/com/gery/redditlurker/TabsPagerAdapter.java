@@ -19,7 +19,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             return new AllSubRedditsFragment();
         case 1:
             //Entered Subreddits
-            return new VisitedSubRedditsFragment();
+            return new EnteredSubRedditsFragment();
         }
  
         return null;

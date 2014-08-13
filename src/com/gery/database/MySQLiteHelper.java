@@ -17,11 +17,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
   // Database creation sql statement
   private static final String DATABASE_CREATE = "create table "
       + TABLE_SUBREDDITS + "(" + COLUMN_ID
-      + " integer primary key autoincrement, " + COLUMN_SUBREDDIT
+      + " text not null, " + COLUMN_SUBREDDIT
       + " text not null);";
 
   public MySQLiteHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
+   // context.deleteDatabase(getDatabaseName());
   }
 
   @Override

@@ -2,6 +2,8 @@ package com.gery.redditlurker;
 
 import java.util.List;
 
+import com.gery.database.SubRedditsDataSource;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,12 +16,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SubRedditCustomBaseAdapter extends BaseAdapter {
+public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
 	private static List<SubRedditInfo> list;
 
 	private LayoutInflater mInflater;
 
-	public SubRedditCustomBaseAdapter(Context context,
+	public AllSubRedditCustomBaseAdapter(Context context,
 			List<SubRedditInfo> listItems) {
 		list = listItems;
 		mInflater = LayoutInflater.from(context);
@@ -37,7 +39,7 @@ public class SubRedditCustomBaseAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.all_aubreddit_list_item,
@@ -52,8 +54,12 @@ public class SubRedditCustomBaseAdapter extends BaseAdapter {
 			holder.goButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Intent i = new Intent(mInflater.getContext(),
-							SubRedditActivity.class);
+					Intent i = new Intent(mInflater.getContext(), SubRedditActivity.class);
+					SubRedditsDataSource srDataSource = new SubRedditsDataSource(mInflater.getContext());
+					srDataSource.open();
+					srDataSource.addSubRedditToDB(list.get(position));
+					AllSubRedditsFragment.addedItem = true;
+					srDataSource.close();
 					mInflater.getContext().startActivity(i);
 				}
 			});
@@ -75,15 +81,6 @@ public class SubRedditCustomBaseAdapter extends BaseAdapter {
 		String link = list.get(position).url;
 		holder.txtLink.setText(link.substring(0, link.length() - 1));
 
-		holder.goButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent i = new Intent(mInflater.getContext(),
-						SubRedditActivity.class);
-				mInflater.getContext().startActivity(i);
-			}
-		});
-		  
 		Bitmap image_bits = list.get(position).imageBitMap;
 		if (image_bits != null)
 			holder.thumbView.setImageBitmap(image_bits);

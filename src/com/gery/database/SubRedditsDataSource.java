@@ -21,10 +21,8 @@ public class SubRedditsDataSource {
 	  private MySQLiteHelper dbHelper;
 	  private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
 	      MySQLiteHelper.COLUMN_SUBREDDIT };
-	  private Context context;
 
 	  public SubRedditsDataSource(Context context) {
-		this.context = context;
 		dbHelper = new MySQLiteHelper(context);
 	  }
 
@@ -36,42 +34,62 @@ public class SubRedditsDataSource {
 	    dbHelper.close();
 	  }
 
-	  public SubRedditInfo createSubReddit(SubRedditInfo subReddit) {
-		  SubRedditInfo temp = subRedditExists(subReddit.getUrl());
-		if(temp != null)
-		{
-			System.out.println("TRIED!! to add SubReddit with URL and id: " + temp.getUrl()+" "+temp.getId());
-			return temp;
+	  public void addSubRedditToDB(SubRedditInfo subReddit) {
+		  	boolean exists = isRawSubRedditExist(subReddit.getId());
+			if(exists) {
+				System.out.println("TRIED!! to add SubReddit with URL and id: " + subReddit.getUrl()+" "+subReddit.getId());
+				return;
+			}
+			ContentValues values = new ContentValues();
+			values.put(MySQLiteHelper.COLUMN_SUBREDDIT, subReddit.getJsonObject().toJSONString());
+			values.put(MySQLiteHelper.COLUMN_ID, subReddit.getId());
+			
+			database.insert(MySQLiteHelper.TABLE_SUBREDDITS, null, values);
+			System.out.println("SubReddit added with URL and id: " + subReddit.getUrl()+" "+subReddit.getId());
 		}
-	    ContentValues values = new ContentValues();
-	    values.put(MySQLiteHelper.COLUMN_SUBREDDIT, subReddit.getJsonObject().toJSONString());
-	    long insertId = database.insert(MySQLiteHelper.TABLE_SUBREDDITS, null, values);
-	    Cursor cursor = database.query(MySQLiteHelper.TABLE_SUBREDDITS,
-	        allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
-	        null, null, null);
-	    cursor.moveToFirst();
-	    SubRedditInfo newSubReddit = cursorToSubReddit(cursor);
-	    cursor.close();
-	    System.out.println("SubReddit added with URL and id: " + newSubReddit.getUrl()+" "+newSubReddit.getId());
-	    return newSubReddit;
-	  }
 
 	  public void deleteSubReddit(SubRedditInfo subReddit) {
-	    String id = subReddit.getId();
-	    System.out.println("SubReddit deleted with id: " + id);
-	    database.delete(MySQLiteHelper.TABLE_SUBREDDITS, MySQLiteHelper.COLUMN_ID
-	        + " = " + id, null);
+		    String id = subReddit.getId();
+		    System.out.println("SubReddit deleted with id: " + id);
+		    
+			String whereClause = MySQLiteHelper.COLUMN_ID + " = " + "\""+id+"\"";
+			database.delete(MySQLiteHelper.TABLE_SUBREDDITS, whereClause, null);
+	  }
+	  
+	  private Cursor getAllSubRedditRaw()
+	  {
+		  return database.query(MySQLiteHelper.TABLE_SUBREDDITS,
+			        allColumns, null, null, null, null, null);
+	  }
+	  
+	  private boolean isRawSubRedditExist(String id)
+	  {
+		  Cursor cursor = getAllSubRedditRaw();
+		  cursor.moveToFirst();
+		    while (!cursor.isAfterLast()) {
+		    	String idFromCursor = cursor.getString(0);
+		    	
+		    	if(idFromCursor.equalsIgnoreCase(id))//matchFound
+		    	{
+		    		System.out.println("FOUND MATCH ID: " + idFromCursor);
+		    		return true;
+		    	}
+		    	cursor.moveToNext();
+		    }
+		    // make sure to close the cursor
+		    cursor.close();
+		    return false;
 	  }
 
 	  public List<SubRedditInfo> getAllSubReddit() {
 	    List<SubRedditInfo> subReddits = new ArrayList<SubRedditInfo>();
-
-	    Cursor cursor = database.query(MySQLiteHelper.TABLE_SUBREDDITS,
-	        allColumns, null, null, null, null, null);
+	    
+	    Cursor cursor = getAllSubRedditRaw();
 
 	    cursor.moveToFirst();
 	    while (!cursor.isAfterLast()) {
-	      SubRedditInfo subRedditFromDB = cursorToSubReddit(cursor);
+	      JSONObject jObject = 	getJsonFromString(cursor.getString(1));
+	      SubRedditInfo subRedditFromDB = new SubRedditInfo(jObject).execute();
 	      subReddits.add(subRedditFromDB);
 	      cursor.moveToNext();
 	    }
@@ -80,17 +98,6 @@ public class SubRedditsDataSource {
 	    return subReddits;
 	  }
 	  
-	  public SubRedditInfo subRedditExists(String subRedditID)
-	  {
-		  List<SubRedditInfo> subReddits = this.getAllSubReddit();
-		  for(SubRedditInfo sr : subReddits)
-		  {
-			  if(sr.getUrl().equalsIgnoreCase(subRedditID))
-				  return sr.execute();
-		  }
-		  return null;
-	  }
-
 	  private JSONObject getJsonFromString(String jsonString)
 	  {
 		  JSONParser parser = new JSONParser();
@@ -101,17 +108,5 @@ public class SubRedditsDataSource {
 	    		e.printStackTrace();
 	    	}
 	    	return jsonObject;
-	  }
-	  
-	  private SubRedditInfo cursorToSubReddit(Cursor cursor) {
-		//  String subRedditId = cursor.getString(0);
-		  String jsonString = cursor.getString(1);
-		  JSONObject jObject = getJsonFromString(jsonString);
-		  
-		  SubRedditInfo subReddit = new SubRedditInfo(jObject).execute();
-	//	  subReddit.setId(subRedditId);
-//	    subReddit.setId(cursor.getLong(0));
-//	    subReddit.setSubReddit(cursor.getString(1));
-	    return subReddit;
 	  }
 	} 
