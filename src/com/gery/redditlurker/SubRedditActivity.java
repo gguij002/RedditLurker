@@ -39,7 +39,7 @@ public class SubRedditActivity extends Activity
 	    private void handleIntent(Intent intent) {
 	        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	            String query = intent.getStringExtra(SearchManager.QUERY);
-	 
+	            
 	            /**
 	             * Use this query to display search results like 
 	             * 1. Getting the data from SQLite and showing in listview 
@@ -49,6 +49,9 @@ public class SubRedditActivity extends Activity
 	            txtQuery.setText("Search Query: " + query);
 	 
 	        }
-	 
+	        else //comes from the lists and not the search bar
+	        {
+	        	 txtQuery.setText("Search Query: " + "FROM LIST");
+	        }
 	    }
 }

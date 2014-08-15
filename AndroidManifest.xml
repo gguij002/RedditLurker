@@ -18,7 +18,7 @@
         
          <!-- Search results activity -->
         <activity android:name=".SubRedditActivity"
-            android:parentActivityName="info.androidhive.actionbar.MainActivity" >
+            android:parentActivityName="com.gery.redditlurker.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -28,7 +28,7 @@
         </activity>
         
          <activity android:name=".SubRedditItemActivity"
-            android:parentActivityName="info.androidhive.actionbar.MainActivity" >
+            android:parentActivityName="com.gery.redditlurker.MainActivity" >
         </activity>
         
         <activity

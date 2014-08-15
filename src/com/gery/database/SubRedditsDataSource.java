@@ -1,5 +1,6 @@
 package com.gery.database;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class SubRedditsDataSource {
 
@@ -20,7 +23,7 @@ public class SubRedditsDataSource {
 	  private SQLiteDatabase database;
 	  private MySQLiteHelper dbHelper;
 	  private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
-	      MySQLiteHelper.COLUMN_SUBREDDIT };
+	      MySQLiteHelper.COLUMN_SUBREDDIT, MySQLiteHelper.COLUMN_SUBIMAGE };
 
 	  public SubRedditsDataSource(Context context) {
 		dbHelper = new MySQLiteHelper(context);
@@ -43,6 +46,9 @@ public class SubRedditsDataSource {
 			ContentValues values = new ContentValues();
 			values.put(MySQLiteHelper.COLUMN_SUBREDDIT, subReddit.getJsonObject().toJSONString());
 			values.put(MySQLiteHelper.COLUMN_ID, subReddit.getId());
+			ByteArrayOutputStream bos=new ByteArrayOutputStream();
+			subReddit.getImageBitMap().compress(Bitmap.CompressFormat.PNG, 100, bos);
+			values.put(MySQLiteHelper.COLUMN_SUBIMAGE, bos.toByteArray());
 			
 			database.insert(MySQLiteHelper.TABLE_SUBREDDITS, null, values);
 			System.out.println("SubReddit added with URL and id: " + subReddit.getUrl()+" "+subReddit.getId());
@@ -72,6 +78,7 @@ public class SubRedditsDataSource {
 		    	if(idFromCursor.equalsIgnoreCase(id))//matchFound
 		    	{
 		    		System.out.println("FOUND MATCH ID: " + idFromCursor);
+		    		cursor.close();
 		    		return true;
 		    	}
 		    	cursor.moveToNext();
@@ -90,6 +97,13 @@ public class SubRedditsDataSource {
 	    while (!cursor.isAfterLast()) {
 	      JSONObject jObject = 	getJsonFromString(cursor.getString(1));
 	      SubRedditInfo subRedditFromDB = new SubRedditInfo(jObject).execute();
+	      
+	      byte[] var = cursor.getBlob(2);
+	      if(var != null)
+	      {
+	    	  Bitmap imageBitMap = BitmapFactory.decodeByteArray(var, 0, var.length);
+	    	  subRedditFromDB.setImageBitMap(imageBitMap);
+	      }
 	      subReddits.add(subRedditFromDB);
 	      cursor.moveToNext();
 	    }

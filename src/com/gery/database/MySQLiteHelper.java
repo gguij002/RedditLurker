@@ -10,23 +10,25 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
   public static final String TABLE_SUBREDDITS = "subreddits";
   public static final String COLUMN_ID = "_id";
   public static final String COLUMN_SUBREDDIT = "subreddit";
+  public static final String COLUMN_SUBIMAGE = "subimage";
 
   private static final String DATABASE_NAME = "subreddit.db";
   private static final int DATABASE_VERSION = 1;
 
   // Database creation sql statement
-  private static final String DATABASE_CREATE = "create table "
-      + TABLE_SUBREDDITS + "(" + COLUMN_ID
-      + " text not null, " + COLUMN_SUBREDDIT
-      + " text not null);";
+  private static final String DATABASE_CREATE = "create table " + TABLE_SUBREDDITS 
+	+ "(" + COLUMN_ID + " text not null, " 
+		  + COLUMN_SUBREDDIT + " text not null, "
+		  + COLUMN_SUBIMAGE + " image blob);";
 
   public MySQLiteHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
-   // context.deleteDatabase(getDatabaseName());
+  //  context.deleteDatabase(getDatabaseName()); //USE TO WIPE DB
   }
 
   @Override
   public void onCreate(SQLiteDatabase database) {
+	  System.out.println("CREATE QUERY " + DATABASE_CREATE );
 	database.execSQL(DATABASE_CREATE);
   }
 

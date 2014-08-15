@@ -33,6 +33,16 @@ public class SubRedditInfo
 		
 		return this;
 	}
+	
+	public Bitmap getImageBitMap()
+	{
+		return imageBitMap;
+	}
+	
+	public void setImageBitMap(Bitmap bitmap)
+	{
+		this.imageBitMap = bitmap;
+	}
 
 	public JSONObject getJsonObject() {
 		return jsonObject;
