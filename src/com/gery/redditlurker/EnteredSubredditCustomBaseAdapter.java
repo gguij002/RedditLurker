@@ -55,7 +55,7 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View arg0) {
 					Intent i = new Intent(mInflater.getContext(),
-							SubRedditActivity.class);
+							SubRedditChannelActivity.class);
 					mInflater.getContext().startActivity(i);
 				}
 			});

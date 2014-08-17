@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme" >
         
          <!-- Search results activity -->
-        <activity android:name=".SubRedditActivity"
+        <activity android:name=".SubRedditChannelActivity"
             android:parentActivityName="com.gery.redditlurker.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

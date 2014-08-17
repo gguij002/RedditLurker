@@ -54,7 +54,7 @@ public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
 			holder.goButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Intent i = new Intent(mInflater.getContext(), SubRedditActivity.class);
+					Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
 					SubRedditsDataSource srDataSource = new SubRedditsDataSource(mInflater.getContext());
 					srDataSource.open();
 					srDataSource.addSubRedditToDB(list.get(position));

@@ -94,7 +94,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		@Override
 		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
-				Intent nextActivity = new Intent(context, SubRedditActivity.class);
+				Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
 				srDataSource.open();
 				srDataSource.addSubRedditToDB(subReddit);
 				addedItem = true;

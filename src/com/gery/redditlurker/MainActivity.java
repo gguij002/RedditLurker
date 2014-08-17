@@ -70,7 +70,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	public boolean onSearchRequested() {
 
-		 Intent i = new Intent(MainActivity.this, SubRedditActivity.class);
+		 Intent i = new Intent(MainActivity.this, SubRedditChannelActivity.class);
          startActivity(i);
 
 	     return false;  // don't go ahead and show the search box
@@ -108,7 +108,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     
     public void goToSubReddit()
     {
-    	 Intent i = new Intent(MainActivity.this, SubRedditActivity.class);
+    	 Intent i = new Intent(MainActivity.this, SubRedditChannelActivity.class);
          startActivity(i);
     }
 

@@ -1,16 +1,18 @@
 package com.gery.redditlurker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class SubRedditActivity extends Activity
+public class SubRedditChannelActivity extends Activity  
 {
-	 private TextView txtQuery;
-	 
 	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
@@ -22,8 +24,13 @@ public class SubRedditActivity extends Activity
 	        // Enabling Back navigation on Action Bar icon
 	        actionBar.setDisplayHomeAsUpEnabled(true);
 	 
-	        txtQuery = (TextView) findViewById(R.id.txtQuery);
-	 
+	        List<StoryInfo> values = new ArrayList<StoryInfo>();
+	        values.add(new StoryInfo());
+	        
+	        final ListView subRedditChannelListView = (ListView) findViewById(R.id.subreddit_channel_list);
+	        subRedditChannelListView.setAdapter(new ChannelBaseAdapter(this, values));
+			
+	        
 	        handleIntent(getIntent());
 	    }
 	 
@@ -46,12 +53,10 @@ public class SubRedditActivity extends Activity
 	             * 2. Making webrequest and displaying the data 
 	             * For now we just display the query only
 	             */
-	            txtQuery.setText("Search Query: " + query);
-	 
 	        }
 	        else //comes from the lists and not the search bar
 	        {
-	        	 txtQuery.setText("Search Query: " + "FROM LIST");
+
 	        }
 	    }
 }

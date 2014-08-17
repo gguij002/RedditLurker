@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <RelativeLayout
+    android:id="@+id/test_row_stuff"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"   >
+    
+     <ImageView
+     android:id="@+id/story_thumb_view1"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:contentDescription="@string/subreddit_thumbview_desc"
+     android:layout_centerInParent="true"
+     android:layout_alignParentLeft="true"
+     android:src="@drawable/ic_launcher" />
+     
+     
+     
+     <TextView
+        android:id="@+id/story_title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/story_thumb_view1"
+        android:layout_toLeftOf="@+id/comments_button"
+        android:text="This is a place holder for this text field that will be populated later on " />
+
+     <Button
+         android:id="@+id/comments_button"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_alignParentTop="true"
+         android:layout_alignParentBottom="true"
+         android:drawableLeft="@android:drawable/sym_action_chat"
+         android:background="@android:color/transparent"
+         android:textColor="@android:color/darker_gray"
+         
+         android:layout_marginLeft="10dp"
+         android:layout_marginTop="10dp"
+         android:layout_marginRight="10dp"
+         android:textAlignment="inherit"
+         android:textScaleX=".7" 
+         android:textSize="16sp"
+         android:gravity="left"
+         android:text="1.3k\n1.2k - 3h" />
+
+     <TextView
+         android:id="@+id/author_textview"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/story_title1"
+         android:layout_marginTop="20dp"
+         android:layout_toRightOf="@+id/story_thumb_view1"
+         android:text="Author"
+         android:textSize="12sp"
+         android:textColor="@android:color/darker_gray"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+         
+    </RelativeLayout>
+    
+
+</TableRow>
