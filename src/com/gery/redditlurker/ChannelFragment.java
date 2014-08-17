@@ -85,7 +85,7 @@ public class ChannelFragment extends Fragment
 			 * */
 			protected List<StoryInfo> doInBackground(String... args) {
 				// "http://reddit.com/r/reddits.rss?limit=[limit]&after=[after]";
-				final String REDDIT_SUBREDDITS_URL = URLCreate(offset.intValue());
+				final String REDDIT_SUBREDDITS_URL = URLCreate("REPLACXE",offset.intValue());
 
 				List<StoryInfo> listOfStories = new ArrayList<StoryInfo>();
 
@@ -99,12 +99,12 @@ public class ChannelFragment extends Fragment
 				for (int i = 0; i < length; i++) {
 //					JSONObject var = (JSONObject) ((JSONObject) listOfSubredditsRaw
 //							.get(i)).get("data");
-					StoryInfo item = new StoryInfo();//(var).execute();
+					//StoryInfo item = new StoryInfo();//(var).execute();
 				//	String header_image_url = item.header_img;
 //					if (header_image_url != null && !header_image_url.isEmpty()) {
 //						item.imageBitMap = getImage(header_image_url);
 //					}
-					listOfStories.add(item);
+					//listOfStories.add(item);
 				}
 				return listOfStories;
 			}
@@ -135,11 +135,11 @@ public class ChannelFragment extends Fragment
 				return mIcon11;
 			}
 
-			private String URLCreate(int offset) {
+			private String URLCreate(String subReddit, int offset) {
 				String after = "";
 				if (storieList.size() > 0)
 					after = storieList.get(storieList.size() - 1).name;//Get subreddits after This "Name"
-				return "http://www.reddit.com/r/funny/.json" + "?limit=" + offset+ "&after=" + after;
+				return "http://www.reddit.com"+subReddit+".json" + "?limit=" + offset+ "&after=" + after;
 			}
 
 			/**
