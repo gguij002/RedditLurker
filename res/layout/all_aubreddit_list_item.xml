@@ -13,31 +13,33 @@
      android:contentDescription="@string/subreddit_thumbview_desc"
      android:layout_centerInParent="true"
      android:layout_alignParentLeft="true"
+     android:layout_marginTop="10dp"
+     android:layout_marginBottom="10dp"
      android:src="@drawable/ic_launcher" />
     
     <TextView android:id="@+id/sub_reddit_list_item_link_text"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:paddingTop="8dip"
-        android:paddingLeft="8dip"
         android:layout_toRightOf="@+id/subreddit_thumb_view"
         android:layout_toLeftOf="@+id/imagebutton_go"
-        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="KAKALink"
-        android:textSize="20dip"
+        android:textSize="18dip"
+        android:textStyle="bold"
         />
     
     <TextView
         android:id="@+id/sub_reddit_list_item_displayName_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dip"
-        android:paddingBottom="4dip"
-        android:textSize="16dip"
         android:layout_toRightOf="@+id/subreddit_thumb_view"
-        android:layout_toLeftOf="@+id/imagebutton_go"
-        android:text="KAKA"
         android:layout_below="@id/sub_reddit_list_item_link_text"
+        android:layout_toLeftOf="@+id/imagebutton_go"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="KAKA"
+        android:textSize="14dip"
         android:textStyle="bold" />
    
     

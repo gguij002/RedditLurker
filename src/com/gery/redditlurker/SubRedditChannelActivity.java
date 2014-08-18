@@ -30,7 +30,7 @@ public class SubRedditChannelActivity extends Activity
 		int totalItemCount = 0;
 		int currentScrollState = 0;
 		boolean loadingMore = false;
-		Long offset = 1L;
+		Long offset = 4L;
 		// List Items
 		
 		private ProgressDialog pDialog;
@@ -124,10 +124,10 @@ public class SubRedditChannelActivity extends Activity
 					for (int i = 0; i < length; i++) {
 						JSONObject var = (JSONObject) ((JSONObject) listOfSubredditsRaw.get(i)).get("data");
 						StoryInfo item = new StoryInfo(var).execute();//(var).execute();
-					//	String header_image_url = item.header_img;
-//						if (header_image_url != null && !header_image_url.isEmpty()) {
-//							item.imageBitMap = getImage(header_image_url);
-//						}
+						String thumb_image_url = item.thumbnail;
+						if (thumb_image_url != null && !thumb_image_url.isEmpty()) {
+							item.imageBitMap = getImage(thumb_image_url);
+						}
 						listOfStories.add(item);
 					}
 					return listOfStories;
@@ -141,6 +141,7 @@ public class SubRedditChannelActivity extends Activity
 					} catch (Exception e) {
 						Log.e("Error", e.getMessage());
 						e.printStackTrace();
+						return null;
 					}
 					int width = mIcon11.getWidth();
 					int height = mIcon11.getHeight();

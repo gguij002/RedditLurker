@@ -35,7 +35,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	int totalItemCount = 0;
 	int currentScrollState = 0;
 	boolean loadingMore = false;
-	Long offset = 1L;
+	Long offset = 4L;
 	// List Items
 	
 	public static boolean addedItem = false;

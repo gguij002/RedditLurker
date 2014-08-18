@@ -1,5 +1,6 @@
 package com.gery.redditlurker;
 
+import java.util.Date;
 import java.util.List;
 
 import com.gery.database.SubRedditsDataSource;
@@ -7,11 +8,14 @@ import com.gery.redditlurker.AllSubRedditCustomBaseAdapter.ViewHolder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.text.method.DateTimeKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,20 +53,45 @@ public class ChannelBaseAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.channel_list_items,
 					null);
 			holder = new ViewHolder();
-			holder.displayName = (TextView) convertView
-					.findViewById(R.id.story_title1);
+			holder.title = (TextView) convertView.findViewById(R.id.story_title1);
+			holder.author = (TextView) convertView.findViewById(R.id.author_textview);
+			holder.comments = (Button) convertView.findViewById(R.id.comments_button);
+			holder.thumbView = (ImageView) convertView.findViewById(R.id.story_thumb_view1);
 
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		
+		holder.title.setText(list.get(position).title);
+		holder.author.setText(list.get(position).author);
+		holder.comments.setText(constructCommentsUpsTime(position));
+		
+		Bitmap image_bits = list.get(position).imageBitMap;
+		if (image_bits != null)
+			holder.thumbView.setImageBitmap(image_bits);
 
 		
 		return convertView;
 	}
 	
+	private String constructCommentsUpsTime(int listItem)
+	{
+		StoryInfo story = list.get(listItem);
+		long comments = story.num_comments;
+		long score = story.score;
+		double time = story.created;
+		
+		String commentsUpsTime = ""+comments + "\n" + score; 
+		
+		return commentsUpsTime;
+	}
+	
 	static class ViewHolder {
-		TextView displayName;
+		public TextView author;
+		public TextView title;
+		public Button comments; 
+		public ImageView thumbView;
 	}
 
 }

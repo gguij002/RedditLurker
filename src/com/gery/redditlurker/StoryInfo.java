@@ -2,9 +2,27 @@ package com.gery.redditlurker;
 
 import org.json.simple.JSONObject;
 
+import android.graphics.Bitmap;
+
 public class StoryInfo {
 
+	public String title;
+	public String domain;
+	public boolean clicked;
+	public String author;
+	public boolean over_18;
+	public String thumbnail;
+	public String subreddit_id;
+	public long downs;
+	public long ups;
+	public Double created;
+	public String url;
+	public String author_flair_text;//Can be null
 	public String name;
+	public long num_comments;
+	public long score;
+	public Bitmap imageBitMap = null;
+	
 	JSONObject jsonObject;
 	
 	public StoryInfo(JSONObject jObject)
@@ -14,6 +32,22 @@ public class StoryInfo {
 	
 	public StoryInfo execute()
 	{
+		this.title = (String) jsonObject.get("title");
+		this.domain = (String) jsonObject.get("domain");
+		this.clicked = (Boolean) jsonObject.get("clicked");
+		this.author = (String) jsonObject.get("author");
+		this.over_18 = (Boolean) jsonObject.get("over_18");
+		this.thumbnail = (String) jsonObject.get("thumbnail");
+		this.subreddit_id = (String) jsonObject.get("subreddit_id");
+		this.downs = (Long) jsonObject.get("downs");
+		this.ups = (Long) jsonObject.get("ups");
+		this.created = (Double) jsonObject.get("created");
+		this.url = (String) jsonObject.get("url");
+		this.author_flair_text = (String) jsonObject.get("author_flair_text");
+		this.name = (String) jsonObject.get("name");
+		this.num_comments = (Long) jsonObject.get("num_comments");
+		this.score = (Long) jsonObject.get("score");
+
 		return this;
 	}
 	
