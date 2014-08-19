@@ -40,7 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/story_title1"
             android:layout_marginLeft="7dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            
             android:layout_toRightOf="@+id/story_thumb_view1"
             android:text="Author"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -56,9 +57,10 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            
             android:background="@android:color/transparent"
-            android:drawableLeft="@android:drawable/sym_action_chat"
+            android:drawableStart="@android:drawable/sym_action_chat"
             android:gravity="left"
             android:text="1.3k\n1.2k - 3h"
             android:textAlignment="inherit"

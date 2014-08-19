@@ -65,6 +65,7 @@ public class SubRedditChannelActivity extends Activity
 	    	
 	        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	             query = intent.getStringExtra(SearchManager.QUERY);
+	             query = "/r/"+query+"/"; 
 	            
 	            /**
 	             * Use this query to display search results like 
