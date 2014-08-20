@@ -84,16 +84,9 @@ public class SubRedditChannelActivity extends Activity
 	             query = intent.getStringExtra(SearchManager.QUERY);
 	             query = "/r/"+query+"/"; 
 	             isFromSearch = true;
-	            /**
-	             * Use this query to display search results like 
-	             * 1. Getting the data from SQLite and showing in listview 
-	             * 2. Making webrequest and displaying the data 
-	             * For now we just display the query only
-	             */
 	        }
-	        else //comes from the lists and not the search bar
-	        {
-	        	query = intent.getStringExtra("subReddit");
+	        else {//comes from the lists and not the search bar
+		        query = intent.getStringExtra("subReddit");
 	        }
 	        System.out.println("Passed from Views Query: "+ query);
 	        AsyncTask<String, String, List<StoryInfo>> var = new LoadStories(query).execute();
@@ -268,7 +261,7 @@ public class SubRedditChannelActivity extends Activity
 						}
 					});
 					super.onPostExecute(storiesInfoList);
-				}
-			}
+		}
+	}
 
 }
