@@ -8,7 +8,7 @@ public class SubRedditInfo
 {
 	String header_title;
 	String id;
-	String display_name;
+	String display_name;//
 	String header_img;
 	String url;
 	String public_description;

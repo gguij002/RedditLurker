@@ -29,6 +29,7 @@ public class RedditRSSReader
 			jsonString = getStringfromInputReader(input);
 		} catch (IOException e1) {
 			e1.printStackTrace();
+			return null;
 		}
 		
 	    JSONParser parser = new JSONParser();
@@ -37,6 +38,7 @@ public class RedditRSSReader
     		jsonObject = (JSONObject)parser.parse(jsonString);
     	} catch (Exception e) {
     		e.printStackTrace();
+    		return null;
     	}
     	return jsonObject;
  }

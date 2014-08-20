@@ -49,9 +49,8 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 		
 		srDataSource = new SubRedditsDataSource(inflater.getContext());
-		srDataSource.open();
-		
 		subRedditsList = new ArrayList<SubRedditInfo>();
+		
 		new LoadSubReddits(inflater.getContext()).execute();
 		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container,
 				false);

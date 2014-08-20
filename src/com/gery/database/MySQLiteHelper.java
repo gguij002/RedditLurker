@@ -7,6 +7,8 @@ import android.util.Log;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
+public static int counter = 0;	
+	
   public static final String TABLE_SUBREDDITS = "subreddits";
   public static final String COLUMN_ID = "_id";
   public static final String COLUMN_SUBREDDIT = "subreddit";
@@ -23,13 +25,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
   public MySQLiteHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    System.out.println("MySQLiteHelper exec with COntetx: " + context.getClass() +"Counter: " +counter++ );
   //  context.deleteDatabase(getDatabaseName()); //USE TO WIPE DB
   }
 
   @Override
   public void onCreate(SQLiteDatabase database) {
-	  System.out.println("CREATE QUERY " + DATABASE_CREATE );
-	database.execSQL(DATABASE_CREATE);
+	  database.execSQL(DATABASE_CREATE);
   }
 
   @Override

@@ -8,13 +8,16 @@ import com.gery.database.SubRedditsDataSource;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class EnteredSubRedditsFragment extends Fragment {
 	List<SubRedditInfo> subRedditsList;
@@ -32,9 +35,23 @@ public class EnteredSubRedditsFragment extends Fragment {
     	contex = inflater.getContext();
     	new LoadSubRedditsFromDB(inflater.getContext()).execute();
         rootView = inflater.inflate(R.layout.fragment_entered_subreddit, container, false);
-         
+        setOnItemClickListener(inflater.getContext());
         return rootView;
     }
+    
+	private void setOnItemClickListener(final Context context) {
+		final ListView storiesListView = (ListView) rootView.findViewById(R.id.entered_subreddit_list);
+		storiesListView.setOnItemClickListener(new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
+				Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
+				nextActivity.putExtra("subReddit", subReddit.url);
+				startActivity(nextActivity);
+			}
+		});
+	}
+
     
     @Override
     public void onResume()

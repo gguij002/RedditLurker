@@ -29,18 +29,18 @@ public final class R {
         public static final int ic_search_button=0x7f020005;
     }
     public static final class id {
-        public static final int action_search_widget=0x7f090015;
-        public static final int all_subreddit_list=0x7f090010;
+        public static final int action_search_widget=0x7f090016;
+        public static final int all_subreddit_list=0x7f090011;
         public static final int author_textview=0x7f09000a;
         public static final int comments_button=0x7f090009;
-        public static final int comments_button_transparent1=0x7f090012;
-        public static final int commets_button1=0x7f090013;
-        public static final int entered_imagebutton_delete=0x7f09000d;
-        public static final int entered_imagebutton_go=0x7f09000f;
-        public static final int entered_sub_reddit_list_item_displayName_text=0x7f09000e;
-        public static final int entered_sub_reddit_list_item_link_text=0x7f09000c;
-        public static final int entered_subreddit_list=0x7f090011;
-        public static final int entered_subreddit_thumb_view=0x7f09000b;
+        public static final int comments_button_transparent1=0x7f090013;
+        public static final int commets_button1=0x7f090014;
+        public static final int entered_imagebutton_delete=0x7f09000e;
+        public static final int entered_imagebutton_go=0x7f090010;
+        public static final int entered_sub_reddit_list_item_displayName_text=0x7f09000f;
+        public static final int entered_sub_reddit_list_item_link_text=0x7f09000d;
+        public static final int entered_subreddit_list=0x7f090012;
+        public static final int entered_subreddit_thumb_view=0x7f09000c;
         public static final int imagebutton_go=0x7f090004;
         public static final int pager=0x7f090000;
         public static final int story_thumb_view1=0x7f090007;
@@ -48,9 +48,10 @@ public final class R {
         public static final int sub_reddit_list_item_displayName_text=0x7f090005;
         public static final int sub_reddit_list_item_link_text=0x7f090003;
         public static final int subreddit_channel_list=0x7f090001;
+        public static final int subreddit_textview_list_item=0x7f09000b;
         public static final int subreddit_thumb_view=0x7f090002;
         public static final int test_row_stuff=0x7f090006;
-        public static final int time_likes_button=0x7f090014;
+        public static final int time_likes_button=0x7f090015;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

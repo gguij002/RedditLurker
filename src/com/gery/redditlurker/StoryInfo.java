@@ -13,6 +13,7 @@ public class StoryInfo {
 	public boolean over_18;
 	public String thumbnail;
 	public String subreddit_id;
+	public String subreddit;
 	public long downs;
 	public long ups;
 	public Double created;
@@ -39,6 +40,7 @@ public class StoryInfo {
 		this.over_18 = (Boolean) jsonObject.get("over_18");
 		this.thumbnail = (String) jsonObject.get("thumbnail");
 		this.subreddit_id = (String) jsonObject.get("subreddit_id");
+		this.subreddit = capitalize((String) jsonObject.get("subreddit"));
 		this.downs = (Long) jsonObject.get("downs");
 		this.ups = (Long) jsonObject.get("ups");
 		this.created = (Double) jsonObject.get("created");
@@ -49,6 +51,11 @@ public class StoryInfo {
 		this.score = (Long) jsonObject.get("score");
 
 		return this;
+	}
+	
+	private String capitalize(String line)
+	{
+	  return Character.toUpperCase(line.charAt(0)) + line.substring(1);
 	}
 	
 }

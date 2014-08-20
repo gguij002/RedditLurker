@@ -1,22 +1,14 @@
 package com.gery.redditlurker;
 
-import java.util.Date;
 import java.util.List;
 
-import com.gery.database.SubRedditsDataSource;
-import com.gery.redditlurker.AllSubRedditCustomBaseAdapter.ViewHolder;
-
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.text.method.DateTimeKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,6 +47,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.title = (TextView) convertView.findViewById(R.id.story_title1);
 			holder.author = (TextView) convertView.findViewById(R.id.author_textview);
+			holder.subreddit = (TextView) convertView.findViewById(R.id.subreddit_textview_list_item);
 			holder.comments = (Button) convertView.findViewById(R.id.comments_button);
 			holder.thumbView = (ImageView) convertView.findViewById(R.id.story_thumb_view1);
 
@@ -65,13 +58,13 @@ public class ChannelBaseAdapter extends BaseAdapter {
 		
 		holder.title.setText(list.get(position).title);
 		holder.author.setText(list.get(position).author);
+		holder.subreddit.setText(list.get(position).subreddit);
 		holder.comments.setText(constructCommentsUpsTime(position));
 		
 		Bitmap image_bits = list.get(position).imageBitMap;
 		if (image_bits != null)
 			holder.thumbView.setImageBitmap(image_bits);
 
-		
 		return convertView;
 	}
 	
@@ -92,6 +85,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 		public TextView title;
 		public Button comments; 
 		public ImageView thumbView;
+		public TextView subreddit;
 	}
 
 }
