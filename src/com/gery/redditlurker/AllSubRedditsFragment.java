@@ -38,6 +38,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	Long offset = 4L;
 	// List Items
 
+	AllSubRedditCustomBaseAdapter adapter;
 	List<SubRedditInfo> subRedditsList;
 	private ProgressDialog pDialog;
 	private View rootView;
@@ -52,7 +53,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
 	}
-
+	
 	@Override
 	public void onScroll(AbsListView absListView, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
@@ -202,8 +203,8 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			// updating UI from Background Thread
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
-					AllSubRedditCustomBaseAdapter var = new AllSubRedditCustomBaseAdapter(fragmentContext, subRedditsList);
-					storiesListView.setAdapter(var);
+					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext, subRedditsList);
+					storiesListView.setAdapter(adapter);
 					storiesListView.setSelection(positionToSave);
 				}
 			});

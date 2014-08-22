@@ -19,7 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
-	private static List<SubRedditInfo> list;
+	private List<SubRedditInfo> list;
 
 	private LayoutInflater mInflater;
 
@@ -39,6 +39,27 @@ public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
 
 	public long getItemId(int position) {
 		return position;
+	}
+	
+	public void updateFavs(List<SubRedditInfo> list)
+	{
+		for(SubRedditInfo subAP : this.list)
+		{
+			subAP.favorite = false;
+		}
+
+		for(SubRedditInfo subDB : list)
+		{
+			for(SubRedditInfo subAP : this.list)
+			{
+				if(subDB.compareTo(subAP) == 0)
+				{
+					subAP.favorite = true;
+					break;
+				}
+			}
+		}
+		notifyDataSetChanged();
 	}
 
 	public View getView(final int position, View convertView, final ViewGroup parent) {

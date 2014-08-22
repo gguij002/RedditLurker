@@ -130,6 +130,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			srDataSource.close();
         	SubRedditsDataSource.AddedItemFalse();
         }
+    	else if(SubRedditsDataSource.AddedItem() && tab.getPosition() == 0)
+    	{
+    		System.out.println("SubRedditsDataSource.AddedItem() && tab.getPosition() == 0");
+    		AllSubRedditsFragment var = (AllSubRedditsFragment) mAdapter.getRegisteredFragment(tab.getPosition());
+        	SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
+			srDataSource.open();
+			var.adapter.updateFavs(srDataSource.getAllSubReddit());
+			srDataSource.close();
+        	SubRedditsDataSource.AddedItemFalse();
+        }
         viewPager.setCurrentItem(tab.getPosition());
     }
  

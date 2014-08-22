@@ -94,6 +94,7 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 					list.remove(position);
 					srDataSource.close();
 					notifyDataSetChanged();
+					SubRedditsDataSource.AddedItemTrue();
 					//Refresh Page
 				}
 			});
