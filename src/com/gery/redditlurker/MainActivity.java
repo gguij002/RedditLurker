@@ -14,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.SearchView;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -41,8 +43,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
  
         // Adding Tabs
         for (String tab_name : tabs) {
-            actionBar.addTab(actionBar.newTab().setText(tab_name)
-                    .setTabListener(this));
+            actionBar.addTab(actionBar.newTab().setText(tab_name).setTabListener(this));
         }
         
         /**
@@ -82,10 +83,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         inflater.inflate(R.menu.activity_main_actions, menu);
      // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search_widget)
-                .getActionView();
-        searchView.setSearchableInfo(searchManager
-                .getSearchableInfo(getComponentName()));
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search_widget).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         
         return super.onCreateOptionsMenu(menu);
     }
@@ -106,7 +105,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
     
-    public void goToSubReddit()
+    private void goToSubReddit()
     {
     	 Intent i = new Intent(MainActivity.this, SubRedditChannelActivity.class);
          startActivity(i);
@@ -118,19 +117,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
  
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
+//    	if(AllSubRedditsFragment.addedItem && tab.getPosition() == 1)
+//        {	System.out.println("onTabReselected(Tab tab, FragmentTransaction ft): " + AllSubRedditsFragment.addedItem);
+//        	ListView lView = (ListView)viewPager.findViewById(R.id.entered_subreddit_list);
+//        	((EnteredSubredditCustomBaseAdapter) lView.getAdapter()).notifyDataSetChanged();
+//        }
         viewPager.setCurrentItem(tab.getPosition());
-        
     }
  
     @Override
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
     }
- 
-//    /**
-//     * Launching new activity
-//     * */
-//    private void LocationFound() {
-//        Intent i = new Intent(MainActivity.this, LocationFound.class);
-//        startActivity(i);
-//    }
 }

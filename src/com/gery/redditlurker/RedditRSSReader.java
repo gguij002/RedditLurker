@@ -16,6 +16,7 @@ public class RedditRSSReader
 	
 	public RedditRSSReader(String URL)
 	{
+		System.out.println("RedditRSSReader(String URL): " + URL);
 		this.URL = URL;
 	}
 	

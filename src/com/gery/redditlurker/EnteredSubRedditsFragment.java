@@ -2,6 +2,7 @@ package com.gery.redditlurker;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.gery.database.*;
 
 import com.gery.database.SubRedditsDataSource;
 
@@ -20,22 +21,23 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class EnteredSubRedditsFragment extends Fragment {
-	List<SubRedditInfo> subRedditsList;
+	static List<SubRedditInfo> subRedditsList;
 	private ProgressDialog pDialog;
 	View rootView; 
-	SubRedditsDataSource srDataSource;
-	Context contex;
+	private Context contex;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	
-    	subRedditsList = new ArrayList<SubRedditInfo>();
-    	srDataSource = new SubRedditsDataSource(inflater.getContext());
-		srDataSource.open();
     	contex = inflater.getContext();
-    	new LoadSubRedditsFromDB(inflater.getContext()).execute();
+    	subRedditsList = new ArrayList<SubRedditInfo>();
+    	
+    	Timer.StartTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
+    	new LoadSubRedditsFromDB(contex).execute();
+    	Timer.EndTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
+    	
         rootView = inflater.inflate(R.layout.fragment_entered_subreddit, container, false);
-        setOnItemClickListener(inflater.getContext());
+        setOnItemClickListener(contex);
         return rootView;
     }
     
@@ -51,11 +53,19 @@ public class EnteredSubRedditsFragment extends Fragment {
 			}
 		});
 	}
+	
+	@Override
+    public void onPause()
+    {
+    	System.out.println("EneteredSubsFragment.onPause()" + AllSubRedditsFragment.addedItem);
+    	super.onPause();
+    }
 
     
     @Override
     public void onResume()
     {
+    	System.out.println("EneteredSubsFragment.onResume()" + AllSubRedditsFragment.addedItem);
     	super.onResume();
     	if(AllSubRedditsFragment.addedItem)
     	{
@@ -74,7 +84,14 @@ public class EnteredSubRedditsFragment extends Fragment {
 
 		@Override
 		protected List<SubRedditInfo> doInBackground(String... params) {
+			SubRedditsDataSource srDataSource;
+			
+			srDataSource = new SubRedditsDataSource(contex);
+			srDataSource.open();
+			
+			Timer.StartTimer("doInBackground.srDataSource.getAllSubReddit()");
 			List<SubRedditInfo> values = srDataSource.getAllSubReddit();
+			Timer.EndTimer("doInBackground.srDataSource.getAllSubReddit()");
 			return values;
 		}
 		
@@ -89,10 +106,12 @@ public class EnteredSubRedditsFragment extends Fragment {
 		}
 		
 		protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) {
+			Timer.StartTimer("onPostExecute");
 			pDialog.dismiss();
 			
 			subRedditsList.clear();
 			subRedditsList.addAll(listOfSubReddits);
+			
 			final ListView storiesListView = (ListView) rootView.findViewById(R.id.entered_subreddit_list);
 			//final int positionToSave = storiesListView.getFirstVisiblePosition();
 			// updating UI from Background Thread
@@ -105,6 +124,7 @@ public class EnteredSubRedditsFragment extends Fragment {
 				}
 			});
 			super.onPostExecute(listOfSubReddits);
+			Timer.EndTimer("onPostExecute");
 		}
 
     	

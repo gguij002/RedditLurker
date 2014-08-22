@@ -68,6 +68,20 @@ public class SubRedditsDataSource {
 			        allColumns, null, null, null, null, null);
 	  }
 	  
+	  public List<String> getAllSubRedditsID()
+	  {
+		  List<String> ids = new ArrayList<String>();
+		  Cursor cursor = getAllSubRedditRaw();
+		  cursor.moveToFirst();
+		  while (!cursor.isAfterLast()) {
+		    	String idFromCursor = cursor.getString(0);
+		    	ids.add(idFromCursor);
+		    	cursor.moveToNext();
+		  }
+		  cursor.close();
+		  return ids;
+	  }
+	  
 	  private boolean isRawSubRedditExist(String id)
 	  {
 		  Cursor cursor = getAllSubRedditRaw();

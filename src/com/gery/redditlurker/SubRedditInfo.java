@@ -14,6 +14,7 @@ public class SubRedditInfo
 	String public_description;
 	String name;
 	Bitmap imageBitMap = null;
+	boolean favorite;
 	JSONObject jsonObject;
 	
 	public SubRedditInfo(JSONObject jsonObject)

@@ -54,14 +54,13 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 			holder.goButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Intent i = new Intent(mInflater.getContext(),
-							SubRedditChannelActivity.class);
+					Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
+					i.putExtra("subReddit", list.get(position).url);
 					mInflater.getContext().startActivity(i);
 				}
 			});
 			
-			holder.deleteButton = (ImageButton) convertView
-					.findViewById(R.id.entered_imagebutton_delete);
+			holder.deleteButton = (ImageButton) convertView.findViewById(R.id.entered_imagebutton_delete);
 			holder.deleteButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {

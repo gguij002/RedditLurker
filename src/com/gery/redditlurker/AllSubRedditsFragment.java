@@ -39,21 +39,18 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	// List Items
 	
 	public static boolean addedItem = false;
-	private SubRedditsDataSource srDataSource;
 
 	List<SubRedditInfo> subRedditsList;
 	private ProgressDialog pDialog;
-	View rootView;
+	private View rootView;
 
 	@Override
-	public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
-		
-		srDataSource = new SubRedditsDataSource(inflater.getContext());
+	public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) 
+	{
 		subRedditsList = new ArrayList<SubRedditInfo>();
 		
 		new LoadSubReddits(inflater.getContext()).execute();
-		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container,
-				false);
+		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container, false);
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
 	}
@@ -94,10 +91,6 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 				Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
-				srDataSource.open();
-				srDataSource.addSubRedditToDB(subReddit);
-				addedItem = true;
-				srDataSource.close();
 				nextActivity.putExtra("subReddit", subReddit.url);
 				startActivity(nextActivity);
 			}
@@ -135,24 +128,31 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		protected List<SubRedditInfo> doInBackground(String... args) {
 			// "http://reddit.com/r/reddits.rss?limit=[limit]&after=[after]";
 			final String REDDIT_SUBREDDITS_URL = URLCreate(offset.intValue());
-
+			System.out.println("REDDIT_SUBREDDITS_URL: " + REDDIT_SUBREDDITS_URL);
 			List<SubRedditInfo> listOfSubReddits = new ArrayList<SubRedditInfo>();
 
 			// Create List Of Subreddits
-			JSONObject subRedditsJSON = new RedditRSSReader(
-					REDDIT_SUBREDDITS_URL).execute();
+			JSONObject subRedditsJSON = new RedditRSSReader(REDDIT_SUBREDDITS_URL).execute();
 			JSONObject data = (JSONObject) subRedditsJSON.get("data");
 			JSONArray listOfSubredditsRaw = (JSONArray) data.get("children");
+			
+			SubRedditsDataSource dataSource = new SubRedditsDataSource(fragmentContext);
+			dataSource.open();
+			List<String> subRedditsIdsFromDb = dataSource.getAllSubRedditsID();
+			dataSource.close();
 
 			int length = listOfSubredditsRaw.size();
 			for (int i = 0; i < length; i++) {
-				JSONObject var = (JSONObject) ((JSONObject) listOfSubredditsRaw
-						.get(i)).get("data");
+				JSONObject var = (JSONObject) ((JSONObject) listOfSubredditsRaw.get(i)).get("data");
 				SubRedditInfo item = new SubRedditInfo(var).execute();
 				String header_image_url = item.header_img;
-				if (header_image_url != null && !header_image_url.isEmpty()) {
+				
+				if (header_image_url != null && !header_image_url.isEmpty()) 
 					item.imageBitMap = getImage(header_image_url);
-				}
+				
+				if(subRedditsIdsFromDb.contains(item.id))
+					item.favorite = true;
+					
 				listOfSubReddits.add(item);
 			}
 			return listOfSubReddits;
@@ -187,8 +187,8 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		private String URLCreate(int offset) {
 			String after = "";
 			if (subRedditsList.size() > 0)
-				after = subRedditsList.get(subRedditsList.size() - 1).name;//Get subreddits after This "Name"
-			return "http://www.reddit.com/reddits/.json" + "?limit=" + offset+ "&after=" + after;
+				after = "&after=" + subRedditsList.get(subRedditsList.size() - 1).name;//Get subreddits after This "Name"
+			return "http://www.reddit.com/reddits/.json" + "?limit=" + offset + after;
 		}
 
 		/**
@@ -199,15 +199,12 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			pDialog.dismiss();
 			loadingMore = false;
 			subRedditsList.addAll(subRedditsList.size(), listOfSubReddits);
-			final ListView storiesListView = (ListView) rootView
-					.findViewById(R.id.all_subreddit_list);
-			final int positionToSave = storiesListView
-					.getFirstVisiblePosition();
+			final ListView storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);
+			final int positionToSave = storiesListView.getFirstVisiblePosition();
 			// updating UI from Background Thread
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
-					AllSubRedditCustomBaseAdapter var = new AllSubRedditCustomBaseAdapter(
-							fragmentContext, subRedditsList);
+					AllSubRedditCustomBaseAdapter var = new AllSubRedditCustomBaseAdapter(fragmentContext, subRedditsList);
 					storiesListView.setAdapter(var);
 					storiesListView.setSelection(positionToSave);
 				}
