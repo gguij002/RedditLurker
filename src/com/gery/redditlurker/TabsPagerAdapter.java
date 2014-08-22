@@ -1,10 +1,12 @@
 package com.gery.redditlurker;
 
+import com.gery.database.SmartFragmentStatePagerAdapter;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+//import android.support.v4.app.FragmentPagerAdapter;
 
-public class TabsPagerAdapter extends FragmentPagerAdapter {
+public class TabsPagerAdapter extends SmartFragmentStatePagerAdapter {
 	 
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);

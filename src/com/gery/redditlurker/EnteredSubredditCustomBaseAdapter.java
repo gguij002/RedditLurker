@@ -17,14 +17,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
-	private static List<SubRedditInfo> list;
+	private List<SubRedditInfo> list;
 
 	private LayoutInflater mInflater;
 
-	public EnteredSubredditCustomBaseAdapter(Context context,
-			List<SubRedditInfo> listItems) {
+	public EnteredSubredditCustomBaseAdapter(Context context,List<SubRedditInfo> listItems) {
 		list = listItems;
 		mInflater = LayoutInflater.from(context);
+	}
+	
+	public void DeleteSubRedditFromList(SubRedditInfo subReddit)
+	{
+		int i = 0;
+		for(i = 0; i < list.size(); i++){
+			if(list.get(i).compareTo(subReddit) == 0){
+				break;
+			}
+		}
+		notifyDataSetChanged();
+	}
+	
+	public void AddSubRedditToList(SubRedditInfo subReddit)
+	{
+		list.add(subReddit);
+		notifyDataSetChanged();
+	}
+	
+	public void UpdateSubRedditList(List<SubRedditInfo> list)
+	{
+		this.list = list;
+		notifyDataSetChanged();
 	}
 
 	public int getCount() {

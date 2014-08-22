@@ -9,7 +9,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.gery.database.SubRedditsDataSource;
-import com.gery.redditlurker.AllSubRedditsFragment.LoadSubReddits;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -206,7 +205,7 @@ public class SubRedditChannelActivity extends Activity implements
 			srDataSource.open();
 			SubRedditInfo subReddit = createSubReddit(beforeURL);
 			srDataSource.addSubRedditToDB(subReddit);
-			AllSubRedditsFragment.addedItem = true;
+			SubRedditsDataSource.AddedItemTrue();
 			srDataSource.close();
 			isFromSearch = false;
 		}

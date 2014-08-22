@@ -78,26 +78,14 @@ public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
 					{
 						subReddit.favorite = false;
 						srDataSource.deleteSubReddit(subReddit);
-						
-						int i = 0;
-						for(i = 0; i < EnteredSubRedditsFragment.subRedditsList.size(); i++){
-							if(EnteredSubRedditsFragment.subRedditsList.get(i).compareTo(subReddit) == 0){
-								break;
-							}
-						}
-						EnteredSubRedditsFragment.subRedditsList.remove(i);
-							
 						holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
 					}//not fav Add
 					else{
 						subReddit.favorite = true;
 						srDataSource.addSubRedditToDB(subReddit);
-						EnteredSubRedditsFragment.subRedditsList.add(subReddit);
 						holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
 					}
-//					ListView lView = (ListView)findViewById(R.id.entered_subreddit_list);
-//		        	((EnteredSubredditCustomBaseAdapter) lView.getAdapter()).notifyDataSetChanged();
-					AllSubRedditsFragment.addedItem = true;
+					SubRedditsDataSource.AddedItemTrue();
 					srDataSource.close();
 				}
 			});

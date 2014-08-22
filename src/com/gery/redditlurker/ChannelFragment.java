@@ -8,7 +8,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.gery.database.SubRedditsDataSource;
-import com.gery.redditlurker.EnteredSubRedditsFragment.LoadSubRedditsFromDB;
 
 import android.app.ProgressDialog;
 import android.content.Context;

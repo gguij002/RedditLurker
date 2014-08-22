@@ -21,10 +21,11 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class EnteredSubRedditsFragment extends Fragment {
-	static List<SubRedditInfo> subRedditsList;
+	private List<SubRedditInfo> subRedditsList;
 	private ProgressDialog pDialog;
 	View rootView; 
 	private Context contex;
+	EnteredSubredditCustomBaseAdapter adapter;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,7 +58,6 @@ public class EnteredSubRedditsFragment extends Fragment {
 	@Override
     public void onPause()
     {
-    	System.out.println("EneteredSubsFragment.onPause()" + AllSubRedditsFragment.addedItem);
     	super.onPause();
     }
 
@@ -65,13 +65,7 @@ public class EnteredSubRedditsFragment extends Fragment {
     @Override
     public void onResume()
     {
-    	System.out.println("EneteredSubsFragment.onResume()" + AllSubRedditsFragment.addedItem);
     	super.onResume();
-    	if(AllSubRedditsFragment.addedItem)
-    	{
-    		AllSubRedditsFragment.addedItem = false;
-    		new LoadSubRedditsFromDB(contex).execute();
-    	}
     }
     
     class LoadSubRedditsFromDB extends AsyncTask<String, String, List<SubRedditInfo>>{
@@ -117,8 +111,8 @@ public class EnteredSubRedditsFragment extends Fragment {
 			// updating UI from Background Thread
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
-					EnteredSubredditCustomBaseAdapter var = new EnteredSubredditCustomBaseAdapter(context, subRedditsList);
-					storiesListView.setAdapter(var);
+					adapter = new EnteredSubredditCustomBaseAdapter(context, subRedditsList);
+					storiesListView.setAdapter(adapter);
 					
 					//storiesListView.setSelection(positionToSave);
 				}

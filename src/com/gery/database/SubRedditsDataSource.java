@@ -18,6 +18,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class SubRedditsDataSource {
+	
+	  private static boolean addedItem = false;
 
 	  // Database fields
 	  private SQLiteDatabase database;
@@ -53,6 +55,21 @@ public class SubRedditsDataSource {
 			database.insert(MySQLiteHelper.TABLE_SUBREDDITS, null, values);
 			System.out.println("SubReddit added with URL and id: " + subReddit.getUrl()+" "+subReddit.getId());
 		}
+	  
+	  public static boolean AddedItem()
+	  {
+		  return addedItem;
+	  }
+	  
+	  public static void AddedItemTrue()
+	  {
+		  addedItem = true;
+	  }
+	  
+	  public static void AddedItemFalse()
+	  {
+		  addedItem = false;
+	  }
 
 	  public void deleteSubReddit(SubRedditInfo subReddit) {
 		    String id = subReddit.getId();
