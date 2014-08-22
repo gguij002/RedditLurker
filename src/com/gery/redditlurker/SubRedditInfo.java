@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 
 import android.graphics.Bitmap;
 
-public class SubRedditInfo 
+public class SubRedditInfo implements Comparable<SubRedditInfo>
 {
 	String header_title;
 	String id;
@@ -34,6 +34,17 @@ public class SubRedditInfo
 		
 		return this;
 	}
+	
+	@Override
+	public int compareTo(SubRedditInfo subredditInfo)
+	{
+		if(this.id.equalsIgnoreCase(subredditInfo.id))
+			return 0;
+		else 
+			return 1;
+		
+	}
+	
 	
 	public Bitmap getImageBitMap()
 	{

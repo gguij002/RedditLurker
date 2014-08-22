@@ -117,11 +117,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
  
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-//    	if(AllSubRedditsFragment.addedItem && tab.getPosition() == 1)
-//        {	System.out.println("onTabReselected(Tab tab, FragmentTransaction ft): " + AllSubRedditsFragment.addedItem);
-//        	ListView lView = (ListView)viewPager.findViewById(R.id.entered_subreddit_list);
-//        	((EnteredSubredditCustomBaseAdapter) lView.getAdapter()).notifyDataSetChanged();
-//        }
+    	if(AllSubRedditsFragment.addedItem && tab.getPosition() == 1)
+        {	System.out.println("onTabReselected(Tab tab, FragmentTransaction ft): " + AllSubRedditsFragment.addedItem);
+        	ListView lView = (ListView)viewPager.findViewById(R.id.entered_subreddit_list);
+        	((EnteredSubredditCustomBaseAdapter) lView.getAdapter()).notifyDataSetChanged();
+        	AllSubRedditsFragment.addedItem = false;
+        }
         viewPager.setCurrentItem(tab.getPosition());
     }
  
