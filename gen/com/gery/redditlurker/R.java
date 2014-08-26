@@ -29,6 +29,7 @@ public final class R {
         public static final int ic_search_button=0x7f020005;
     }
     public static final class id {
+        public static final int action_fav=0x7f090018;
         public static final int action_search_widget=0x7f090017;
         public static final int all_sub_favorite_image_button=0x7f090006;
         public static final int all_subreddit_list=0x7f090012;

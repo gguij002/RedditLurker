@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.gery.database.SubRedditsDataSource;
+import com.gery.redditlurker.R.id;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -22,6 +23,10 @@ import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -41,6 +46,7 @@ public class SubRedditChannelActivity extends Activity implements
 	List<StoryInfo> storieList;
 	private boolean loadingMore;
 	private String query;
+	private boolean favorite = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,7 @@ public class SubRedditChannelActivity extends Activity implements
 
 		// Enabling Back navigation on Action Bar icon
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
+	
 		try {
 			handleIntent(getIntent());
 		} catch (InterruptedException e) {
@@ -69,6 +75,56 @@ public class SubRedditChannelActivity extends Activity implements
 		storiesListView.setOnScrollListener(this);
 	}
 
+	/**
+     * On selecting action bar icons
+     * */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+        case R.id.action_fav:
+        	if(favorite)
+        	{
+        		favorite= false;
+        		item.setIcon(android.R.drawable.btn_star_big_off);
+        	}
+        	else
+        	{
+        		favorite = true;
+        		item.setIcon(android.R.drawable.btn_star_big_on);
+        	}
+    	    
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+        MenuItem item = menu.findItem(R.id.action_fav);
+        setFavoriteButton(item);
+        MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
+        itemSearch.setVisible(false);
+        return super.onCreateOptionsMenu(menu);
+    }
+	
+    private void setFavoriteButton(MenuItem item)
+    {
+    	if(favorite)
+    	{
+    		favorite= true;
+    		item.setIcon(android.R.drawable.btn_star_big_on);
+    	}
+    	else
+    	{
+    		favorite = false;
+    		item.setIcon(android.R.drawable.btn_star_big_off);
+    	}
+    }
+    
 	@Override
 	protected void onNewIntent(Intent intent) {
 		setIntent(intent);
@@ -96,6 +152,7 @@ public class SubRedditChannelActivity extends Activity implements
 			isFromSearch = true;
 		} else {// comes from the lists and not the search bar
 			query = intent.getStringExtra("subReddit");
+			favorite = intent.getBooleanExtra("favorite", false);
 		}
 		System.out.println("Passed from Views Query: " + query);
 

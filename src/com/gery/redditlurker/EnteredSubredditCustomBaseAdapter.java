@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
@@ -26,29 +27,6 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 		mInflater = LayoutInflater.from(context);
 	}
 	
-	public void DeleteSubRedditFromList(SubRedditInfo subReddit)
-	{
-		int i = 0;
-		for(i = 0; i < list.size(); i++){
-			if(list.get(i).compareTo(subReddit) == 0){
-				break;
-			}
-		}
-		notifyDataSetChanged();
-	}
-	
-	public void AddSubRedditToList(SubRedditInfo subReddit)
-	{
-		list.add(subReddit);
-		notifyDataSetChanged();
-	}
-	
-	public void UpdateSubRedditList(List<SubRedditInfo> list)
-	{
-		this.list = list;
-		notifyDataSetChanged();
-	}
-
 	public int getCount() {
 		return list.size();
 	}
@@ -64,8 +42,7 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.entered_subreddit_list_item,
-					null);
+			convertView = mInflater.inflate(R.layout.entered_subreddit_list_item, null);
 			holder = new ViewHolder();
 			holder.displayName = (TextView) convertView
 					.findViewById(R.id.entered_sub_reddit_list_item_displayName_text);
@@ -78,6 +55,7 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 				public void onClick(View arg0) {
 					Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
 					i.putExtra("subReddit", list.get(position).url);
+					i.putExtra("favorite", list.get(position).favorite);
 					mInflater.getContext().startActivity(i);
 				}
 			});
@@ -89,7 +67,6 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 					SubRedditInfo subReddit = list.get(position);
 					SubRedditsDataSource srDataSource = new SubRedditsDataSource(parent.getContext());
 					srDataSource.open();
-					
 					srDataSource.deleteSubReddit(subReddit);
 					list.remove(position);
 					srDataSource.close();
@@ -116,15 +93,6 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 
 		String link = list.get(position).url;
 		holder.txtLink.setText(link.substring(0, link.length() - 1));
-
-//		holder.goButton.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View arg0) {
-//				Intent i = new Intent(mInflater.getContext(),
-//						SubRedditActivity.class);
-//				mInflater.getContext().startActivity(i);
-//			}
-//		});
 		  
 		Bitmap image_bits = list.get(position).imageBitMap;
 		if (image_bits != null)

@@ -1,6 +1,5 @@
 package com.gery.redditlurker;
 
-import com.gery.database.SmartFragmentStatePagerAdapter;
 import com.gery.database.SubRedditsDataSource;
 import com.gery.redditlurker.R.id;
 
@@ -11,20 +10,17 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.SearchView;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
 	private ViewPager viewPager;
-    private SmartFragmentStatePagerAdapter mAdapter;
+    private TabsPagerAdapter mAdapter;
     private ActionBar actionBar;
     // Tab titles
     private String[] tabs = { "SubReddits", "Favorite SubReddits"};
@@ -39,7 +35,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        
  
         viewPager.setAdapter(mAdapter);
         actionBar.setHomeButtonEnabled(false);
@@ -89,7 +84,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search_widget).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        
+        MenuItem item = menu.findItem(R.id.action_fav);
+        item.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -123,23 +119,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
     	if(SubRedditsDataSource.AddedItem() && tab.getPosition() == 1)
     	{
-    		EnteredSubRedditsFragment var = (EnteredSubRedditsFragment) mAdapter.getRegisteredFragment(tab.getPosition());
+    		EnteredSubRedditsFragment var = (EnteredSubRedditsFragment) mAdapter.getFragmentAlreadyCreated(tab.getPosition());
         	SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
 			srDataSource.open();
-			var.adapter.UpdateSubRedditList(srDataSource.getAllSubReddit());
+			var.UpdateSubRedditList(srDataSource.getAllSubReddit());
 			srDataSource.close();
-        	SubRedditsDataSource.AddedItemFalse();
         }
     	else if(SubRedditsDataSource.AddedItem() && tab.getPosition() == 0)
     	{
-    		System.out.println("SubRedditsDataSource.AddedItem() && tab.getPosition() == 0");
-    		AllSubRedditsFragment var = (AllSubRedditsFragment) mAdapter.getRegisteredFragment(tab.getPosition());
-        	SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
+    		AllSubRedditsFragment var = (AllSubRedditsFragment) mAdapter.getFragmentAlreadyCreated(tab.getPosition());
+    		SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
 			srDataSource.open();
-			var.adapter.updateFavs(srDataSource.getAllSubReddit());
+			var.UpdateFavs(srDataSource.getAllSubReddit());
 			srDataSource.close();
-        	SubRedditsDataSource.AddedItemFalse();
-        }
+		}
+    	SubRedditsDataSource.AddedItemFalse();
+		
         viewPager.setCurrentItem(tab.getPosition());
     }
  

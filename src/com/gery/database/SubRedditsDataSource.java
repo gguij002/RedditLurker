@@ -46,6 +46,7 @@ public class SubRedditsDataSource {
 				return;
 			}
 			ContentValues values = new ContentValues();
+			subReddit.addFavToJson();
 			values.put(MySQLiteHelper.COLUMN_SUBREDDIT, subReddit.getJsonObject().toJSONString());
 			values.put(MySQLiteHelper.COLUMN_ID, subReddit.getId());
 			ByteArrayOutputStream bos=new ByteArrayOutputStream();

@@ -14,7 +14,7 @@ public class SubRedditInfo implements Comparable<SubRedditInfo>
 	String public_description;
 	String name;
 	Bitmap imageBitMap = null;
-	boolean favorite;
+	boolean favorite= false;
 	JSONObject jsonObject;
 	
 	public SubRedditInfo(JSONObject jsonObject)
@@ -31,8 +31,35 @@ public class SubRedditInfo implements Comparable<SubRedditInfo>
 		this.id = ((String) jsonObject.get("id"));
 		this.header_img = (String) jsonObject.get("header_img");
 		this.name = (String) jsonObject.get("name");
+		try
+		{
+			this.favorite = (Boolean) jsonObject.get("favorite");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		
 		return this;
+	}
+	
+	public void addFavToJson(boolean favorite)
+	{
+		try{
+		this.getJsonObject().put("favorite", favorite);
+		}
+		catch(Exception e)
+		{e.printStackTrace();}
+	}
+	
+	public void addFavToJson()
+	{
+		try{
+		this.getJsonObject().put("favorite", this.favorite);
+		}
+		catch(Exception e)
+		{e.printStackTrace();}
 	}
 	
 	@Override
@@ -44,6 +71,20 @@ public class SubRedditInfo implements Comparable<SubRedditInfo>
 			return 1;
 		
 	}
+	
+	@Override
+    public boolean equals(Object object)
+    {
+		System.out.println("EQUALS");
+        boolean sameSame = false;
+
+        if (object != null && object instanceof SubRedditInfo)
+        {
+            sameSame = this.name.equalsIgnoreCase(((SubRedditInfo) object).name);
+        }
+
+        return sameSame;
+    }
 	
 	
 	public Bitmap getImageBitMap()

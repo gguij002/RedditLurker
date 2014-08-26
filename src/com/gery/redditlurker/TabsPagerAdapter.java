@@ -4,12 +4,19 @@ import com.gery.database.SmartFragmentStatePagerAdapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-//import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
-public class TabsPagerAdapter extends SmartFragmentStatePagerAdapter {
+public class TabsPagerAdapter extends FragmentPagerAdapter {
 	 
+	private AllSubRedditsFragment allSubRedditsFragment;
+	private EnteredSubRedditsFragment enteredSubRedditsFragment;
+	
     public TabsPagerAdapter(FragmentManager fm) {
         super(fm);
+    }
+    
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
  
     @Override
@@ -18,13 +25,29 @@ public class TabsPagerAdapter extends SmartFragmentStatePagerAdapter {
         switch (index) {
         case 0:
             // List Subreddits
-            return new AllSubRedditsFragment();
+        	allSubRedditsFragment = new AllSubRedditsFragment();
+            return allSubRedditsFragment;
         case 1:
             //Entered Subreddits
-            return new EnteredSubRedditsFragment();
+        	enteredSubRedditsFragment = new EnteredSubRedditsFragment();
+            return enteredSubRedditsFragment;
         }
  
         return null;
+    }
+    
+    public Fragment getFragmentAlreadyCreated(int index)
+    {
+    	 switch (index) {
+         case 0:
+             // List Subreddits
+             return allSubRedditsFragment;
+         case 1:
+             //Entered Subreddits
+             return enteredSubRedditsFragment;
+         }
+  
+         return null;
     }
  
     @Override

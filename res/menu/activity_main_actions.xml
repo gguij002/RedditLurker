@@ -15,5 +15,10 @@
 	      android:label="@string/app_name"
 	      android:showAsAction="always"
 	      android:actionViewClass="android.widget.SearchView"/>
+	
+	 <item android:id="@+id/action_fav"
+	      android:icon="@android:drawable/btn_star_big_off"
+          android:title="@string/action_search"
+          android:showAsAction="ifRoom" />
 
 </menu>

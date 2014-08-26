@@ -18,6 +18,7 @@ import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,11 +92,24 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 				Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
 				nextActivity.putExtra("subReddit", subReddit.url);
+				nextActivity.putExtra("favorite", subReddit.favorite);
 				startActivity(nextActivity);
 			}
 		});
 		storiesListView.setOnScrollListener(this);
 	}
+	
+	@Override
+    public void onPause() {
+    	super.onPause();
+    }
+
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    }
+    
 
 	/**
 	 * Background Async Task to Load subreddits by making HTTP Request
@@ -150,8 +164,10 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 					item.imageBitMap = getImage(header_image_url);
 				
 				if(subRedditsIdsFromDb.contains(item.id))
+				{
+					System.out.println("subRedditsIdsFromDb.contains(item.id)" + item.display_name);
 					item.favorite = true;
-					
+				}
 				listOfSubReddits.add(item);
 			}
 			return listOfSubReddits;
@@ -210,5 +226,25 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			});
 			super.onPostExecute(listOfSubReddits);
 		}
+	}
+	
+	public void UpdateFavs(List<SubRedditInfo> storiesDB)
+	{
+		for(SubRedditInfo subReddits : this.subRedditsList)
+		{
+			System.out.println("BEFORE IF: " +subReddits.display_name+"-"+subReddits.name);
+			if(!storiesDB.contains(subReddits))
+			{
+				subReddits.favorite = false;
+				storiesDB.add(subReddits);
+			}
+		}
+		
+		this.subRedditsList.clear();
+		this.subRedditsList.addAll(storiesDB);
+			
+		adapter.notifyDataSetChanged();
+		final ListView storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);
+		storiesListView.invalidateViews();
 	}
 }

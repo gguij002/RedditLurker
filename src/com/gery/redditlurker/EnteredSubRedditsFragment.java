@@ -13,10 +13,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -32,7 +35,6 @@ public class EnteredSubRedditsFragment extends Fragment {
     	
     	contex = inflater.getContext();
     	subRedditsList = new ArrayList<SubRedditInfo>();
-    	
     	Timer.StartTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
     	new LoadSubRedditsFromDB(contex).execute();
     	Timer.EndTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
@@ -50,6 +52,9 @@ public class EnteredSubRedditsFragment extends Fragment {
 				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 				Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
 				nextActivity.putExtra("subReddit", subReddit.url);
+				System.out.println("BEFORE PUT EXTRA: "+ subReddit.favorite) ;
+				System.out.println("BEFORE PUT EXTRA: "+ subReddit.favorite) ;
+				nextActivity.putExtra("favorite", subReddit.favorite);
 				startActivity(nextActivity);
 			}
 		});
@@ -120,7 +125,12 @@ public class EnteredSubRedditsFragment extends Fragment {
 			super.onPostExecute(listOfSubReddits);
 			Timer.EndTimer("onPostExecute");
 		}
-
-    	
     }
+
+    public void UpdateSubRedditList(List<SubRedditInfo> list)
+	{
+    	this.subRedditsList.clear();
+		this.subRedditsList.addAll(list);
+		adapter.notifyDataSetChanged();
+	}
 }
