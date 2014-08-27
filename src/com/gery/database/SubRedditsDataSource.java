@@ -25,7 +25,7 @@ public class SubRedditsDataSource {
 	  private SQLiteDatabase database;
 	  private MySQLiteHelper dbHelper;
 	  private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
-	      MySQLiteHelper.COLUMN_SUBREDDIT, MySQLiteHelper.COLUMN_SUBIMAGE };
+	      MySQLiteHelper.COLUMN_SUBREDDIT, MySQLiteHelper.COLUMN_SUBIMAGE, MySQLiteHelper.COLUMN_FAVORITE };
 
 	  public SubRedditsDataSource(Context context) {
 		dbHelper = new MySQLiteHelper(context);
@@ -46,7 +46,7 @@ public class SubRedditsDataSource {
 				return;
 			}
 			ContentValues values = new ContentValues();
-			subReddit.addFavToJson();
+			values.put(MySQLiteHelper.COLUMN_FAVORITE, subReddit.getFavoriteAsInt());
 			values.put(MySQLiteHelper.COLUMN_SUBREDDIT, subReddit.getJsonObject().toJSONString());
 			values.put(MySQLiteHelper.COLUMN_ID, subReddit.getId());
 			ByteArrayOutputStream bos=new ByteArrayOutputStream();
@@ -54,7 +54,7 @@ public class SubRedditsDataSource {
 			values.put(MySQLiteHelper.COLUMN_SUBIMAGE, bos.toByteArray());
 			
 			database.insert(MySQLiteHelper.TABLE_SUBREDDITS, null, values);
-			System.out.println("SubReddit added with URL and id: " + subReddit.getUrl()+" "+subReddit.getId());
+			System.out.println("SubReddit added with URL and id and Favorite: " + subReddit.getUrl()+" "+subReddit.getId() +" "+ subReddit.getFavoriteAsInt());
 		}
 	  
 	  public static boolean AddedItem()
@@ -131,11 +131,13 @@ public class SubRedditsDataSource {
 	      SubRedditInfo subRedditFromDB = new SubRedditInfo(jObject).execute();
 	      
 	      byte[] var = cursor.getBlob(2);
+	      int fav = cursor.getInt(3);
 	      if(var != null)
 	      {
 	    	  Bitmap imageBitMap = BitmapFactory.decodeByteArray(var, 0, var.length);
 	    	  subRedditFromDB.setImageBitMap(imageBitMap);
 	      }
+	      subRedditFromDB.setFavoriteFromInt(fav);
 	      subReddits.add(subRedditFromDB);
 	      cursor.moveToNext();
 	    }

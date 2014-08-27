@@ -31,35 +31,7 @@ public class SubRedditInfo implements Comparable<SubRedditInfo>
 		this.id = ((String) jsonObject.get("id"));
 		this.header_img = (String) jsonObject.get("header_img");
 		this.name = (String) jsonObject.get("name");
-		try
-		{
-			this.favorite = (Boolean) jsonObject.get("favorite");
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		
 		return this;
-	}
-	
-	public void addFavToJson(boolean favorite)
-	{
-		try{
-		this.getJsonObject().put("favorite", favorite);
-		}
-		catch(Exception e)
-		{e.printStackTrace();}
-	}
-	
-	public void addFavToJson()
-	{
-		try{
-		this.getJsonObject().put("favorite", this.favorite);
-		}
-		catch(Exception e)
-		{e.printStackTrace();}
 	}
 	
 	@Override
@@ -116,5 +88,14 @@ public class SubRedditInfo implements Comparable<SubRedditInfo>
 	
 	public String getUrl() {
 		return url;
+	}
+
+	public int getFavoriteAsInt() {
+		int flag = (favorite)? 1 : 0;
+		return flag;
+	}
+
+	public void setFavoriteFromInt(int intFav) {
+		this.favorite = (intFav == 1)? true : false;
 	}
 }
