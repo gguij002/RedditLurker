@@ -43,6 +43,15 @@ public class SubRedditInfo implements Comparable<SubRedditInfo>
 			return 1;
 		
 	}
+	@Override
+	public String toString()
+	{
+		String subRedString;
+		
+		subRedString = "DisplayName: "+ this.display_name +" Name: "+ this.name+ " Favorite: "+ this.favorite;  
+		
+		return subRedString; 
+	}
 	
 	@Override
     public boolean equals(Object object)

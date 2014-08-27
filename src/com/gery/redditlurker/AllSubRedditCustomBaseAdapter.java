@@ -11,18 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
-	private List<SubRedditInfo> list;
+public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
+	public List<SubRedditInfo> list;
 
 	private LayoutInflater mInflater;
 
-	public AllSubRedditCustomBaseAdapter(Context context,
-			List<SubRedditInfo> listItems) {
+	public AllSubRedditCustomBaseAdapter(Context context,int res, List<SubRedditInfo> listItems) {
+		super(context, res, listItems);
 		list = listItems;
 		mInflater = LayoutInflater.from(context);
 	}
@@ -31,7 +32,7 @@ public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
 		return list.size();
 	}
 
-	public Object getItem(int position) {
+	public SubRedditInfo getItem(int position) {
 		return list.get(position);
 	}
 
@@ -39,8 +40,7 @@ public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public View getView(final int position, View convertView,
-			final ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 		final ViewHolder holder;
 		final SubRedditInfo subReddit = list.get(position);
 		if (convertView == null) {
@@ -50,28 +50,21 @@ public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
 					.findViewById(R.id.sub_reddit_list_item_displayName_text);
 			holder.txtLink = (TextView) convertView
 					.findViewById(R.id.sub_reddit_list_item_link_text);
-			holder.goButton = (ImageButton) convertView
-					.findViewById(R.id.imagebutton_go);
+			holder.goButton = (ImageButton) convertView.findViewById(R.id.imagebutton_go);
 			holder.goButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Intent i = new Intent(mInflater.getContext(),
-							SubRedditChannelActivity.class);
+					Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
 					i.putExtra("subReddit", list.get(position).url);
 					mInflater.getContext().startActivity(i);
 				}
 			});
 
-			holder.favoriteButton = (ImageButton) convertView
-					.findViewById(R.id.all_sub_favorite_image_button);
-			System.out.println("SUBREDDIT.Fav: " + subReddit.display_name + "-"
-					+ subReddit.favorite);
+			holder.favoriteButton = (ImageButton) convertView.findViewById(R.id.all_sub_favorite_image_button);
 			if (subReddit.favorite)
-				holder.favoriteButton
-						.setImageResource(android.R.drawable.btn_star_big_on);
+				holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
 			else
-				holder.favoriteButton
-						.setImageResource(android.R.drawable.btn_star_big_off);
+				holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
 
 			holder.favoriteButton.setOnClickListener(new OnClickListener() {
 				@Override
@@ -82,26 +75,20 @@ public class AllSubRedditCustomBaseAdapter extends BaseAdapter {
 					{
 						subReddit.favorite = false;
 						srDataSource.deleteSubReddit(subReddit);
-						holder.favoriteButton
-								.setImageResource(android.R.drawable.btn_star_big_off);
+						holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
 					}// not fav Add
 					else {
 						subReddit.favorite = true;
 						srDataSource.addSubRedditToDB(subReddit);
-						holder.favoriteButton
-								.setImageResource(android.R.drawable.btn_star_big_on);
+						holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
 					}
 					
-					for(SubRedditInfo sub : srDataSource.getAllSubReddit())
-						System.out.println("ALL SUBS IN DB: " + sub.display_name + sub.favorite);
 					SubRedditsDataSource.AddedItemTrue();
 					srDataSource.close();
 				}
 			});
-			System.out.println("SUBREDDIT.Fav: " + subReddit.display_name + "-"
-					+ subReddit.favorite);
-			holder.thumbView = (ImageView) convertView
-					.findViewById(R.id.subreddit_thumb_view);
+			
+			holder.thumbView = (ImageView) convertView.findViewById(R.id.subreddit_thumb_view);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();

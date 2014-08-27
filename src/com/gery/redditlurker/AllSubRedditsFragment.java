@@ -18,7 +18,6 @@ import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,13 +42,14 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	List<SubRedditInfo> subRedditsList;
 	private ProgressDialog pDialog;
 	private View rootView;
+	Context context;
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) 
 	{
 		subRedditsList = new ArrayList<SubRedditInfo>();
-		
-		new LoadSubReddits(inflater.getContext()).execute();
+		context = inflater.getContext();
+		new LoadSubReddits(context).execute();
 		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container, false);
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
@@ -219,7 +219,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			// updating UI from Background Thread
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
-					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext, subRedditsList);
+					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext,R.layout.fragment_all_subreddit, subRedditsList);
 					storiesListView.setAdapter(adapter);
 					storiesListView.setSelection(positionToSave);
 				}
@@ -228,23 +228,32 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		}
 	}
 	
+	 //TODO: Come back , VERY UGLY implementation
 	public void UpdateFavs(List<SubRedditInfo> storiesDB)
 	{
+		List<SubRedditInfo> newTempList = new ArrayList<SubRedditInfo>();
 		for(SubRedditInfo subReddits : this.subRedditsList)
 		{
 			System.out.println("BEFORE IF: " +subReddits.display_name+"-"+subReddits.name);
 			if(!storiesDB.contains(subReddits))
 			{
 				subReddits.favorite = false;
-				storiesDB.add(subReddits);
 			}
+			else
+			{
+				subReddits.favorite = true;
+			}
+			newTempList.add(subReddits);
 		}
 		
-		this.subRedditsList.clear();
-		this.subRedditsList.addAll(storiesDB);
-			
-		adapter.notifyDataSetChanged();
+		this.adapter.clear();
+		this.adapter.addAll(newTempList);
+		
+		//UGLY
 		final ListView storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);
-		storiesListView.invalidateViews();
+		final int positionToSave = storiesListView.getFirstVisiblePosition();
+
+		storiesListView.setAdapter(adapter);
+		storiesListView.setSelection(positionToSave);
 	}
 }
