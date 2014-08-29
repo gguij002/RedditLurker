@@ -4,8 +4,7 @@ import org.json.simple.JSONObject;
 
 import android.graphics.Bitmap;
 
-public class SubRedditInfo implements Comparable<SubRedditInfo>
-{
+public class SubRedditInfo implements Comparable<SubRedditInfo> {
 	String header_title;
 	String id;
 	String display_name;//
@@ -14,16 +13,14 @@ public class SubRedditInfo implements Comparable<SubRedditInfo>
 	String public_description;
 	String name;
 	Bitmap imageBitMap = null;
-	boolean favorite= false;
+	boolean favorite = false;
 	JSONObject jsonObject;
-	
-	public SubRedditInfo(JSONObject jsonObject)
-	{
+
+	public SubRedditInfo(JSONObject jsonObject) {
 		this.jsonObject = jsonObject;
 	}
-	
-	public SubRedditInfo execute()
-	{
+
+	public SubRedditInfo execute() {
 		this.header_title = (String) jsonObject.get("header_title");
 		this.public_description = (String) jsonObject.get("public_description");
 		this.url = (String) jsonObject.get("url");
@@ -33,48 +30,42 @@ public class SubRedditInfo implements Comparable<SubRedditInfo>
 		this.name = (String) jsonObject.get("name");
 		return this;
 	}
-	
+
 	@Override
-	public int compareTo(SubRedditInfo subredditInfo)
-	{
-		if(this.id.equalsIgnoreCase(subredditInfo.id))
+	public int compareTo(SubRedditInfo subredditInfo) {
+		if (this.id.equalsIgnoreCase(subredditInfo.id))
 			return 0;
-		else 
+		else
 			return 1;
-		
+
 	}
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String subRedString;
-		
-		subRedString = "DisplayName: "+ this.display_name +" Name: "+ this.name+ " Favorite: "+ this.favorite;  
-		
-		return subRedString; 
+
+		subRedString = "DisplayName: " + this.display_name + " Name: " + this.name + " Favorite: " + this.favorite;
+
+		return subRedString;
 	}
-	
+
 	@Override
-    public boolean equals(Object object)
-    {
+	public boolean equals(Object object) {
 		System.out.println("EQUALS");
-        boolean sameSame = false;
+		boolean sameSame = false;
 
-        if (object != null && object instanceof SubRedditInfo)
-        {
-            sameSame = this.name.equalsIgnoreCase(((SubRedditInfo) object).name);
-        }
+		if (object != null && object instanceof SubRedditInfo) {
+			sameSame = this.name.equalsIgnoreCase(((SubRedditInfo) object).name);
+		}
 
-        return sameSame;
-    }
-	
-	
-	public Bitmap getImageBitMap()
-	{
+		return sameSame;
+	}
+
+	public Bitmap getImageBitMap() {
 		return imageBitMap;
 	}
-	
-	public void setImageBitMap(Bitmap bitmap)
-	{
+
+	public void setImageBitMap(Bitmap bitmap) {
 		this.imageBitMap = bitmap;
 	}
 
@@ -89,22 +80,25 @@ public class SubRedditInfo implements Comparable<SubRedditInfo>
 	public String getId() {
 		return id;
 	}
-	
-	public void setId(String Id)
-	{
+
+	public void setId(String Id) {
 		this.id = Id;
 	}
-	
+
 	public String getUrl() {
 		return url;
 	}
 
 	public int getFavoriteAsInt() {
-		int flag = (favorite)? 1 : 0;
+		int flag = (favorite) ? 1 : 0;
 		return flag;
 	}
 
 	public void setFavoriteFromInt(int intFav) {
-		this.favorite = (intFav == 1)? true : false;
+		this.favorite = (intFav == 1) ? true : false;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 }

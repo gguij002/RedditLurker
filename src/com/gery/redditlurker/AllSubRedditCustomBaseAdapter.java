@@ -2,27 +2,26 @@ package com.gery.redditlurker;
 
 import java.util.List;
 
-import com.gery.database.SubRedditsDataSource;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.gery.database.SubRedditsDataSource;
 
 public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 	public List<SubRedditInfo> list;
 
 	private LayoutInflater mInflater;
 
-	public AllSubRedditCustomBaseAdapter(Context context,int res, List<SubRedditInfo> listItems) {
+	public AllSubRedditCustomBaseAdapter(Context context, int res, List<SubRedditInfo> listItems) {
 		super(context, res, listItems);
 		list = listItems;
 		mInflater = LayoutInflater.from(context);
@@ -46,53 +45,52 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.all_aubreddit_list_item, null);
 			holder = new ViewHolder();
-			holder.displayName = (TextView) convertView
-					.findViewById(R.id.sub_reddit_list_item_displayName_text);
-			holder.txtLink = (TextView) convertView
-					.findViewById(R.id.sub_reddit_list_item_link_text);
+			holder.displayName = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_displayName_text);
+			holder.txtLink = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_link_text);
 			holder.goButton = (ImageButton) convertView.findViewById(R.id.imagebutton_go);
-			holder.goButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
-					i.putExtra("subReddit", list.get(position).url);
-					mInflater.getContext().startActivity(i);
-				}
-			});
-
 			holder.favoriteButton = (ImageButton) convertView.findViewById(R.id.all_sub_favorite_image_button);
-			if (subReddit.favorite)
-				holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
-			else
-				holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
 
-			holder.favoriteButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					SubRedditsDataSource srDataSource = new SubRedditsDataSource(parent.getContext());
-					srDataSource.open();
-					if (subReddit.favorite)// Its already fav. Delete
-					{
-						subReddit.favorite = false;
-						srDataSource.deleteSubReddit(subReddit);
-						holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
-					}// not fav Add
-					else {
-						subReddit.favorite = true;
-						srDataSource.addSubRedditToDB(subReddit);
-						holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
-					}
-					
-					SubRedditsDataSource.AddedItemTrue();
-					srDataSource.close();
-				}
-			});
-			
 			holder.thumbView = (ImageView) convertView.findViewById(R.id.subreddit_thumb_view);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+
+		holder.favoriteButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				SubRedditsDataSource srDataSource = new SubRedditsDataSource(parent.getContext());
+				srDataSource.open();
+				if (subReddit.favorite)// Its already fav. Delete
+				{
+					subReddit.favorite = false;
+					srDataSource.deleteSubReddit(subReddit.getName());
+					holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
+				}// not fav Add
+				else {
+					subReddit.favorite = true;
+					srDataSource.addSubRedditToDB(subReddit);
+					holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+				}
+
+				SubRedditsDataSource.AddedItemTrue();
+				srDataSource.close();
+			}
+		});
+
+		holder.goButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
+				i.putExtra("subReddit", list.get(position).url);
+				mInflater.getContext().startActivity(i);
+			}
+		});
+
+		if (subReddit.favorite)
+			holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+		else
+			holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
 
 		// Second TextView in the list item
 		String header_title_text = list.get(position).header_title;

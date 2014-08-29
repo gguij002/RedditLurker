@@ -2,31 +2,30 @@ package com.gery.redditlurker;
 
 import java.util.List;
 
-import com.gery.database.SubRedditsDataSource;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.gery.database.SubRedditsDataSource;
 
 public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 	private List<SubRedditInfo> list;
 
 	private LayoutInflater mInflater;
 
-	public EnteredSubredditCustomBaseAdapter(Context context,List<SubRedditInfo> listItems) {
+	public EnteredSubredditCustomBaseAdapter(Context context, List<SubRedditInfo> listItems) {
 		list = listItems;
 		mInflater = LayoutInflater.from(context);
 	}
-	
+
 	public int getCount() {
 		return list.size();
 	}
@@ -44,45 +43,42 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.entered_subreddit_list_item, null);
 			holder = new ViewHolder();
-			holder.displayName = (TextView) convertView
-					.findViewById(R.id.entered_sub_reddit_list_item_displayName_text);
-			holder.txtLink = (TextView) convertView
-					.findViewById(R.id.entered_sub_reddit_list_item_link_text);
-			holder.goButton = (ImageButton) convertView
-					.findViewById(R.id.entered_imagebutton_go);
-			holder.goButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
-					i.putExtra("subReddit", list.get(position).url);
-					i.putExtra("favorite", list.get(position).favorite);
-					mInflater.getContext().startActivity(i);
-				}
-			});
-			
+			holder.displayName = (TextView) convertView.findViewById(R.id.entered_sub_reddit_list_item_displayName_text);
+			holder.txtLink = (TextView) convertView.findViewById(R.id.entered_sub_reddit_list_item_link_text);
+			holder.goButton = (ImageButton) convertView.findViewById(R.id.entered_imagebutton_go);
+
 			holder.deleteButton = (ImageButton) convertView.findViewById(R.id.entered_imagebutton_delete);
-			holder.deleteButton.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					SubRedditInfo subReddit = list.get(position);
-					SubRedditsDataSource srDataSource = new SubRedditsDataSource(parent.getContext());
-					srDataSource.open();
-					srDataSource.deleteSubReddit(subReddit);
-					list.remove(position);
-					srDataSource.close();
-					notifyDataSetChanged();
-					SubRedditsDataSource.AddedItemTrue();
-					//Refresh Page
-				}
-			});
 
-
-			holder.thumbView = (ImageView) convertView
-					.findViewById(R.id.entered_subreddit_thumb_view);
+			holder.thumbView = (ImageView) convertView.findViewById(R.id.entered_subreddit_thumb_view);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+
+		holder.goButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
+				i.putExtra("subReddit", list.get(position).url);
+				i.putExtra("favorite", list.get(position).favorite);
+				mInflater.getContext().startActivity(i);
+			}
+		});
+
+		holder.deleteButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				SubRedditInfo subReddit = list.get(position);
+				SubRedditsDataSource srDataSource = new SubRedditsDataSource(parent.getContext());
+				srDataSource.open();
+				srDataSource.deleteSubReddit(subReddit.getName());
+				list.remove(position);
+				srDataSource.close();
+				notifyDataSetChanged();
+				SubRedditsDataSource.AddedItemTrue();
+				// Refresh Page
+			}
+		});
 
 		// Second TextView in the list item
 		String header_title_text = list.get(position).header_title;
@@ -93,7 +89,7 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 
 		String link = list.get(position).url;
 		holder.txtLink.setText(link.substring(0, link.length() - 1));
-		  
+
 		Bitmap image_bits = list.get(position).imageBitMap;
 		if (image_bits != null)
 			holder.thumbView.setImageBitmap(image_bits);

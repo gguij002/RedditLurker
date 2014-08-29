@@ -13,10 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ChannelBaseAdapter extends BaseAdapter {
-	
+
 	private static List<StoryInfo> list;
 	private LayoutInflater mInflater;
-	
+
 	public ChannelBaseAdapter(Context fragmentContext, List<StoryInfo> storieList) {
 		list = storieList;
 		mInflater = LayoutInflater.from(fragmentContext);
@@ -40,10 +40,9 @@ public class ChannelBaseAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
-		
+
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.channel_list_items,
-					null);
+			convertView = mInflater.inflate(R.layout.channel_list_items, null);
 			holder = new ViewHolder();
 			holder.title = (TextView) convertView.findViewById(R.id.story_title1);
 			holder.author = (TextView) convertView.findViewById(R.id.author_textview);
@@ -55,35 +54,35 @@ public class ChannelBaseAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
-		holder.title.setText(list.get(position).title);
-		holder.author.setText(list.get(position).author);
-		holder.subreddit.setText(list.get(position).subreddit);
+
+		StoryInfo storyInfo = list.get(position);
+		holder.title.setText(storyInfo.title);
+		holder.author.setText(storyInfo.author);
+		holder.subreddit.setText(storyInfo.subreddit);
 		holder.comments.setText(constructCommentsUpsTime(position));
-		
-		Bitmap image_bits = list.get(position).imageBitMap;
+
+		Bitmap image_bits = storyInfo.imageBitMap;
 		if (image_bits != null)
 			holder.thumbView.setImageBitmap(image_bits);
 
 		return convertView;
 	}
-	
-	private String constructCommentsUpsTime(int listItem)
-	{
+
+	private String constructCommentsUpsTime(int listItem) {
 		StoryInfo story = list.get(listItem);
 		long comments = story.num_comments;
 		long score = story.score;
 		double time = story.created;
-		
-		String commentsUpsTime = ""+comments + "\n" + score; 
-		
+
+		String commentsUpsTime = "" + comments + "\n" + score;
+
 		return commentsUpsTime;
 	}
-	
+
 	static class ViewHolder {
 		public TextView author;
 		public TextView title;
-		public Button comments; 
+		public Button comments;
 		public ImageView thumbView;
 		public TextView subreddit;
 	}

@@ -18,21 +18,19 @@ public class StoryInfo {
 	public long ups;
 	public Double created;
 	public String url;
-	public String author_flair_text;//Can be null
+	public String author_flair_text;// Can be null
 	public String name;
 	public long num_comments;
 	public long score;
 	public Bitmap imageBitMap = null;
-	
+
 	JSONObject jsonObject;
-	
-	public StoryInfo(JSONObject jObject)
-	{
+
+	public StoryInfo(JSONObject jObject) {
 		this.jsonObject = jObject;
 	}
-	
-	public StoryInfo execute()
-	{
+
+	public StoryInfo execute() {
 		this.title = (String) jsonObject.get("title");
 		this.domain = (String) jsonObject.get("domain");
 		this.clicked = (Boolean) jsonObject.get("clicked");
@@ -52,10 +50,9 @@ public class StoryInfo {
 
 		return this;
 	}
-	
-	private String capitalize(String line)
-	{
-	  return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+
+	private String capitalize(String line) {
+		return Character.toUpperCase(line.charAt(0)) + line.substring(1);
 	}
-	
+
 }

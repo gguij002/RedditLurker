@@ -10,18 +10,15 @@ import java.net.URLConnection;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class RedditRSSReader 
-{
+public class RedditRSSReader {
 	private String URL;
-	
-	public RedditRSSReader(String URL)
-	{
+
+	public RedditRSSReader(String URL) {
 		System.out.println("RedditRSSReader(String URL): " + URL);
 		this.URL = URL;
 	}
-	
-	public JSONObject execute()
-	{
+
+	public JSONObject execute() {
 		String jsonString = null;
 		try {
 			URL url = new URL(URL);
@@ -32,27 +29,26 @@ public class RedditRSSReader
 			e1.printStackTrace();
 			return null;
 		}
-		
-	    JSONParser parser = new JSONParser();
-	    JSONObject jsonObject = null;
-    	try {
-    		jsonObject = (JSONObject)parser.parse(jsonString);
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		return null;
-    	}
-    	return jsonObject;
- }
-	
-	private String getStringfromInputReader(InputStream in) throws IOException
-	{
+
+		JSONParser parser = new JSONParser();
+		JSONObject jsonObject = null;
+		try {
+			jsonObject = (JSONObject) parser.parse(jsonString);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return jsonObject;
+	}
+
+	private String getStringfromInputReader(InputStream in) throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        StringBuilder out = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            out.append(line);
-        }
-        reader.close();
-        return out.toString();
+		StringBuilder out = new StringBuilder();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			out.append(line);
+		}
+		reader.close();
+		return out.toString();
 	}
 }

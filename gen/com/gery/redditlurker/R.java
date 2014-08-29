@@ -31,7 +31,7 @@ public final class R {
     public static final class id {
         public static final int action_fav=0x7f090018;
         public static final int action_search_widget=0x7f090017;
-        public static final int all_sub_favorite_image_button=0x7f090006;
+        public static final int all_sub_favorite_image_button=0x7f090004;
         public static final int all_subreddit_list=0x7f090012;
         public static final int author_textview=0x7f09000b;
         public static final int comments_button=0x7f09000a;
@@ -43,7 +43,7 @@ public final class R {
         public static final int entered_sub_reddit_list_item_link_text=0x7f09000e;
         public static final int entered_subreddit_list=0x7f090013;
         public static final int entered_subreddit_thumb_view=0x7f09000d;
-        public static final int imagebutton_go=0x7f090004;
+        public static final int imagebutton_go=0x7f090006;
         public static final int pager=0x7f090000;
         public static final int story_thumb_view1=0x7f090008;
         public static final int story_title1=0x7f090009;

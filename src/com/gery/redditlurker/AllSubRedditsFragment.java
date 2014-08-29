@@ -1,24 +1,20 @@
 package com.gery.redditlurker;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.gery.database.ImageReader;
 import com.gery.database.SubRedditsDataSource;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +41,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	Context context;
 
 	@Override
-	public View onCreateView(final LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) 
-	{
+	public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		subRedditsList = new ArrayList<SubRedditInfo>();
 		context = inflater.getContext();
 		new LoadSubReddits(context).execute();
@@ -54,10 +49,9 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
 	}
-	
+
 	@Override
-	public void onScroll(AbsListView absListView, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
+	public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		this.currentFirstVisibleItem = firstVisibleItem;
 		this.currentVisibleItemCount = visibleItemCount;
 		this.totalItemCount = totalItemCount;
@@ -70,8 +64,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	}
 
 	private void isScrollCompleted(Context context) {
-		if (this.currentVisibleItemCount > 0
-				&& this.currentScrollState == SCROLL_STATE_IDLE
+		if (this.currentVisibleItemCount > 0 && this.currentScrollState == SCROLL_STATE_IDLE
 				&& this.totalItemCount == (currentFirstVisibleItem + currentVisibleItemCount)) {
 			/***
 			 * In this way I detect if there's been a scroll which has completed
@@ -87,29 +80,35 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	private void setOnItemClickListener(final Context context) {
 		final ListView storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
-		@Override
-		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+			@Override
+			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 				Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
 				nextActivity.putExtra("subReddit", subReddit.url);
 				nextActivity.putExtra("favorite", subReddit.favorite);
+				nextActivity.putExtra("subName", subReddit.name);
 				startActivity(nextActivity);
 			}
 		});
 		storiesListView.setOnScrollListener(this);
 	}
-	
-	@Override
-    public void onPause() {
-    	super.onPause();
-    }
 
-    
-    @Override
-    public void onResume() {
-    	super.onResume();
-    }
-    
+	@Override
+	public void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (SubRedditsDataSource.AddedItem()) {
+			SubRedditsDataSource srDataSource = new SubRedditsDataSource(context);
+			srDataSource.open();
+			UpdateFavs(srDataSource.getAllSubRedditsID());
+			srDataSource.close();
+			// SubRedditsDataSource.AddedItemFalse();
+		}
+	}
 
 	/**
 	 * Background Async Task to Load subreddits by making HTTP Request
@@ -148,7 +147,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			JSONObject subRedditsJSON = new RedditRSSReader(REDDIT_SUBREDDITS_URL).execute();
 			JSONObject data = (JSONObject) subRedditsJSON.get("data");
 			JSONArray listOfSubredditsRaw = (JSONArray) data.get("children");
-			
+
 			SubRedditsDataSource dataSource = new SubRedditsDataSource(fragmentContext);
 			dataSource.open();
 			List<String> subRedditsIdsFromDb = dataSource.getAllSubRedditsID();
@@ -159,12 +158,12 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				JSONObject var = (JSONObject) ((JSONObject) listOfSubredditsRaw.get(i)).get("data");
 				SubRedditInfo item = new SubRedditInfo(var).execute();
 				String header_image_url = item.header_img;
-				
-				if (header_image_url != null && !header_image_url.isEmpty()) 
-					item.imageBitMap = getImage(header_image_url);
-				
-				if(subRedditsIdsFromDb.contains(item.id))
-				{
+
+				if (header_image_url != null && !header_image_url.isEmpty()) {
+					item.imageBitMap = new ImageReader(header_image_url).exceute().imageBitmap;
+				}
+
+				if (subRedditsIdsFromDb.contains(item.name)) {
 					System.out.println("subRedditsIdsFromDb.contains(item.id)" + item.display_name);
 					item.favorite = true;
 				}
@@ -173,36 +172,14 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			return listOfSubReddits;
 		}
 
-		private Bitmap getImage(String url) {
-			Bitmap mIcon11 = null;
-			try {
-				InputStream in = new java.net.URL(url).openStream();
-				mIcon11 = BitmapFactory.decodeStream(in);
-			} catch (Exception e) {
-				Log.e("Error", e.getMessage());
-				e.printStackTrace();
-			}
-			int width = mIcon11.getWidth();
-			int height = mIcon11.getHeight();
-
-			if (width > 341 || height > 201) {
-				// calculate the scale
-				float scaleWidth = ((float) 100) / width;
-				float scaleHeight = ((float) 100) / height;
-				// create a matrix for the manipulation
-				Matrix matrix = new Matrix();
-				matrix.postScale(scaleWidth, scaleHeight);
-				mIcon11 = Bitmap.createBitmap(mIcon11, 0, 0, width, height,
-						matrix, true);
-			}
-
-			return mIcon11;
-		}
-
 		private String URLCreate(int offset) {
 			String after = "";
 			if (subRedditsList.size() > 0)
-				after = "&after=" + subRedditsList.get(subRedditsList.size() - 1).name;//Get subreddits after This "Name"
+				after = "&after=" + subRedditsList.get(subRedditsList.size() - 1).name;// Get
+																						// subreddits
+																						// after
+																						// This
+																						// "Name"
 			return "http://www.reddit.com/reddits/.json" + "?limit=" + offset + after;
 		}
 
@@ -219,7 +196,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			// updating UI from Background Thread
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
-					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext,R.layout.fragment_all_subreddit, subRedditsList);
+					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext, R.layout.fragment_all_subreddit, subRedditsList);
 					storiesListView.setAdapter(adapter);
 					storiesListView.setSelection(positionToSave);
 				}
@@ -227,33 +204,21 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			super.onPostExecute(listOfSubReddits);
 		}
 	}
-	
-	 //TODO: Come back , VERY UGLY implementation
-	public void UpdateFavs(List<SubRedditInfo> storiesDB)
-	{
+
+	public void UpdateFavs(List<String> storiesDB) {
 		List<SubRedditInfo> newTempList = new ArrayList<SubRedditInfo>();
-		for(SubRedditInfo subReddits : this.subRedditsList)
-		{
-			System.out.println("BEFORE IF: " +subReddits.display_name+"-"+subReddits.name);
-			if(!storiesDB.contains(subReddits))
-			{
+		for (SubRedditInfo subReddits : this.subRedditsList) {
+			System.out.println("BEFORE IF: " + subReddits.display_name + "-" + subReddits.name);
+			if (!storiesDB.contains(subReddits.name)) {
 				subReddits.favorite = false;
-			}
-			else
-			{
+			} else {
 				subReddits.favorite = true;
 			}
 			newTempList.add(subReddits);
 		}
-		
+
 		this.adapter.clear();
 		this.adapter.addAll(newTempList);
-		
-		//UGLY
-		final ListView storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);
-		final int positionToSave = storiesListView.getFirstVisiblePosition();
-
-		storiesListView.setAdapter(adapter);
-		storiesListView.setSelection(positionToSave);
+		this.adapter.notifyDataSetChanged();
 	}
 }

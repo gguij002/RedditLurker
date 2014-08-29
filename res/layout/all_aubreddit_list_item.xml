@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_toRightOf="@+id/subreddit_thumb_view"
-        android:layout_toLeftOf="@+id/imagebutton_go"
+        android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="KAKALink"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/subreddit_thumb_view"
         android:layout_below="@id/sub_reddit_list_item_link_text"
-        android:layout_toLeftOf="@+id/imagebutton_go"
+        android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:text="KAKA"
@@ -46,7 +46,8 @@
 	    android:id="@+id/all_sub_favorite_image_button"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignRight="@+id/sub_reddit_list_item_displayName_text"
+	     android:layout_toLeftOf="@+id/imagebutton_go"
+	   
 	    android:layout_centerVertical="true"
 	    android:background="@null"
 	    android:src="@android:drawable/btn_star_big_off" />
