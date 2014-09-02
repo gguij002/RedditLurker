@@ -1,7 +1,5 @@
 package com.gery.redditlurker;
 
-import java.util.List;
-
 import com.gery.database.SubRedditsDataSource;
 import com.gery.redditlurker.R.id;
 

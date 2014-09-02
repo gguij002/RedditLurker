@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.gery.database.ImageReader;
+import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 
 import android.app.ProgressDialog;
@@ -31,7 +32,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	int totalItemCount = 0;
 	int currentScrollState = 0;
 	boolean loadingMore = false;
-	Long offset = 4L;
+	Long offset = 10L;
 	// List Items
 
 	public AllSubRedditCustomBaseAdapter adapter;

@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.gery.database.ImageReader;
+import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 
 import android.app.ActionBar;
@@ -29,7 +30,7 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.Toast;
+
 
 public class SubRedditChannelActivity extends Activity implements OnScrollListener {
 	// List Items
@@ -37,7 +38,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	int currentVisibleItemCount = 0;
 	int totalItemCount = 0;
 	int currentScrollState = 0;
-	Long offset = 4L;
+	Long offset = 10L;
 	// List Items
 
 	public boolean isFromSearch = false;

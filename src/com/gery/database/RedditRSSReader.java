@@ -1,4 +1,4 @@
-package com.gery.redditlurker;
+package com.gery.database;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -19,8 +19,6 @@ import android.graphics.BitmapFactory;
 
 public class SubRedditsDataSource {
 
-	private static boolean addedItem = false;
-
 	// Database fields
 	private SQLiteDatabase database;
 	private MySQLiteHelper dbHelper;
@@ -51,25 +49,15 @@ public class SubRedditsDataSource {
 		values.put(MySQLiteHelper.COLUMN_SUBREDDIT, subReddit.getJsonObject().toJSONString());
 		values.put(MySQLiteHelper.COLUMN_ID, SubName);
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		subReddit.getImageBitMap().compress(Bitmap.CompressFormat.PNG, 100, bos);
-		values.put(MySQLiteHelper.COLUMN_SUBIMAGE, bos.toByteArray());
-
+		if(subReddit.getImageBitMap() != null){
+			subReddit.getImageBitMap().compress(Bitmap.CompressFormat.PNG, 100, bos);
+			values.put(MySQLiteHelper.COLUMN_SUBIMAGE, bos.toByteArray());
+		}
+			
 		database.insert(MySQLiteHelper.TABLE_SUBREDDITS, null, values);
 		System.out
 				.println("SubReddit added with URL and id and Favorite: " + subReddit.getUrl() + " " + SubName + " " + subReddit.getFavoriteAsInt());
 	}
-
-//	public static boolean AddedItem() {
-//		return addedItem;
-//	}
-//
-//	public static void AddedItemTrue() {
-//		addedItem = true;
-//	}
-//
-//	public static void AddedItemFalse() {
-//		addedItem = false;
-//	}
 
 	public void deleteSubReddit(String subReddit) {
 		String subName = subReddit;
