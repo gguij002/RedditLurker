@@ -32,6 +32,15 @@
                 android:resource="@xml/searchable" />
         </activity>
         
+             <!-- WEBVIEW activity -->
+        <activity
+            android:name=".ActivityCommentsWebView"
+            android:parentActivityName="com.gery.redditlurker.SubRedditChannelActivity" 
+            android:screenOrientation="portrait">
+    
+
+        </activity>
+        
         <activity
             android:name="com.gery.redditlurker.MainActivity"
             android:label="@string/app_name" 

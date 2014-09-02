@@ -27,9 +27,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 
 
 public class SubRedditChannelActivity extends Activity implements OnScrollListener {
@@ -43,7 +46,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 
 	public boolean isFromSearch = false;
 	private ProgressDialog pDialog;
-	List<StoryInfo> storieList;
+	public List<StoryInfo> storieList;
 	private boolean loadingMore;
 	private String query;
 	private boolean favorite = false;
@@ -69,7 +72,14 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-		setOnScrollListener();
+		setOnItemClickListener(this);
+	}
+	
+	@Override
+	public void onResume()
+	{
+		
+		super.onResume();
 	}
 	
 	@Override
@@ -186,6 +196,19 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void setOnItemClickListener(final Context context) {
+		final ListView storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
+		storiesListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+				StoryInfo subReddit = (StoryInfo) storieList.get(position);
+				Intent nextActivity = new Intent(context, ActivityCommentsWebView.class);
+				startActivity(nextActivity);
+			}
+		});
+		storiesListView.setOnScrollListener(this);
 	}
 
 	@Override
