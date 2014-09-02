@@ -38,7 +38,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	int currentVisibleItemCount = 0;
 	int totalItemCount = 0;
 	int currentScrollState = 0;
-	Long offset = 10L;
+	Long offset = 4L;
 	// List Items
 
 	public boolean isFromSearch = false;
@@ -70,6 +70,34 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			e.printStackTrace();
 		}
 		setOnScrollListener();
+	}
+	
+	@Override
+	public void onPause()
+	{
+		SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
+		srDataSource.open();
+		if (favorite) { //Its fav, Add to DB
+			if (this.storieList != null && !this.storieList.isEmpty()) {
+				if(subReddit == null){
+					try {
+						subReddit = new LoadSubReddit(this.storieList.get(0).subreddit_id).execute().get();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						e.printStackTrace();
+					}
+				}
+				subReddit.favorite = true;
+				srDataSource.addSubRedditToDB(subReddit);
+				subNname = subReddit.name;
+			}
+		}
+		else{ //Not fav Delete from DB
+			srDataSource.deleteSubReddit(subNname);
+		}
+		srDataSource.close();
+		super.onPause();
 	}
 
 	/**
@@ -103,9 +131,6 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		storiesListView.setOnScrollListener(this);
 	}
 
-	/**
-	 * On selecting action bar icons
-	 * */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Take appropriate action for each action item click
@@ -118,31 +143,9 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		case R.id.action_fav:
 			if (favorite) {
 				favorite = false;
-
-				SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
-				srDataSource.open();
-				srDataSource.deleteSubReddit(subNname);
-				srDataSource.close();
 				item.setIcon(android.R.drawable.btn_star_big_off);
 			} else {
 				favorite = true;
-				if (this.storieList != null && !this.storieList.isEmpty()) {
-					if(subReddit == null){
-						try {
-							subReddit = new LoadSubReddit(this.storieList.get(0).subreddit_id).execute().get();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						} catch (ExecutionException e) {
-							e.printStackTrace();
-						}
-					}
-					subReddit.favorite = true;
-					SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
-					srDataSource.open();
-					srDataSource.addSubRedditToDB(subReddit);
-					subNname = subReddit.name;
-					srDataSource.close();
-				}
 				item.setIcon(android.R.drawable.btn_star_big_on);
 			}
 
