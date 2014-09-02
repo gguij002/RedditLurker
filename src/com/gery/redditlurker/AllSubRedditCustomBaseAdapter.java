@@ -73,7 +73,6 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 					holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
 				}
 
-				SubRedditsDataSource.AddedItemTrue();
 				srDataSource.close();
 			}
 		});

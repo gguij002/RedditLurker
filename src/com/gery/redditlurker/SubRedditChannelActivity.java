@@ -110,9 +110,8 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case android.R.id.home:{
-             Toast.makeText(getApplicationContext(),"Back button clicked", Toast.LENGTH_SHORT).show();
-             SubRedditsDataSource.AddedItemFalse();
              super.onBackPressed();
+             return true;
 		}
 
 		case R.id.action_fav:
@@ -123,7 +122,6 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 				srDataSource.open();
 				srDataSource.deleteSubReddit(subNname);
 				srDataSource.close();
-				SubRedditsDataSource.AddedItemTrue();
 				item.setIcon(android.R.drawable.btn_star_big_off);
 			} else {
 				favorite = true;
@@ -136,13 +134,12 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 						} catch (ExecutionException e) {
 							e.printStackTrace();
 						}
-						}
+					}
 					subReddit.favorite = true;
 					SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
 					srDataSource.open();
 					srDataSource.addSubRedditToDB(subReddit);
 					subNname = subReddit.name;
-					SubRedditsDataSource.AddedItemTrue();
 					srDataSource.close();
 				}
 				item.setIcon(android.R.drawable.btn_star_big_on);

@@ -71,13 +71,10 @@ public class EnteredSubRedditsFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (SubRedditsDataSource.AddedItem()) {
-			SubRedditsDataSource srDataSource = new SubRedditsDataSource(contex);
-			srDataSource.open();
-			UpdateSubRedditList(srDataSource.getAllSubReddit());
-			srDataSource.close();
-			SubRedditsDataSource.AddedItemFalse();
-		}
+		SubRedditsDataSource srDataSource = new SubRedditsDataSource(contex);
+		srDataSource.open();
+		UpdateSubRedditList(srDataSource.getAllSubReddit());
+		srDataSource.close();
 	}
 
 	class LoadSubRedditsFromDB extends AsyncTask<String, String, List<SubRedditInfo>> {
@@ -137,7 +134,7 @@ public class EnteredSubRedditsFragment extends Fragment {
 	}
 
 	public void UpdateSubRedditList(List<SubRedditInfo> list) {
-		if(this.subRedditsList != null && this.subRedditsList.size() != list.size()){
+		if(this.adapter != null && this.subRedditsList != null && this.subRedditsList.size() != list.size()){
 			this.subRedditsList.clear();
 			this.subRedditsList.addAll(list);
 			adapter.notifyDataSetChanged();

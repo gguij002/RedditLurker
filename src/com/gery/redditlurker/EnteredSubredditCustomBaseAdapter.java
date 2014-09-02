@@ -69,14 +69,14 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View arg0) {
 				SubRedditInfo subReddit = list.get(position);
+				list.remove(position);
+				
 				SubRedditsDataSource srDataSource = new SubRedditsDataSource(parent.getContext());
 				srDataSource.open();
 				srDataSource.deleteSubReddit(subReddit.getName());
-				list.remove(position);
 				srDataSource.close();
+			
 				notifyDataSetChanged();
-				SubRedditsDataSource.AddedItemTrue();
-				// Refresh Page
 			}
 		});
 

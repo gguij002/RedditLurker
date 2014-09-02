@@ -107,13 +107,10 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (SubRedditsDataSource.AddedItem()) {
-			SubRedditsDataSource srDataSource = new SubRedditsDataSource(context);
-			srDataSource.open();
-			UpdateFavs(srDataSource.getAllSubRedditsID());
-			srDataSource.close();
-			// SubRedditsDataSource.AddedItemFalse();
-		}
+		SubRedditsDataSource srDataSource = new SubRedditsDataSource(context);
+		srDataSource.open();
+		UpdateFavs(srDataSource.getAllSubRedditsID());
+		srDataSource.close();
 	}
 
 	/**
@@ -214,7 +211,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	public void UpdateFavs(List<String> storiesDB) {
 		List<SubRedditInfo> newTempList = new ArrayList<SubRedditInfo>();
 		
-		if(subRedditsList != null && this.subRedditsList.size() != storiesDB.size()){
+		if(this.adapter != null && subRedditsList != null && this.subRedditsList.size() != storiesDB.size()){
 			for (SubRedditInfo subReddits : this.subRedditsList) {
 				System.out.println("BEFORE IF: " + subReddits.display_name + "-" + subReddits.name);
 				if (!storiesDB.contains(subReddits.name)) {

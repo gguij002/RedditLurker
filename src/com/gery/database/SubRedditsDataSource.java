@@ -59,17 +59,17 @@ public class SubRedditsDataSource {
 				.println("SubReddit added with URL and id and Favorite: " + subReddit.getUrl() + " " + SubName + " " + subReddit.getFavoriteAsInt());
 	}
 
-	public static boolean AddedItem() {
-		return addedItem;
-	}
-
-	public static void AddedItemTrue() {
-		addedItem = true;
-	}
-
-	public static void AddedItemFalse() {
-		addedItem = false;
-	}
+//	public static boolean AddedItem() {
+//		return addedItem;
+//	}
+//
+//	public static void AddedItemTrue() {
+//		addedItem = true;
+//	}
+//
+//	public static void AddedItemFalse() {
+//		addedItem = false;
+//	}
 
 	public void deleteSubReddit(String subReddit) {
 		String subName = subReddit;
