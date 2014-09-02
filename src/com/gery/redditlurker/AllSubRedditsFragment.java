@@ -34,15 +34,21 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	Long offset = 4L;
 	// List Items
 
-	AllSubRedditCustomBaseAdapter adapter;
-	List<SubRedditInfo> subRedditsList;
+	public AllSubRedditCustomBaseAdapter adapter;
+	public List<SubRedditInfo> subRedditsList;
 	private ProgressDialog pDialog;
 	private View rootView;
 	Context context;
 
 	@Override
-	public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public void onCreate(Bundle bundle)
+	{
 		subRedditsList = new ArrayList<SubRedditInfo>();
+		super.onCreate(bundle);
+	}
+	
+	@Override
+	public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		context = inflater.getContext();
 		new LoadSubReddits(context).execute();
 		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container, false);
@@ -207,18 +213,20 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 
 	public void UpdateFavs(List<String> storiesDB) {
 		List<SubRedditInfo> newTempList = new ArrayList<SubRedditInfo>();
-		for (SubRedditInfo subReddits : this.subRedditsList) {
-			System.out.println("BEFORE IF: " + subReddits.display_name + "-" + subReddits.name);
-			if (!storiesDB.contains(subReddits.name)) {
-				subReddits.favorite = false;
-			} else {
-				subReddits.favorite = true;
+		
+		if(subRedditsList != null && this.subRedditsList.size() != storiesDB.size()){
+			for (SubRedditInfo subReddits : this.subRedditsList) {
+				System.out.println("BEFORE IF: " + subReddits.display_name + "-" + subReddits.name);
+				if (!storiesDB.contains(subReddits.name)) {
+					subReddits.favorite = false;
+				} else {
+					subReddits.favorite = true;
+				}
+				newTempList.add(subReddits);
 			}
-			newTempList.add(subReddits);
+			this.adapter.clear();
+			this.adapter.addAll(newTempList);
+			this.adapter.notifyDataSetChanged();
 		}
-
-		this.adapter.clear();
-		this.adapter.addAll(newTempList);
-		this.adapter.notifyDataSetChanged();
 	}
 }

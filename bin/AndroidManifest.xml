@@ -21,7 +21,8 @@
         <!-- Search results activity -->
         <activity
             android:name=".SubRedditChannelActivity"
-            android:parentActivityName="com.gery.redditlurker.MainActivity" >
+            android:parentActivityName="com.gery.redditlurker.MainActivity" 
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -33,7 +34,8 @@
         
         <activity
             android:name="com.gery.redditlurker.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SubRedditChannelActivity" />

@@ -22,12 +22,12 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 		switch (index) {
 		case 0:
-			// List Subreddits
-			allSubRedditsFragment = new AllSubRedditsFragment();
+			if(allSubRedditsFragment == null)
+				allSubRedditsFragment = new AllSubRedditsFragment();
 			return allSubRedditsFragment;
 		case 1:
-			// Entered Subreddits
-			enteredSubRedditsFragment = new EnteredSubRedditsFragment();
+			if(enteredSubRedditsFragment == null)
+				enteredSubRedditsFragment = new EnteredSubRedditsFragment();
 			return enteredSubRedditsFragment;
 		}
 

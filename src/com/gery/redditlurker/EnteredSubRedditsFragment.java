@@ -20,17 +20,23 @@ import com.gery.database.SubRedditsDataSource;
 import com.gery.database.Timer;
 
 public class EnteredSubRedditsFragment extends Fragment {
-	private List<SubRedditInfo> subRedditsList;
+	public List<SubRedditInfo> subRedditsList;
 	private ProgressDialog pDialog;
 	View rootView;
 	private Context contex;
 	EnteredSubredditCustomBaseAdapter adapter;
 
 	@Override
+	public void onCreate(Bundle bundle)
+	{
+		subRedditsList = new ArrayList<SubRedditInfo>();
+		super.onCreate(bundle);
+	}
+	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		contex = inflater.getContext();
-		subRedditsList = new ArrayList<SubRedditInfo>();
 		Timer.StartTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
 		new LoadSubRedditsFromDB(contex).execute();
 		Timer.EndTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
@@ -131,8 +137,10 @@ public class EnteredSubRedditsFragment extends Fragment {
 	}
 
 	public void UpdateSubRedditList(List<SubRedditInfo> list) {
-		this.subRedditsList.clear();
-		this.subRedditsList.addAll(list);
-		adapter.notifyDataSetChanged();
+		if(this.subRedditsList != null && this.subRedditsList.size() != list.size()){
+			this.subRedditsList.clear();
+			this.subRedditsList.addAll(list);
+			adapter.notifyDataSetChanged();
+		}
 	}
 }

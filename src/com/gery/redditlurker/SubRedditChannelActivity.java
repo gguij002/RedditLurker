@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.Toast;
 
 public class SubRedditChannelActivity extends Activity implements OnScrollListener {
 	// List Items
@@ -108,6 +109,12 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
+		case android.R.id.home:{
+             Toast.makeText(getApplicationContext(),"Back button clicked", Toast.LENGTH_SHORT).show();
+             SubRedditsDataSource.AddedItemFalse();
+             super.onBackPressed();
+		}
+
 		case R.id.action_fav:
 			if (favorite) {
 				favorite = false;

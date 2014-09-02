@@ -1,5 +1,7 @@
 package com.gery.redditlurker;
 
+import java.util.List;
+
 import com.gery.database.SubRedditsDataSource;
 import com.gery.redditlurker.R.id;
 
@@ -10,6 +12,7 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -120,21 +123,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		if (SubRedditsDataSource.AddedItem() && tab.getPosition() == 1) {
-			EnteredSubRedditsFragment var = (EnteredSubRedditsFragment) mAdapter.getFragmentAlreadyCreated(tab.getPosition());
-			SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
-			srDataSource.open();
-			var.UpdateSubRedditList(srDataSource.getAllSubReddit());
-			srDataSource.close();
-		} else if (SubRedditsDataSource.AddedItem() && tab.getPosition() == 0) {
-			AllSubRedditsFragment var = (AllSubRedditsFragment) mAdapter.getFragmentAlreadyCreated(tab.getPosition());
-			SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
-			srDataSource.open();
-			var.UpdateFavs(srDataSource.getAllSubRedditsID());
-			srDataSource.close();
+		SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
+		srDataSource.open();
+		
+		Fragment fragment = mAdapter.getItem(tab.getPosition());
+		
+		if (tab.getPosition() == 1) {
+			EnteredSubRedditsFragment enteredFragment = (EnteredSubRedditsFragment) fragment;
+			enteredFragment.UpdateSubRedditList(srDataSource.getAllSubReddit());
+		} else if (tab.getPosition() == 0){
+			AllSubRedditsFragment allFragment = (AllSubRedditsFragment) fragment;
+			allFragment.UpdateFavs(srDataSource.getAllSubRedditsID());
 		}
-		SubRedditsDataSource.AddedItemFalse();
-
+		srDataSource.close();
 		viewPager.setCurrentItem(tab.getPosition());
 	}
 
