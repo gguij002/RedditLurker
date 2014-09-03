@@ -28,8 +28,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
@@ -75,10 +77,8 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		setOnItemClickListener(this);
 	}
 	
-	@Override
 	public void onResume()
 	{
-		
 		super.onResume();
 	}
 	
@@ -134,11 +134,6 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			System.out.println("INVALID SUBREDDIT: " + query);
 		}
 		isFromSearch = false;
-	}
-
-	private void setOnScrollListener() {
-		final ListView storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
-		storiesListView.setOnScrollListener(this);
 	}
 
 	@Override
@@ -204,7 +199,8 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				StoryInfo subReddit = (StoryInfo) storieList.get(position);
-				Intent nextActivity = new Intent(context, ActivityCommentsWebView.class);
+				Intent nextActivity = new Intent(context, ActivityStoryContent.class);
+				nextActivity.putExtra("url", subReddit.url);
 				startActivity(nextActivity);
 			}
 		});

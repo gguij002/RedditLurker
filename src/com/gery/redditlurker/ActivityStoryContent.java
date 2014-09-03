@@ -7,26 +7,26 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class ActivityCommentsWebView extends Activity
+public class ActivityStoryContent extends Activity
 {
 	private WebView webView;
-	private String permalink;
+	private String url;
 	 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_comments_webview);
+		setContentView(R.layout.activity_story_content);
 		
 		this.handleIntent(getIntent());
  
-		webView = (WebView) findViewById(R.id.comments_webview_view);
+		webView = (WebView) findViewById(R.id.story_content_webview_view);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.setWebViewClient(new WebViewClient());
-		webView.loadUrl("http://www.reddit.com"+ permalink);
+		webView.loadUrl(url);
 	}
 	
 	private void handleIntent(Intent intent)
 	{
-		permalink = intent.getStringExtra("permalink");
+		url = intent.getStringExtra("url");
 	}
 	
 	@Override

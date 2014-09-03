@@ -21,8 +21,8 @@
         <!-- Search results activity -->
         <activity
             android:name=".SubRedditChannelActivity"
-            android:parentActivityName="com.gery.redditlurker.MainActivity" 
-            android:screenOrientation="portrait">
+            android:parentActivityName="com.gery.redditlurker.MainActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -31,20 +31,25 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        
-             <!-- WEBVIEW activity -->
+
+        <!-- WEBVIEW activity Comments-->
         <activity
             android:name=".ActivityCommentsWebView"
-            android:parentActivityName="com.gery.redditlurker.SubRedditChannelActivity" 
-            android:screenOrientation="portrait">
-    
+            android:parentActivityName="com.gery.redditlurker.SubRedditChannelActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
+        <!-- WEBVIEW activity Story Content -->
+        <activity
+            android:name=".ActivityStoryContent"
+            android:parentActivityName="com.gery.redditlurker.SubRedditChannelActivity"
+            android:screenOrientation="portrait" >
         </activity>
         
         <activity
             android:name="com.gery.redditlurker.MainActivity"
-            android:label="@string/app_name" 
-            android:screenOrientation="portrait">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SubRedditChannelActivity" />

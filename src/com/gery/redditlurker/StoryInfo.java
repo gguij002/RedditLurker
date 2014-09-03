@@ -23,8 +23,10 @@ public class StoryInfo {
 	public long num_comments;
 	public long score;
 	public Bitmap imageBitMap = null;
-
+	public String permalink;
+	
 	JSONObject jsonObject;
+	
 
 	public StoryInfo(JSONObject jObject) {
 		this.jsonObject = jObject;
@@ -43,6 +45,7 @@ public class StoryInfo {
 		this.ups = (Long) jsonObject.get("ups");
 		this.created = (Double) jsonObject.get("created");
 		this.url = (String) jsonObject.get("url");
+		this.permalink = (String) jsonObject.get("permalink");
 		this.author_flair_text = (String) jsonObject.get("author_flair_text");
 		this.name = (String) jsonObject.get("name");
 		this.num_comments = (Long) jsonObject.get("num_comments");

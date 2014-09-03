@@ -3,10 +3,12 @@ package com.gery.redditlurker;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,10 +18,12 @@ public class ChannelBaseAdapter extends BaseAdapter {
 
 	private static List<StoryInfo> list;
 	private LayoutInflater mInflater;
+	private Context fragmentContext;
 
 	public ChannelBaseAdapter(Context fragmentContext, List<StoryInfo> storieList) {
 		list = storieList;
 		mInflater = LayoutInflater.from(fragmentContext);
+		this.fragmentContext = fragmentContext;
 	}
 
 	@Override
@@ -55,11 +59,20 @@ public class ChannelBaseAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		StoryInfo storyInfo = list.get(position);
+		final StoryInfo storyInfo = list.get(position);
 		holder.title.setText(storyInfo.title);
 		holder.author.setText(storyInfo.author);
 		holder.subreddit.setText(storyInfo.subreddit);
 		holder.comments.setText(constructCommentsUpsTime(position));
+		holder.comments.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent nextActivity = new Intent(fragmentContext, ActivityCommentsWebView.class);
+				nextActivity.putExtra("permalink", storyInfo.permalink);
+				nextActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				fragmentContext.startActivity(nextActivity);
+			}
+		});
 
 		Bitmap image_bits = storyInfo.imageBitMap;
 		if (image_bits != null)
