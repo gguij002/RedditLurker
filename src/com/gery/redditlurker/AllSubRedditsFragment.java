@@ -6,13 +6,15 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.gery.database.ImageReader;
+import com.gery.database.LoadThumbsTask;
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 public class AllSubRedditsFragment extends Fragment implements OnScrollListener {
 	// List Items
@@ -51,10 +54,27 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		context = inflater.getContext();
-		new LoadSubReddits(context).execute();
+
+		if(isNetworkConnected()) {
+			new LoadSubReddits(context).execute();
+		}
+		else {
+			Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
+		}
+		
 		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container, false);
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
+	}
+	
+	private boolean isNetworkConnected() {
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+		if (ni == null) {
+			// There are no active networks.
+			return false;
+		} else
+			return true;
 	}
 
 	@Override
@@ -137,7 +157,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			pDialog.setCancelable(false);
 			pDialog.show();
 		}
-
+		
 		/**
 		 * getting SubReddits
 		 * */
@@ -164,7 +184,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				String header_image_url = item.header_img;
 
 				if (header_image_url != null && !header_image_url.isEmpty()) {
-					item.imageBitMap = new ImageReader(header_image_url).exceute().imageBitmap;
+					item.imageBitMap = new LoadThumbsTask(header_image_url).exceute().imageBitmap;
 				}
 
 				if (subRedditsIdsFromDb.contains(item.name)) {
@@ -179,11 +199,8 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		private String URLCreate(int offset) {
 			String after = "";
 			if (subRedditsList.size() > 0)
-				after = "&after=" + subRedditsList.get(subRedditsList.size() - 1).name;// Get
-																						// subreddits
-																						// after
-																						// This
-																						// "Name"
+				after = "&after=" + subRedditsList.get(subRedditsList.size() - 1).name;
+			
 			return "http://www.reddit.com/reddits/.json" + "?limit=" + offset + after;
 		}
 
@@ -208,7 +225,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			super.onPostExecute(listOfSubReddits);
 		}
 	}
-
+	
 	public void UpdateFavs(List<String> storiesDB) {
 		List<SubRedditInfo> newTempList = new ArrayList<SubRedditInfo>();
 		

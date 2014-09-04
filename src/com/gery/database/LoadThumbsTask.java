@@ -7,16 +7,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.util.Log;
 
-public class ImageReader {
+public class LoadThumbsTask {
 
 	private String imageURL;
 	public Bitmap imageBitmap = null;
 
-	public ImageReader(String imageURL) {
+	public LoadThumbsTask(String imageURL) {
 		this.imageURL = imageURL;
 	}
 
-	public ImageReader exceute() {
+	public LoadThumbsTask exceute() {
 		this.imageBitmap = getImage(imageURL);
 		return this;
 	}

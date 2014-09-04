@@ -3,6 +3,8 @@ package com.gery.redditlurker;
 import com.gery.database.SubRedditsDataSource;
 import com.gery.redditlurker.R.id;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -123,13 +125,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
 		srDataSource.open();
-		
+
 		Fragment fragment = mAdapter.getItem(tab.getPosition());
-		
+
 		if (tab.getPosition() == 1) {
 			EnteredSubRedditsFragment enteredFragment = (EnteredSubRedditsFragment) fragment;
 			enteredFragment.UpdateSubRedditList(srDataSource.getAllSubReddit());
-		} else if (tab.getPosition() == 0){
+		} else if (tab.getPosition() == 0) {
 			AllSubRedditsFragment allFragment = (AllSubRedditsFragment) fragment;
 			allFragment.UpdateFavs(srDataSource.getAllSubRedditsID());
 		}

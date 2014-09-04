@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutionException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.gery.database.ImageReader;
+import com.gery.database.LoadThumbsTask;
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 
@@ -282,7 +282,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			SubRedditInfo item = new SubRedditInfo(varB).execute();
 			String header_image_url = item.header_img;
 			if (header_image_url != null && !header_image_url.isEmpty()) {
-				item.imageBitMap = new ImageReader(header_image_url).exceute().imageBitmap;
+				item.imageBitMap = new LoadThumbsTask(header_image_url).exceute().imageBitmap;
 			}
 			return item;
 		}
