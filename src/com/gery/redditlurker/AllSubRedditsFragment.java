@@ -114,6 +114,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				nextActivity.putExtra("subReddit", subReddit.url);
 				nextActivity.putExtra("favorite", subReddit.favorite);
 				nextActivity.putExtra("subName", subReddit.name);
+				nextActivity.putExtra("displayName", subReddit.display_name);
 				startActivity(nextActivity);
 			}
 		});

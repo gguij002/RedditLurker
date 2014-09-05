@@ -47,7 +47,6 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 			holder = new ViewHolder();
 			holder.displayName = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_displayName_text);
 			holder.txtLink = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_link_text);
-			holder.goButton = (ImageButton) convertView.findViewById(R.id.imagebutton_go);
 			holder.favoriteButton = (ImageButton) convertView.findViewById(R.id.all_sub_favorite_image_button);
 
 			holder.thumbView = (ImageView) convertView.findViewById(R.id.subreddit_thumb_view);
@@ -65,7 +64,7 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 				{
 					subReddit.favorite = false;
 					srDataSource.deleteSubReddit(subReddit.getName());
-					holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
+					holder.favoriteButton.setImageResource(R.drawable.ic_favorite_off_new);
 				}// not fav Add
 				else {
 					subReddit.favorite = true;
@@ -77,19 +76,10 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 			}
 		});
 
-		holder.goButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
-				i.putExtra("subReddit", list.get(position).url);
-				mInflater.getContext().startActivity(i);
-			}
-		});
-
 		if (subReddit.favorite)
 			holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
 		else
-			holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_off);
+			holder.favoriteButton.setImageResource(R.drawable.ic_favorite_off_new);
 
 		// Second TextView in the list item
 		String header_title_text = list.get(position).header_title;
@@ -113,7 +103,6 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 		TextView txtLink;
 		ImageView thumbView;
 		TextView comment;
-		ImageButton goButton;
 		ImageButton favoriteButton;
 	}
 }

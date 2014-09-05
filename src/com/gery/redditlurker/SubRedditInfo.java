@@ -24,13 +24,16 @@ public class SubRedditInfo implements Comparable<SubRedditInfo> {
 		this.header_title = (String) jsonObject.get("header_title");
 		this.public_description = (String) jsonObject.get("public_description");
 		this.url = (String) jsonObject.get("url");
-		this.display_name = ((String) jsonObject.get("display_name"));
+		this.display_name = capitalize((String) jsonObject.get("display_name"));
 		this.id = ((String) jsonObject.get("id"));
 		this.header_img = (String) jsonObject.get("header_img");
 		this.name = (String) jsonObject.get("name");
 		return this;
 	}
 
+	private String capitalize(String line) {
+		return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+	}
 	@Override
 	public int compareTo(SubRedditInfo subredditInfo) {
 		if (this.id.equalsIgnoreCase(subredditInfo.id))

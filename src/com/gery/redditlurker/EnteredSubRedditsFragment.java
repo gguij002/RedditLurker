@@ -55,8 +55,7 @@ public class EnteredSubRedditsFragment extends Fragment {
 				Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
 				nextActivity.putExtra("subReddit", subReddit.url);
 				nextActivity.putExtra("subName", subReddit.name);
-				System.out.println("BEFORE PUT EXTRA: " + subReddit.favorite);
-				System.out.println("BEFORE PUT EXTRA: " + subReddit.favorite);
+				nextActivity.putExtra("displayName", subReddit.display_name);
 				nextActivity.putExtra("favorite", subReddit.favorite);
 				startActivity(nextActivity);
 			}

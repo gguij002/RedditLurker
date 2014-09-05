@@ -47,8 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
         android:background="@null"
-        android:src="@drawable/ic_delete_image_1" />
+        android:src="@drawable/ic_delete_image_new" />
 
 </RelativeLayout>

@@ -46,19 +46,13 @@
 	    android:id="@+id/all_sub_favorite_image_button"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	     android:layout_toLeftOf="@+id/imagebutton_go"
-	   
-	    android:layout_centerVertical="true"
+	    android:layout_alignParentBottom="false"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignParentTop="false"
+	    android:layout_centerInParent="true"
+	    android:layout_marginRight="5dp"
+	    android:layout_toLeftOf="@+id/imagebutton_go"
 	    android:background="@null"
-	    android:src="@android:drawable/btn_star_big_off" />
-
-    <ImageButton
-        android:id="@+id/imagebutton_go"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:background="@null"
-        android:src="@android:drawable/ic_menu_view" />
+	    android:src="@drawable/ic_favorite_off_new" />
 
 </RelativeLayout>

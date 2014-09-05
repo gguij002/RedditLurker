@@ -28,10 +28,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
@@ -54,6 +52,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	private boolean favorite = false;
 	SubRedditInfo subReddit = null;
 	private String subNname;
+	private String displayName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,15 +119,16 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		query = null;
 
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			query = intent.getStringExtra(SearchManager.QUERY);
+			displayName = query = intent.getStringExtra(SearchManager.QUERY);
 			query = "/r/" + query + "/";
 			isFromSearch = true;
 		} else {// comes from the lists and not the search bar
 			query = intent.getStringExtra("subReddit");
 			favorite = intent.getBooleanExtra("favorite", false);
 			subNname = intent.getStringExtra("subName");
+			displayName = intent.getStringExtra("displayName");
 		}
-
+		setTitle(displayName);
 		AsyncTask<String, String, List<StoryInfo>> var = new LoadStories(this, query).execute();
 		if (var.get() == null || var.get().isEmpty()) {
 			System.out.println("INVALID SUBREDDIT: " + query);
@@ -148,7 +148,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		case R.id.action_fav:
 			if (favorite) {
 				favorite = false;
-				item.setIcon(android.R.drawable.btn_star_big_off);
+				item.setIcon(R.drawable.ic_favorite_off_new);
 			} else {
 				favorite = true;
 				item.setIcon(android.R.drawable.btn_star_big_on);
@@ -177,7 +177,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			item.setIcon(android.R.drawable.btn_star_big_on);
 		} else {
 			favorite = false;
-			item.setIcon(android.R.drawable.btn_star_big_off);
+			item.setIcon(R.drawable.ic_favorite_off_new);
 		}
 	}
 
