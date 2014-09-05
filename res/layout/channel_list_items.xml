@@ -77,13 +77,14 @@
             android:layout_marginBottom="10dp"
             
             android:background="@android:color/transparent"
-            android:drawableStart="@android:drawable/sym_action_chat"
+            android:drawableStart="@drawable/ic_comments_image"
             android:gravity="left"
             android:text="1.3k\n1.2k - 3h"
             android:textAlignment="inherit"
             android:textColor="#74b9d8"
             android:textScaleX=".7"
             android:textSize="16sp" />
+
     </RelativeLayout>
 
 </TableRow>
