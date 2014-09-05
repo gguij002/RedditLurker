@@ -45,7 +45,6 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.displayName = (TextView) convertView.findViewById(R.id.entered_sub_reddit_list_item_displayName_text);
 			holder.txtLink = (TextView) convertView.findViewById(R.id.entered_sub_reddit_list_item_link_text);
-			holder.goButton = (ImageButton) convertView.findViewById(R.id.entered_imagebutton_go);
 
 			holder.deleteButton = (ImageButton) convertView.findViewById(R.id.entered_imagebutton_delete);
 
@@ -54,16 +53,6 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-
-		holder.goButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent i = new Intent(mInflater.getContext(), SubRedditChannelActivity.class);
-				i.putExtra("subReddit", list.get(position).url);
-				i.putExtra("favorite", list.get(position).favorite);
-				mInflater.getContext().startActivity(i);
-			}
-		});
 
 		holder.deleteButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -101,7 +90,6 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 		TextView displayName;
 		TextView txtLink;
 		ImageView thumbView;
-		ImageButton goButton;
 		ImageButton deleteButton;
 	}
 }
