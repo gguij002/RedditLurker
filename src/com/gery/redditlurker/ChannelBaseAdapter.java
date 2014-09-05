@@ -63,7 +63,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 		holder.title.setText(storyInfo.title);
 		holder.author.setText(storyInfo.author);
 		holder.subreddit.setText(storyInfo.subreddit);
-		holder.comments.setText(constructCommentsUpsTime(position));
+		holder.comments.setText(storyInfo.num_comments+"");
 		holder.comments.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
