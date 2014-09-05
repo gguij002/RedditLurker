@@ -35,7 +35,6 @@
 	        android:textStyle="bold" 
             android:text="This is a place holder for this text field that will be populated later on "
             android:textColor="@android:color/black"
-            
              />
 
 
@@ -58,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/story_title1"
             android:layout_toRightOf="@+id/story_thumb_view1"
-            android:layout_marginLeft="7dp"
             android:layout_marginBottom="7dp"
             android:text="SubReddit"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -69,20 +67,37 @@
             android:id="@+id/comments_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
+            android:layout_alignParentTop="false"
+            android:layout_centerInParent="false"
             
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
             
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_comments_image"
             android:text="1.3k"
             android:textColor="#74b9d8"
-            android:textSize="16sp" />
+            android:textSize="@dimen/buttonsText"
+            android:drawablePadding="0dp"/>
+
+        <Button
+            android:id="@+id/ups_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="false"
+            
+            android:layout_marginRight="10dp"
+            
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_ups_image"
+            android:text="1.3k"
+            android:textColor="#74b9d8"
+            android:textSize="@dimen/buttonsText" 
+            android:drawablePadding="0dp"/>
 
     </RelativeLayout>
 

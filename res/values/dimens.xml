@@ -8,6 +8,7 @@
     <dimen name="rating">15dip</dimen>
     <dimen name="genre">13dip</dimen>
     <dimen name="year">12dip</dimen>
+    <dimen name="buttonsText">14dip</dimen>
     <dimen name="thumbs">80dp</dimen>
 
 </resources>
