@@ -1,104 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-     >
+    android:layout_height="match_parent" >
 
     <RelativeLayout
         android:id="@+id/test_row_stuff"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:descendantFocusability="blocksDescendants"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/story_thumb_view1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:layout_width="80dp"
-        	android:layout_height="80dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
-     		android:layout_marginBottom="2dp"
-     		android:layout_marginLeft="10dp"
-     		android:layout_marginRight="8dp" 
             android:contentDescription="@string/subreddit_thumbview_desc"
             android:src="@drawable/ic_launcher" />
+
+        <!-- Title -->
 
         <TextView
             android:id="@+id/story_title1"
             android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignTop="@+id/story_thumb_view1"
-	        android:layout_toRightOf="@+id/story_thumb_view1"
-	        android:layout_toLeftOf="@+id/comments_button"
-	        android:textSize="@dimen/title"
-	        android:textStyle="bold" 
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/story_thumb_view1"
+            android:layout_toLeftOf="@+id/comments_button"
+            android:layout_toRightOf="@+id/story_thumb_view1"
             android:text="This is a place holder for this text field that will be populated later on "
             android:textColor="@android:color/black"
+            android:textSize="@dimen/title"
+            android:textStyle="bold" />
+
+        <!-- ups -->
+
+        <TextView
+            android:id="@+id/ups_text_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/story_title1"
+            android:layout_marginTop="1dip"
+            android:layout_toRightOf="@+id/story_thumb_view1"
+            android:text="Up: 123"
+            android:textSize="@dimen/rating"
              />
 
+        <!-- Author -->
 
         <TextView
             android:id="@+id/author_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/story_title1"
-            android:layout_marginLeft="7dp"
-            android:layout_marginBottom="7dp"
-            android:layout_toRightOf="@+id/subreddit_textview_list_item"
-            android:text="Author"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/black"
-            android:textSize="12dip" />
-        
-         <TextView
-            android:id="@+id/subreddit_textview_list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/story_title1"
+            android:layout_below="@id/ups_text_view"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/story_thumb_view1"
-            android:layout_marginBottom="7dp"
-            android:text="SubReddit"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#74b9d8"
-            android:textSize="12dip" />
+            android:text="9 hours ago by Margarito"
+            android:textSize="@dimen/genre"
+            android:textColor="@color/genre" />
 
         <Button
             android:id="@+id/comments_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentBottom="false"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="false"
-            android:layout_centerInParent="false"
-            
-            android:layout_marginRight="10dp"
-            
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dp"
             android:background="@android:color/transparent"
+            android:drawablePadding="0dp"
             android:drawableStart="@drawable/ic_comments_image"
             android:text="1.3k"
             android:textColor="#74b9d8"
-            android:textSize="@dimen/buttonsText"
-            android:drawablePadding="0dp"/>
-
-        <Button
-            android:id="@+id/ups_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="false"
-            
-            android:layout_marginRight="10dp"
-            
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/ic_ups_image"
-            android:text="1.3k"
-            android:textColor="#74b9d8"
-            android:textSize="@dimen/buttonsText" 
-            android:drawablePadding="0dp"/>
-
+            android:textSize="@dimen/buttonsText" />
     </RelativeLayout>
 
 </TableRow>

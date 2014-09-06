@@ -45,28 +45,26 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	Context context;
 
 	@Override
-	public void onCreate(Bundle bundle)
-	{
+	public void onCreate(Bundle bundle) {
 		subRedditsList = new ArrayList<SubRedditInfo>();
 		super.onCreate(bundle);
 	}
-	
+
 	@Override
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		context = inflater.getContext();
 
-		if(isNetworkConnected()) {
+		if (isNetworkConnected()) {
 			new LoadSubReddits(context).execute();
-		}
-		else {
+		} else {
 			Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
 		}
-		
+
 		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container, false);
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
 	}
-	
+
 	private boolean isNetworkConnected() {
 		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -158,7 +156,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			pDialog.setCancelable(false);
 			pDialog.show();
 		}
-		
+
 		/**
 		 * getting SubReddits
 		 * */
@@ -201,7 +199,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			String after = "";
 			if (subRedditsList.size() > 0)
 				after = "&after=" + subRedditsList.get(subRedditsList.size() - 1).name;
-			
+
 			return "http://www.reddit.com/reddits/.json" + "?limit=" + offset + after;
 		}
 
@@ -226,11 +224,11 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			super.onPostExecute(listOfSubReddits);
 		}
 	}
-	
+
 	public void UpdateFavs(List<String> storiesDB) {
 		List<SubRedditInfo> newTempList = new ArrayList<SubRedditInfo>();
-		
-		if(this.adapter != null && subRedditsList != null && this.subRedditsList.size() != storiesDB.size()){
+
+		if (this.adapter != null && subRedditsList != null && this.subRedditsList.size() != storiesDB.size()) {
 			for (SubRedditInfo subReddits : this.subRedditsList) {
 				System.out.println("BEFORE IF: " + subReddits.display_name + "-" + subReddits.name);
 				if (!storiesDB.contains(subReddits.name)) {

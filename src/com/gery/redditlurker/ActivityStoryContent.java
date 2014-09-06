@@ -14,34 +14,29 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
-public class ActivityStoryContent extends Activity
-{
+public class ActivityStoryContent extends Activity {
 	private WebView webView;
 	private String url;
 	private Bitmap imageBitmap = null;
-	 
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
+
 		this.handleIntent(getIntent());
-		
-		if(isImage())
-		{
+
+		if (isImage()) {
 			setContentView(R.layout.activity_image_display);
-			 AsyncTask<String, Void, Bitmap> loadImage = new LoadIMagesTask(this).execute(url);
-			 try {
+			AsyncTask<String, Void, Bitmap> loadImage = new LoadIMagesTask(this).execute(url);
+			try {
 				imageBitmap = loadImage.get();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {
 				e.printStackTrace();
 			}
-			 ImageView imageView = (ImageView) findViewById(R.id.image_viewer);
-			 imageView.setImageBitmap(imageBitmap);
-		}
-		else 
-		{
+			ImageView imageView = (ImageView) findViewById(R.id.image_viewer);
+			imageView.setImageBitmap(imageBitmap);
+		} else {
 			setContentView(R.layout.activity_story_content);
 			webView = (WebView) findViewById(R.id.story_content_webview_view);
 			webView.getSettings().setJavaScriptEnabled(true);
@@ -49,32 +44,29 @@ public class ActivityStoryContent extends Activity
 			webView.loadUrl(url);
 		}
 	}
-	
+
 	@Override
-	public void onDestroy()
-	{
-		if(imageBitmap != null)
+	public void onDestroy() {
+		if (imageBitmap != null)
 			imageBitmap.recycle();
 		super.onDestroy();
 	}
-	
-	private void handleIntent(Intent intent)
-	{
+
+	private void handleIntent(Intent intent) {
 		url = intent.getStringExtra("url");
 	}
-	
-	private boolean isImage()
-	{
+
+	private boolean isImage() {
 		return (url.endsWith(".jpg") || url.endsWith(".gif") || url.endsWith("png"));
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
-		case android.R.id.home:{
-             super.onBackPressed();
-             return true;
+		case android.R.id.home: {
+			super.onBackPressed();
+			return true;
 		}
 		default:
 			return super.onOptionsItemSelected(item);

@@ -34,7 +34,6 @@ import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
-
 public class SubRedditChannelActivity extends Activity implements OnScrollListener {
 	// List Items
 	int currentFirstVisibleItem = 0;
@@ -75,20 +74,18 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		}
 		setOnItemClickListener(this);
 	}
-	
-	public void onResume()
-	{
+
+	public void onResume() {
 		super.onResume();
 	}
-	
+
 	@Override
-	public void onPause()
-	{
+	public void onPause() {
 		SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
 		srDataSource.open();
-		if (favorite) { //Its fav, Add to DB
+		if (favorite) { // Its fav, Add to DB
 			if (this.storieList != null && !this.storieList.isEmpty()) {
-				if(subReddit == null){
+				if (subReddit == null) {
 					try {
 						subReddit = new LoadSubReddit(this.storieList.get(0).subreddit_id).execute().get();
 					} catch (InterruptedException e) {
@@ -101,8 +98,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 				srDataSource.addSubRedditToDB(subReddit);
 				subNname = subReddit.name;
 			}
-		}
-		else{ //Not fav Delete from DB
+		} else { // Not fav Delete from DB
 			srDataSource.deleteSubReddit(subNname);
 		}
 		srDataSource.close();
@@ -128,7 +124,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			subNname = intent.getStringExtra("subName");
 			displayName = intent.getStringExtra("displayName");
 		}
-		setTitle(displayName);
+		setTitle("LurkR: " + displayName);
 		AsyncTask<String, String, List<StoryInfo>> var = new LoadStories(this, query).execute();
 		if (var.get() == null || var.get().isEmpty()) {
 			System.out.println("INVALID SUBREDDIT: " + query);
@@ -140,9 +136,9 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
-		case android.R.id.home:{
-             super.onBackPressed();
-             return true;
+		case android.R.id.home: {
+			super.onBackPressed();
+			return true;
 		}
 
 		case R.id.action_fav:
@@ -192,7 +188,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void setOnItemClickListener(final Context context) {
 		final ListView storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {

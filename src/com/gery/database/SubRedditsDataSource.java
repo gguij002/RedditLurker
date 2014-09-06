@@ -49,11 +49,11 @@ public class SubRedditsDataSource {
 		values.put(MySQLiteHelper.COLUMN_SUBREDDIT, subReddit.getJsonObject().toJSONString());
 		values.put(MySQLiteHelper.COLUMN_ID, SubName);
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		if(subReddit.getImageBitMap() != null){
+		if (subReddit.getImageBitMap() != null) {
 			subReddit.getImageBitMap().compress(Bitmap.CompressFormat.PNG, 100, bos);
 			values.put(MySQLiteHelper.COLUMN_SUBIMAGE, bos.toByteArray());
 		}
-			
+
 		database.insert(MySQLiteHelper.TABLE_SUBREDDITS, null, values);
 		System.out
 				.println("SubReddit added with URL and id and Favorite: " + subReddit.getUrl() + " " + SubName + " " + subReddit.getFavoriteAsInt());
@@ -63,7 +63,7 @@ public class SubRedditsDataSource {
 		String subName = subReddit;
 		String whereClause = MySQLiteHelper.COLUMN_ID + " = " + "\"" + subName + "\"";
 		int var = database.delete(MySQLiteHelper.TABLE_SUBREDDITS, whereClause, null);
-		System.out.println("SubReddit deleted with id: " + subName + "INT: " +var );
+		System.out.println("SubReddit deleted with id: " + subName + "INT: " + var);
 	}
 
 	private Cursor getAllSubRedditRaw() {

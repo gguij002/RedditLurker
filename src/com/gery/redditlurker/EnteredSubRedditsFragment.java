@@ -27,12 +27,11 @@ public class EnteredSubRedditsFragment extends Fragment {
 	EnteredSubredditCustomBaseAdapter adapter;
 
 	@Override
-	public void onCreate(Bundle bundle)
-	{
+	public void onCreate(Bundle bundle) {
 		subRedditsList = new ArrayList<SubRedditInfo>();
 		super.onCreate(bundle);
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -133,7 +132,7 @@ public class EnteredSubRedditsFragment extends Fragment {
 	}
 
 	public void UpdateSubRedditList(List<SubRedditInfo> list) {
-		if(this.adapter != null && this.subRedditsList != null && this.subRedditsList.size() != list.size()){
+		if (this.adapter != null && this.subRedditsList != null && this.subRedditsList.size() != list.size()) {
 			this.subRedditsList.clear();
 			this.subRedditsList.addAll(list);
 			adapter.notifyDataSetChanged();

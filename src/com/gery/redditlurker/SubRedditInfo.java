@@ -34,6 +34,7 @@ public class SubRedditInfo implements Comparable<SubRedditInfo> {
 	private String capitalize(String line) {
 		return Character.toUpperCase(line.charAt(0)) + line.substring(1);
 	}
+
 	@Override
 	public int compareTo(SubRedditInfo subredditInfo) {
 		if (this.id.equalsIgnoreCase(subredditInfo.id))

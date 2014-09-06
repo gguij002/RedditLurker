@@ -1,5 +1,7 @@
 package com.gery.redditlurker;
 
+import java.util.Date;
+
 import org.json.simple.JSONObject;
 
 import android.graphics.Bitmap;
@@ -24,9 +26,8 @@ public class StoryInfo {
 	public long score;
 	public Bitmap imageBitMap = null;
 	public String permalink;
-	
+
 	JSONObject jsonObject;
-	
 
 	public StoryInfo(JSONObject jObject) {
 		this.jsonObject = jObject;
@@ -56,6 +57,14 @@ public class StoryInfo {
 
 	private String capitalize(String line) {
 		return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+	}
+	
+	public Date getCreated_UTC_formatted()
+	{
+		Date d = new Date(created.longValue() * 1000);
+		System.out.println("Current UTC: " +System.currentTimeMillis() +" UTC from Reddit: " + created);
+		System.out.println("DATE FORMATTED: " + d.toString());
+		return d;
 	}
 
 }

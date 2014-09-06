@@ -2,6 +2,8 @@ package com.gery.redditlurker;
 
 import java.util.List;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -44,13 +46,14 @@ public class ChannelBaseAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
+		PrettyTime p = new PrettyTime();
 
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.channel_list_items, null);
 			holder = new ViewHolder();
 			holder.title = (TextView) convertView.findViewById(R.id.story_title1);
 			holder.author = (TextView) convertView.findViewById(R.id.author_textview);
-			holder.subreddit = (TextView) convertView.findViewById(R.id.subreddit_textview_list_item);
+			holder.ups = (TextView) convertView.findViewById(R.id.ups_text_view);
 			holder.comments = (Button) convertView.findViewById(R.id.comments_button);
 			holder.thumbView = (ImageView) convertView.findViewById(R.id.story_thumb_view1);
 
@@ -61,9 +64,9 @@ public class ChannelBaseAdapter extends BaseAdapter {
 
 		final StoryInfo storyInfo = list.get(position);
 		holder.title.setText(storyInfo.title);
-		holder.author.setText(storyInfo.author);
-		holder.subreddit.setText(storyInfo.subreddit);
-		holder.comments.setText(storyInfo.num_comments+"");
+		holder.author.setText(p.format(storyInfo.getCreated_UTC_formatted()) + " by "+ storyInfo.author);
+		holder.ups.setText("Up: "+ storyInfo.ups);
+		holder.comments.setText(storyInfo.num_comments + "");
 		holder.comments.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -97,7 +100,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 		public TextView title;
 		public Button comments;
 		public ImageView thumbView;
-		public TextView subreddit;
+		public TextView ups;
 	}
 
 }
