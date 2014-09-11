@@ -3,8 +3,6 @@ package com.gery.redditlurker;
 import com.gery.database.SubRedditsDataSource;
 import com.gery.redditlurker.R.id;
 
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -26,7 +24,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
 	// Tab titles
-	private String[] tabs = { "SubReddits", "Favorite SubReddits" };
+	private String[] tabs = { "All", "Favorite"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +75,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	public boolean onSearchRequested() {
 
-		Intent i = new Intent(MainActivity.this, SubRedditChannelActivity.class);
-		startActivity(i);
+		goToSubReddit();
 
 		return false; // don't go ahead and show the search box
 	}

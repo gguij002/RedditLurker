@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.gery.database.Connection;
 import com.gery.database.LoadThumbsTask;
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
@@ -35,7 +36,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	int totalItemCount = 0;
 	int currentScrollState = 0;
 	boolean loadingMore = false;
-	Long offset = 4L;
+	Long offset = 20L;
 	// List Items
 
 	public AllSubRedditCustomBaseAdapter adapter;
@@ -54,25 +55,15 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		context = inflater.getContext();
 
-		if (isNetworkConnected()) {
+		if (Connection.isNetworkConnected(context)) {
 			new LoadSubReddits(context).execute();
 		} else {
 			Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
 		}
-
+		
 		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container, false);
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
-	}
-
-	private boolean isNetworkConnected() {
-		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo ni = cm.getActiveNetworkInfo();
-		if (ni == null) {
-			// There are no active networks.
-			return false;
-		} else
-			return true;
 	}
 
 	@Override
@@ -107,13 +98,19 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
-				Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
-				nextActivity.putExtra("subReddit", subReddit.url);
-				nextActivity.putExtra("favorite", subReddit.favorite);
-				nextActivity.putExtra("subName", subReddit.name);
-				nextActivity.putExtra("displayName", subReddit.display_name);
-				startActivity(nextActivity);
+				if(Connection.isNetworkConnected(context))
+				{
+					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
+					Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
+					nextActivity.putExtra("subReddit", subReddit.url);
+					nextActivity.putExtra("favorite", subReddit.favorite);
+					nextActivity.putExtra("subName", subReddit.name);
+					nextActivity.putExtra("displayName", subReddit.display_name);
+					nextActivity.putExtra("header_img", subReddit.header_img);
+					startActivity(nextActivity);
+				}
+				else 
+					Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
 			}
 		});
 		storiesListView.setOnScrollListener(this);

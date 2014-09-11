@@ -23,6 +23,7 @@ public class ActivityStoryContent extends Activity {
 		super.onCreate(savedInstanceState);
 
 		this.handleIntent(getIntent());
+		
 
 		if (isImage()) {
 			setContentView(R.layout.activity_image_display);
@@ -41,8 +42,15 @@ public class ActivityStoryContent extends Activity {
 			webView = (WebView) findViewById(R.id.story_content_webview_view);
 			webView.getSettings().setJavaScriptEnabled(true);
 			webView.setWebViewClient(new WebViewClient());
-			webView.loadUrl(url);
+			webView.loadUrl(formatURL(url));
 		}
+	}
+	
+	private String formatURL(String url)
+	{
+		if(url.contains("www.reddit.com"))
+			return url+".compact";
+		else return url;
 	}
 
 	@Override
@@ -54,6 +62,8 @@ public class ActivityStoryContent extends Activity {
 
 	private void handleIntent(Intent intent) {
 		url = intent.getStringExtra("url");
+		String displayName = intent.getStringExtra("name"); 
+		setTitle("LurkR: " + displayName);
 	}
 
 	private boolean isImage() {

@@ -13,9 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.gery.database.Connection;
 import com.gery.database.SubRedditsDataSource;
 import com.gery.database.Timer;
 
@@ -23,7 +25,7 @@ public class EnteredSubRedditsFragment extends Fragment {
 	public List<SubRedditInfo> subRedditsList;
 	private ProgressDialog pDialog;
 	View rootView;
-	private Context contex;
+	private Context ActivityContext;
 	EnteredSubredditCustomBaseAdapter adapter;
 
 	@Override
@@ -35,13 +37,13 @@ public class EnteredSubRedditsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		contex = inflater.getContext();
+		ActivityContext = inflater.getContext();
 		Timer.StartTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
-		new LoadSubRedditsFromDB(contex).execute();
+		new LoadSubRedditsFromDB(ActivityContext).execute();
 		Timer.EndTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
 
 		rootView = inflater.inflate(R.layout.fragment_entered_subreddit, container, false);
-		setOnItemClickListener(contex);
+		setOnItemClickListener(ActivityContext);
 		return rootView;
 	}
 
@@ -50,13 +52,19 @@ public class EnteredSubRedditsFragment extends Fragment {
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
-				Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
-				nextActivity.putExtra("subReddit", subReddit.url);
-				nextActivity.putExtra("subName", subReddit.name);
-				nextActivity.putExtra("displayName", subReddit.display_name);
-				nextActivity.putExtra("favorite", subReddit.favorite);
-				startActivity(nextActivity);
+				if(Connection.isNetworkConnected(context))
+				{
+					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
+					Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
+					nextActivity.putExtra("subReddit", subReddit.url);
+					nextActivity.putExtra("subName", subReddit.name);
+					nextActivity.putExtra("displayName", subReddit.display_name);
+					nextActivity.putExtra("favorite", subReddit.favorite);
+					nextActivity.putExtra("header_img", subReddit.header_img);
+					startActivity(nextActivity);
+				}
+				else 
+					Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
 			}
 		});
 	}
@@ -69,7 +77,7 @@ public class EnteredSubRedditsFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		SubRedditsDataSource srDataSource = new SubRedditsDataSource(contex);
+		SubRedditsDataSource srDataSource = new SubRedditsDataSource(ActivityContext);
 		srDataSource.open();
 		UpdateSubRedditList(srDataSource.getAllSubReddit());
 		srDataSource.close();
@@ -87,7 +95,7 @@ public class EnteredSubRedditsFragment extends Fragment {
 		protected List<SubRedditInfo> doInBackground(String... params) {
 			SubRedditsDataSource srDataSource;
 
-			srDataSource = new SubRedditsDataSource(contex);
+			srDataSource = new SubRedditsDataSource(ActivityContext);
 			srDataSource.open();
 
 			Timer.StartTimer("doInBackground.srDataSource.getAllSubReddit()");
@@ -100,16 +108,10 @@ public class EnteredSubRedditsFragment extends Fragment {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(context);
-			pDialog.setMessage("Loading SubReddits From DB...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
 		}
 
 		protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) {
 			Timer.StartTimer("onPostExecute");
-			pDialog.dismiss();
 
 			subRedditsList.clear();
 			subRedditsList.addAll(listOfSubReddits);

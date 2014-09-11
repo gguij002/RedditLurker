@@ -1,6 +1,5 @@
 package com.gery.redditlurker;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -18,12 +17,12 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,11 +39,10 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	int currentVisibleItemCount = 0;
 	int totalItemCount = 0;
 	int currentScrollState = 0;
-	Long offset = 4L;
+	Long offset = 20L;
 	// List Items
 
 	public boolean isFromSearch = false;
-	private ProgressDialog pDialog;
 	public List<StoryInfo> storieList;
 	private boolean loadingMore;
 	private String query;
@@ -52,6 +50,8 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	SubRedditInfo subReddit = null;
 	private String subNname;
 	private String displayName;
+	private String headerImage;
+	private Bitmap thumbsBit = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +65,44 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		// Enabling Back navigation on Action Bar icon
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
+		handleIntent(getIntent());
+		
+		setOnItemClickListener(this);
+	}
+	
+	private void handleIntent(Intent intent){
+		query = null;
+
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			displayName = query = intent.getStringExtra(SearchManager.QUERY);
+			query = "/r/" + query + "/";
+			isFromSearch = true;
+		} else {// comes from the lists and not the search bar
+			query = intent.getStringExtra("subReddit");
+			favorite = intent.getBooleanExtra("favorite", false);
+			subNname = intent.getStringExtra("subName");
+			displayName = intent.getStringExtra("displayName");
+			this.headerImage = intent.getStringExtra("header_img");
+			System.out.println("HEADER IMAGE URL: " + this.headerImage);
+			
+		}
+		setTitle("LurkR: " + displayName);
+		ProgressDialog dialogwait = ProgressDialog.show(this,
+                "Loading...", "Please wait..", true);
+		AsyncTask<String, String, List<StoryInfo>> var = new LoadStories(this, query).execute();
+		dialogwait.dismiss();
 		try {
-			handleIntent(getIntent());
+			if (var.get() == null || var.get().isEmpty()) {
+				System.out.println("INVALID SUBREDDIT: " + query);
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-		setOnItemClickListener(this);
+		isFromSearch = false;
 	}
+
 
 	public void onResume() {
 		super.onResume();
@@ -87,7 +116,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			if (this.storieList != null && !this.storieList.isEmpty()) {
 				if (subReddit == null) {
 					try {
-						subReddit = new LoadSubReddit(this.storieList.get(0).subreddit_id).execute().get();
+						subReddit = new LoadSubReddit(this, this.storieList.get(0).subreddit_id).execute().get();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} catch (ExecutionException e) {
@@ -103,33 +132,6 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		}
 		srDataSource.close();
 		super.onPause();
-	}
-
-	/**
-	 * Handling intent data
-	 * 
-	 * @throws ExecutionException
-	 * @throws InterruptedException
-	 */
-	private void handleIntent(Intent intent) throws InterruptedException, ExecutionException {
-		query = null;
-
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			displayName = query = intent.getStringExtra(SearchManager.QUERY);
-			query = "/r/" + query + "/";
-			isFromSearch = true;
-		} else {// comes from the lists and not the search bar
-			query = intent.getStringExtra("subReddit");
-			favorite = intent.getBooleanExtra("favorite", false);
-			subNname = intent.getStringExtra("subName");
-			displayName = intent.getStringExtra("displayName");
-		}
-		setTitle("LurkR: " + displayName);
-		AsyncTask<String, String, List<StoryInfo>> var = new LoadStories(this, query).execute();
-		if (var.get() == null || var.get().isEmpty()) {
-			System.out.println("INVALID SUBREDDIT: " + query);
-		}
-		isFromSearch = false;
 	}
 
 	@Override
@@ -180,13 +182,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	@Override
 	protected void onNewIntent(Intent intent) {
 		setIntent(intent);
-		try {
-			handleIntent(intent);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
+		handleIntent(intent);
 	}
 
 	private void setOnItemClickListener(final Context context) {
@@ -195,8 +191,9 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				StoryInfo subReddit = (StoryInfo) storieList.get(position);
-				Intent nextActivity = new Intent(context, ActivityStoryContent.class);
+				Intent nextActivity = new Intent(context, ActivityStoryContent.class);//Pass in the name
 				nextActivity.putExtra("url", subReddit.url);
+				nextActivity.putExtra("name", displayName);
 				startActivity(nextActivity);
 			}
 		});
@@ -233,13 +230,22 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	// Load Channel To Store on DB
 	class LoadSubReddit extends AsyncTask<String, String, SubRedditInfo> {
 		private String subRedditName;
+		private Context context;
+		private ProgressDialog pDialogChannel;
 
-		public LoadSubReddit(String subRedditName) {
+		public LoadSubReddit(Context context ,String subRedditName) {
 			this.subRedditName = subRedditName;
+			this.context = context;
 		}
 
 		protected void onPreExecute() {
 			super.onPreExecute();
+			pDialogChannel = new ProgressDialog(context);// CHANGE TO GETAPPLICATION
+			// CONTEXT
+			pDialogChannel.setMessage("Saving Favorite SubReddit ...");
+			pDialogChannel.setIndeterminate(false);
+			pDialogChannel.setCancelable(false);
+			pDialogChannel.show();
 		}
 
 		protected SubRedditInfo doInBackground(String... args) {
@@ -248,6 +254,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		}
 
 		protected void onPostExecute(final SubRedditInfo subRedditInfo) {
+			pDialogChannel.dismiss();
 			super.onPostExecute(subRedditInfo);
 		}
 
@@ -298,6 +305,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	class LoadStories extends AsyncTask<String, String, List<StoryInfo>> {
 		private String subRedditChannel;
 		private Context context;
+		private ProgressDialog pDialogStories;
 
 		public LoadStories(Context context, String subReddit) {
 			this.context = context;
@@ -311,13 +319,23 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(context);// CHANGE TO GETAPPLICATION
+			pDialogStories = new ProgressDialog(context);// CHANGE TO GETAPPLICATION
 													// CONTEXT
-			pDialog.setMessage("Loading Stories ...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
+			pDialogStories.setMessage("Loading Stories ...");
+			pDialogStories.setIndeterminate(false);
+			pDialogStories.setCancelable(false);
+			pDialogStories.show();
 		}
+		
+		private void getHeaderImage(final String thumbUrl)
+		{
+			thumbsBit = new LoadThumbsTask(thumbUrl).exceute().imageBitmap;
+
+			Resources res = getResources();
+			BitmapDrawable icon = new BitmapDrawable(res,thumbsBit);
+			getActionBar().setIcon(icon);
+		}
+
 
 		/**
 		 * getting SubReddits
@@ -326,6 +344,9 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			// "http://reddit.com/r/reddits.rss?limit=[limit]&after=[after]";
 			final String STORIES_URL = URLCreate(subRedditChannel, offset.intValue());
 
+//			if(thumbsBit == null && headerImage != null && !headerImage.isEmpty()) //Use Picaso?
+//				getHeaderImage(headerImage);
+			
 			List<StoryInfo> listOfStories = new ArrayList<StoryInfo>();
 
 			// Create List Of Stories
@@ -342,7 +363,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 				StoryInfo item = new StoryInfo(var).execute();
 				String thumb_image_url = item.thumbnail;
 				if (thumb_image_url != null && !thumb_image_url.isEmpty() && isURL(thumb_image_url)) {
-					item.imageBitMap = getImage(thumb_image_url);
+					item.imageBitMap = new LoadThumbsTask(thumb_image_url).exceute().imageBitmap;
 				}
 				listOfStories.add(item);
 			}
@@ -368,32 +389,6 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			return URL.contains("http");
 		}
 
-		private Bitmap getImage(String url) {
-			Bitmap mIcon11 = null;
-			try {
-				InputStream in = new java.net.URL(url).openStream();
-				mIcon11 = BitmapFactory.decodeStream(in);
-			} catch (Exception e) {
-				Log.e("Error", e.getMessage());
-				e.printStackTrace();
-				return null;
-			}
-			int width = mIcon11.getWidth();
-			int height = mIcon11.getHeight();
-
-			if (width > 341 || height > 201) {
-				// calculate the scale
-				float scaleWidth = ((float) 100) / width;
-				float scaleHeight = ((float) 100) / height;
-				// create a matrix for the manipulation
-				Matrix matrix = new Matrix();
-				matrix.postScale(scaleWidth, scaleHeight);
-				mIcon11 = Bitmap.createBitmap(mIcon11, 0, 0, width, height, matrix, true);
-			}
-
-			return mIcon11;
-		}
-
 		private String URLCreate(String subReddit, int offset) {
 			String after = "";
 			if (storieList.size() > 0)
@@ -407,7 +402,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		 * **/
 		protected void onPostExecute(final List<StoryInfo> storiesInfoList) {
 			// dismiss the dialog after getting all products
-			pDialog.dismiss();
+			pDialogStories.dismiss();
 			loadingMore = false;
 			if (storiesInfoList == null)
 				return;

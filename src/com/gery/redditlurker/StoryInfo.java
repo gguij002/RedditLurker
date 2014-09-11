@@ -1,6 +1,7 @@
 package com.gery.redditlurker;
 
 import java.util.Date;
+import android.text.format.DateUtils;
 
 import org.json.simple.JSONObject;
 

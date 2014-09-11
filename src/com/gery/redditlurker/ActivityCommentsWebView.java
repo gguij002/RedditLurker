@@ -20,7 +20,7 @@ public class ActivityCommentsWebView extends Activity {
 		webView = (WebView) findViewById(R.id.comments_webview_view);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.setWebViewClient(new WebViewClient());
-		webView.loadUrl("http://www.reddit.com" + permalink);
+		webView.loadUrl("http://www.reddit.com" + permalink+"/.compact");
 	}
 
 	private void handleIntent(Intent intent) {

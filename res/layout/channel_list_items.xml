@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/story_thumb_view1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="2dp"
@@ -21,7 +21,8 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
             android:contentDescription="@string/subreddit_thumbview_desc"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_launcher" 
+            />
 
         <!-- Title -->
 
