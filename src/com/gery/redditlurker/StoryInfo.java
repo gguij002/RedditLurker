@@ -67,5 +67,10 @@ public class StoryInfo {
 		System.out.println("DATE FORMATTED: " + d.toString());
 		return d;
 	}
+	
+	public boolean isValidThumbNail()
+	{
+		return this.thumbnail != null && !this.thumbnail.isEmpty();
+	}
 
 }

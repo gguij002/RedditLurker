@@ -11,8 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
-     	android:layout_marginBottom="10dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="2dp"
         android:contentDescription="@string/subreddit_thumbview_desc"
         android:src="@drawable/ic_launcher" />
 
@@ -22,10 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/entered_imagebutton_delete"
         android:layout_toRightOf="@+id/entered_subreddit_thumb_view"
-        android:layout_marginLeft="10dp"
          android:layout_marginTop="10dp"
         android:text="KAKALink"
-        android:textSize="18dip"
+        android:textSize="@dimen/title"
         android:textStyle="bold" />
 
     <TextView
@@ -36,9 +37,8 @@
         android:layout_toLeftOf="@+id/entered_imagebutton_delete"
         android:layout_toRightOf="@+id/entered_subreddit_thumb_view"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
         android:text="KAKA"
-        android:textSize="14dip"
+        android:textSize="@dimen/rating"
         android:textStyle="bold" />
 
 <ImageButton

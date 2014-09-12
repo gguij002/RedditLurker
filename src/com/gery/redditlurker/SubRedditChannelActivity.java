@@ -10,7 +10,6 @@ import org.json.simple.JSONObject;
 import com.gery.database.LoadThumbsTask;
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -19,10 +18,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -50,8 +49,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 	SubRedditInfo subReddit = null;
 	private String subNname;
 	private String displayName;
-	private String headerImage;
-	private Bitmap thumbsBit = null;
+	private byte[] headerBarThumb;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +68,20 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 		setOnItemClickListener(this);
 	}
 	
+	private void setHeaderBarThumb(byte[] thumbBitmapArr)
+	{
+		if(thumbBitmapArr != null){
+		Bitmap thumbBitmap = BitmapFactory.decodeByteArray(thumbBitmapArr, 0, thumbBitmapArr.length);
+		Resources res = getResources();
+		BitmapDrawable icon = null;
+		
+		icon = new BitmapDrawable(res,thumbBitmap);
+		getActionBar().setIcon(icon);
+		}
+		else
+			getActionBar().setIcon(R.drawable.ic_launcher);
+	}
+	
 	private void handleIntent(Intent intent){
 		query = null;
 
@@ -82,13 +94,11 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			favorite = intent.getBooleanExtra("favorite", false);
 			subNname = intent.getStringExtra("subName");
 			displayName = intent.getStringExtra("displayName");
-			this.headerImage = intent.getStringExtra("header_img");
-			System.out.println("HEADER IMAGE URL: " + this.headerImage);
-			
+			this.headerBarThumb = intent.getByteArrayExtra("imageBitMap");
+			setHeaderBarThumb(this.headerBarThumb);
 		}
 		setTitle("LurkR: " + displayName);
-		ProgressDialog dialogwait = ProgressDialog.show(this,
-                "Loading...", "Please wait..", true);
+		ProgressDialog dialogwait = ProgressDialog.show(this, "Loading...", "Please wait..", true);
 		AsyncTask<String, String, List<StoryInfo>> var = new LoadStories(this, query).execute();
 		dialogwait.dismiss();
 		try {
@@ -194,6 +204,7 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 				Intent nextActivity = new Intent(context, ActivityStoryContent.class);//Pass in the name
 				nextActivity.putExtra("url", subReddit.url);
 				nextActivity.putExtra("name", displayName);
+				nextActivity.putExtra("imageBitMap", headerBarThumb);
 				startActivity(nextActivity);
 			}
 		});
@@ -326,16 +337,6 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			pDialogStories.setCancelable(false);
 			pDialogStories.show();
 		}
-		
-		private void getHeaderImage(final String thumbUrl)
-		{
-			thumbsBit = new LoadThumbsTask(thumbUrl).exceute().imageBitmap;
-
-			Resources res = getResources();
-			BitmapDrawable icon = new BitmapDrawable(res,thumbsBit);
-			getActionBar().setIcon(icon);
-		}
-
 
 		/**
 		 * getting SubReddits
@@ -344,9 +345,6 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			// "http://reddit.com/r/reddits.rss?limit=[limit]&after=[after]";
 			final String STORIES_URL = URLCreate(subRedditChannel, offset.intValue());
 
-//			if(thumbsBit == null && headerImage != null && !headerImage.isEmpty()) //Use Picaso?
-//				getHeaderImage(headerImage);
-			
 			List<StoryInfo> listOfStories = new ArrayList<StoryInfo>();
 
 			// Create List Of Stories
@@ -361,10 +359,10 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			for (int i = 0; i < length; i++) {
 				JSONObject var = (JSONObject) ((JSONObject) listOfSubredditsRaw.get(i)).get("data");
 				StoryInfo item = new StoryInfo(var).execute();
-				String thumb_image_url = item.thumbnail;
-				if (thumb_image_url != null && !thumb_image_url.isEmpty() && isURL(thumb_image_url)) {
-					item.imageBitMap = new LoadThumbsTask(thumb_image_url).exceute().imageBitmap;
-				}
+//				String thumb_image_url = item.thumbnail;
+//				if (thumb_image_url != null && !thumb_image_url.isEmpty() && isURL(thumb_image_url)) {
+//					item.imageBitMap = new LoadThumbsTask(thumb_image_url).exceute().imageBitmap;
+//				}
 				listOfStories.add(item);
 			}
 

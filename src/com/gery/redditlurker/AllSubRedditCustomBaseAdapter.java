@@ -5,16 +5,24 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gery.database.SubRedditsDataSource;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 	public List<SubRedditInfo> list;
@@ -41,34 +49,35 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		final ViewHolder holder;
-		final SubRedditInfo subReddit = list.get(position);
+
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.all_aubreddit_list_item, null);
 			holder = new ViewHolder();
 			holder.displayName = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_displayName_text);
 			holder.txtLink = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_link_text);
 			holder.favoriteButton = (ImageButton) convertView.findViewById(R.id.all_sub_favorite_image_button);
-
+			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.progressBar_allsub_image);
 			holder.thumbView = (ImageView) convertView.findViewById(R.id.subreddit_thumb_view);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		final SubRedditInfo subRedditInfo = list.get(position);
 
 		holder.favoriteButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				SubRedditsDataSource srDataSource = new SubRedditsDataSource(parent.getContext());
 				srDataSource.open();
-				if (subReddit.favorite)// Its already fav. Delete
+				if (subRedditInfo.favorite)// Its already fav. Delete
 				{
-					subReddit.favorite = false;
-					srDataSource.deleteSubReddit(subReddit.getName());
+					subRedditInfo.favorite = false;
+					srDataSource.deleteSubReddit(subRedditInfo.getName());
 					holder.favoriteButton.setImageResource(R.drawable.ic_favorite_off_new);
 				}// not fav Add
 				else {
-					subReddit.favorite = true;
-					srDataSource.addSubRedditToDB(subReddit);
+					subRedditInfo.favorite = true;
+					srDataSource.addSubRedditToDB(subRedditInfo);
 					holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
 				}
 
@@ -76,29 +85,55 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 			}
 		});
 
-		if (subReddit.favorite)
+		if (subRedditInfo.favorite)
 			holder.favoriteButton.setImageResource(android.R.drawable.btn_star_big_on);
 		else
 			holder.favoriteButton.setImageResource(R.drawable.ic_favorite_off_new);
 
 		// Second TextView in the list item
-		String header_title_text = list.get(position).header_title;
+		String header_title_text = subRedditInfo.header_title;
 		if (header_title_text != null && !header_title_text.isEmpty())
 			holder.displayName.setText(header_title_text);
 		else
-			holder.displayName.setText(list.get(position).display_name);
+			holder.displayName.setText(subRedditInfo.display_name);
 
-		String link = list.get(position).url;
+		String link = subRedditInfo.url;
 		holder.txtLink.setText(link.substring(0, link.length() - 1));
 
-		Bitmap image_bits = list.get(position).imageBitMap;
-		if (image_bits != null)
-			holder.thumbView.setImageBitmap(image_bits);
+		holder.progressBar.setVisibility(View.GONE);
+		if (subRedditInfo.isValidThumbNail()) {
+			if (subRedditInfo.header_img.equalsIgnoreCase("nsfw")) {
+				holder.thumbView.setImageResource(R.drawable.ic_nsfw_image);
+			} else if (subRedditInfo.header_img.equalsIgnoreCase("self")) {
+				holder.thumbView.setImageResource(R.drawable.ic_launcher);
+			} else {
+				holder.progressBar.setVisibility(View.VISIBLE);
+				Picasso.with(parent.getContext()).load(subRedditInfo.header_img).into(holder.thumbView, new Callback() {
+					@Override
+					public void onSuccess() {
+						holder.progressBar.setVisibility(View.GONE);
+						subRedditInfo.setImageBitMap(getImageBitmap(holder.thumbView));
+					}
 
+					@Override
+					public void onError() {
+						// error
+					}
+				});
+			}
+		}
 		return convertView;
 	}
 
+	private Bitmap getImageBitmap(ImageView v) {
+		BitmapDrawable drawable = (BitmapDrawable) v.getDrawable();
+		Bitmap bitmap = drawable.getBitmap();
+
+		return bitmap;
+	}
+
 	static class ViewHolder {
+		public ProgressBar progressBar;
 		TextView displayName;
 		TextView txtLink;
 		ImageView thumbView;

@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ChannelBaseAdapter extends BaseAdapter {
@@ -45,7 +49,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
+		final ViewHolder holder;
 		PrettyTime p = new PrettyTime();
 
 		if (convertView == null) {
@@ -56,6 +60,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 			holder.ups = (TextView) convertView.findViewById(R.id.ups_text_view);
 			holder.comments = (Button) convertView.findViewById(R.id.comments_button);
 			holder.thumbView = (ImageView) convertView.findViewById(R.id.story_thumb_view1);
+			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.progressBar_channel_image);
 
 			convertView.setTag(holder);
 		} else {
@@ -76,10 +81,33 @@ public class ChannelBaseAdapter extends BaseAdapter {
 				fragmentContext.startActivity(nextActivity);
 			}
 		});
-
-		Bitmap image_bits = storyInfo.imageBitMap;
-		if (image_bits != null)
-			holder.thumbView.setImageBitmap(image_bits);
+		
+		holder.progressBar.setVisibility(View.GONE);
+		if(storyInfo.isValidThumbNail()){
+			if(storyInfo.thumbnail.equalsIgnoreCase("nsfw"))
+			{
+				holder.thumbView.setImageResource(R.drawable.ic_nsfw_image);
+			}
+			else if(storyInfo.thumbnail.equalsIgnoreCase("self"))
+			{
+				holder.thumbView.setImageResource(R.drawable.ic_launcher);
+			}
+			else
+			{
+				holder.progressBar.setVisibility(View.VISIBLE);
+				Picasso.with(fragmentContext).load(storyInfo.thumbnail).into(holder.thumbView, new Callback() {
+		            @Override
+		            public void onSuccess() {
+		                holder.progressBar.setVisibility(View.GONE);
+		            }
+		
+		            @Override
+		            public void onError() {
+		                //error
+		            }
+		        });
+			}
+		}
 
 		return convertView;
 	}
@@ -101,6 +129,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 		public Button comments;
 		public ImageView thumbView;
 		public TextView ups;
+		public ProgressBar progressBar;
 	}
 
 }

@@ -1,8 +1,12 @@
 package com.gery.redditlurker;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -106,7 +110,14 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 					nextActivity.putExtra("favorite", subReddit.favorite);
 					nextActivity.putExtra("subName", subReddit.name);
 					nextActivity.putExtra("displayName", subReddit.display_name);
-					nextActivity.putExtra("header_img", subReddit.header_img);
+					byte[] byteArray = null;
+					if(subReddit.imageBitMap != null){
+						ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+						subReddit.imageBitMap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
+					    byteArray = bStream.toByteArray();
+					}
+					nextActivity.putExtra("imageBitMap", byteArray);
+					
 					startActivity(nextActivity);
 				}
 				else 
@@ -177,11 +188,6 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			for (int i = 0; i < length; i++) {
 				JSONObject var = (JSONObject) ((JSONObject) listOfSubredditsRaw.get(i)).get("data");
 				SubRedditInfo item = new SubRedditInfo(var).execute();
-				String header_image_url = item.header_img;
-
-				if (header_image_url != null && !header_image_url.isEmpty()) {
-					item.imageBitMap = new LoadThumbsTask(header_image_url).exceute().imageBitmap;
-				}
 
 				if (subRedditsIdsFromDb.contains(item.name)) {
 					System.out.println("subRedditsIdsFromDb.contains(item.id)" + item.display_name);

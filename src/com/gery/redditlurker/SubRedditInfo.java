@@ -105,4 +105,8 @@ public class SubRedditInfo implements Comparable<SubRedditInfo> {
 	public String getName() {
 		return this.name;
 	}
+
+	public boolean isValidThumbNail() {
+		return this.header_img != null && !this.header_img.isEmpty();
+	}
 }

@@ -1,11 +1,13 @@
 package com.gery.redditlurker;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,7 +62,11 @@ public class EnteredSubRedditsFragment extends Fragment {
 					nextActivity.putExtra("subName", subReddit.name);
 					nextActivity.putExtra("displayName", subReddit.display_name);
 					nextActivity.putExtra("favorite", subReddit.favorite);
-					nextActivity.putExtra("header_img", subReddit.header_img);
+					ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+					subReddit.imageBitMap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
+				    byte[] byteArray = bStream.toByteArray();
+					nextActivity.putExtra("imageBitMap", byteArray);
+				
 					startActivity(nextActivity);
 				}
 				else 

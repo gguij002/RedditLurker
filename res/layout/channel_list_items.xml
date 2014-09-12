@@ -79,6 +79,19 @@
             android:text="1.3k"
             android:textColor="#74b9d8"
             android:textSize="@dimen/buttonsText" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_channel_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="2dp"
+            />
+
     </RelativeLayout>
 
 </TableRow>
