@@ -6,20 +6,16 @@ import java.util.List;
 
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.gery.database.Connection;
-import com.gery.database.LoadThumbsTask;
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

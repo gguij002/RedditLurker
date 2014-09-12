@@ -359,10 +359,6 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			for (int i = 0; i < length; i++) {
 				JSONObject var = (JSONObject) ((JSONObject) listOfSubredditsRaw.get(i)).get("data");
 				StoryInfo item = new StoryInfo(var).execute();
-//				String thumb_image_url = item.thumbnail;
-//				if (thumb_image_url != null && !thumb_image_url.isEmpty() && isURL(thumb_image_url)) {
-//					item.imageBitMap = new LoadThumbsTask(thumb_image_url).exceute().imageBitmap;
-//				}
 				listOfStories.add(item);
 			}
 

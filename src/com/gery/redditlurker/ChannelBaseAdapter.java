@@ -1,5 +1,6 @@
 package com.gery.redditlurker;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -77,6 +78,14 @@ public class ChannelBaseAdapter extends BaseAdapter {
 			public void onClick(View arg0) {
 				Intent nextActivity = new Intent(fragmentContext, ActivityCommentsWebView.class);
 				nextActivity.putExtra("permalink", storyInfo.permalink);
+				nextActivity.putExtra("name", storyInfo.subreddit);
+				byte[] byteArray = null;
+				if(storyInfo.imageBitMap != null){
+					ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+					storyInfo.imageBitMap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
+				    byteArray = bStream.toByteArray();
+				}
+				nextActivity.putExtra("imageBitMap", byteArray);
 				nextActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				fragmentContext.startActivity(nextActivity);
 			}

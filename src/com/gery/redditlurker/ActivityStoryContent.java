@@ -1,8 +1,5 @@
 package com.gery.redditlurker;
 
-import java.util.concurrent.ExecutionException;
-
-import com.gery.database.LoadIMagesTask;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -13,7 +10,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,50 +30,41 @@ public class ActivityStoryContent extends Activity {
 
 		if (isImage()) {
 			setContentView(R.layout.activity_image_display);
-			
+
 			ImageView imageView = (ImageView) findViewById(R.id.image_viewer);
 			final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-			//This line shows progressBar again for recycled view
+			// This line shows progressBar again for recycled view
 			progressBar.setVisibility(View.VISIBLE);
-			
+
 			Picasso.with(this).load(url).into(imageView, new Callback() {
-                @Override
-                public void onSuccess() {
-                    progressBar.setVisibility(View.GONE);
-                }
+				@Override
+				public void onSuccess() {
+					progressBar.setVisibility(View.GONE);
+				}
 
-                @Override
-                public void onError() {
-                	//Set Error Image
-                }
-            });
-			
-			
-			//Picasso.with(this).load(url).placeholder(R.id.progressBar).into(imageView);
-			
+				@Override
+				public void onError() {
+					// Set Error Image
+				}
+			});
 
-			// AsyncTask<String, Void, Bitmap> loadImage = new
-			// LoadIMagesTask(this).execute(url);
-			// try {
-			// imageBitmap = loadImage.get();
-			// } catch (InterruptedException e) {
-			// e.printStackTrace();
-			// } catch (ExecutionException e) {
-			// e.printStackTrace();
-			// }
-			// ImageView imageView = (ImageView)
-			// findViewById(R.id.image_viewer);
-			// imageView.setImageBitmap(imageBitmap);
 		} else {
+			final ProgressDialog pd = ProgressDialog.show(this, "", "Loading ...", true);
 			setContentView(R.layout.activity_story_content);
+			
 			webView = (WebView) findViewById(R.id.story_content_webview_view);
 			webView.getSettings().setJavaScriptEnabled(true);
-			webView.setWebViewClient(new WebViewClient());
+			webView.setWebViewClient(new WebViewClient() {
+			    @Override
+			    public void onPageFinished(WebView view, String url) {
+			        pd.dismiss();
+			    }
+			});
 			webView.loadUrl(formatURL(url));
 		}
 	}
-
+	
 	private String formatURL(String url) {
 		if (url.contains("www.reddit.com"))
 			return url + ".compact";
@@ -93,12 +80,19 @@ public class ActivityStoryContent extends Activity {
 	}
 
 	private void setHeaderBarThumb(byte[] thumbBitmapArr) {
+		if(thumbBitmapArr != null)
+		{
 		Bitmap thumbBitmap = BitmapFactory.decodeByteArray(thumbBitmapArr, 0, thumbBitmapArr.length);
 		Resources res = getResources();
 		BitmapDrawable icon = null;
 
 		icon = new BitmapDrawable(res, thumbBitmap);
 		getActionBar().setIcon(icon);
+		}
+		else
+		{
+			getActionBar().setIcon(R.drawable.ic_launcher);
+		}
 	}
 
 	private void handleIntent(Intent intent) {
@@ -124,5 +118,4 @@ public class ActivityStoryContent extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
 }
