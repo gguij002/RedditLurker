@@ -32,7 +32,7 @@ import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class SubRedditChannelActivity extends Activity implements OnScrollListener {
+public class ActivitySubRedditChannel extends Activity implements OnScrollListener {
 	// List Items
 	int currentFirstVisibleItem = 0;
 	int currentVisibleItemCount = 0;
@@ -296,7 +296,8 @@ public class SubRedditChannelActivity extends Activity implements OnScrollListen
 			SubRedditInfo item = new SubRedditInfo(varB).execute();
 			String header_image_url = item.header_img;
 			if (header_image_url != null && !header_image_url.isEmpty()) {
-				item.imageBitMap = new LoadThumbsTask(header_image_url).exceute().imageBitmap;
+				System.out.println("ITS GOING IN HERE NO BUENO");
+				item.imageBitMap = new LoadThumbsTask(header_image_url).exceute().imageBitmap;//Picasso.with(context).load(header_image_url).get();
 			}
 			return item;
 		}

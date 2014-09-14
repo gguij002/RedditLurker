@@ -21,7 +21,7 @@
 
         <!-- Search results activity -->
         <activity
-            android:name=".SubRedditChannelActivity"
+            android:name=".ActivitySubRedditChannel"
             android:parentActivityName="com.gery.redditlurker.MainActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -36,14 +36,14 @@
         <!-- WEBVIEW activity Comments-->
         <activity
             android:name=".ActivityCommentsWebView"
-            android:parentActivityName="com.gery.redditlurker.SubRedditChannelActivity"
+            android:parentActivityName="com.gery.redditlurker.ActivitySubRedditChannel"
             android:screenOrientation="portrait" >
         </activity>
 
         <!-- WEBVIEW activity Story Content -->
         <activity
             android:name=".ActivityStoryContent"
-            android:parentActivityName="com.gery.redditlurker.SubRedditChannelActivity"
+            android:parentActivityName="com.gery.redditlurker.ActivitySubRedditChannel"
             android:screenOrientation="portrait" >
         </activity>
         

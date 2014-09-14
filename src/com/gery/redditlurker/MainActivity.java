@@ -110,7 +110,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 
 	private void goToSubReddit() {
-		Intent i = new Intent(MainActivity.this, SubRedditChannelActivity.class);
+		Intent i = new Intent(MainActivity.this, ActivitySubRedditChannel.class);
 		startActivity(i);
 	}
 

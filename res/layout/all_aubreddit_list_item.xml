@@ -3,74 +3,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-<RelativeLayout
+    <RelativeLayout
         android:id="@+id/all_sub_relative_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:descendantFocusability="blocksDescendants"
         android:orientation="vertical" >
 
-
-    <ImageView
-        android:id="@+id/subreddit_thumb_view"
-        android:layout_width="wrap_content"
+        <!--
+     android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="2dp"
-        android:contentDescription="@string/subreddit_thumbview_desc"
-        android:src="@drawable/ic_launcher" />
+        -->
 
-    <TextView
-        android:id="@+id/sub_reddit_list_item_link_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/subreddit_thumb_view"
-        android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
-        android:layout_toRightOf="@+id/subreddit_thumb_view"
-        android:text="KAKALink"
-        android:textSize="@dimen/title"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/subreddit_thumb_view"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="2dp"
+            android:contentDescription="@string/subreddit_thumbview_desc"
+            android:src="@drawable/ic_launcher" />
 
-    <TextView
-        android:id="@+id/sub_reddit_list_item_displayName_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/sub_reddit_list_item_link_text"
-        android:layout_marginBottom="10dp"
-        android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
-        android:layout_toRightOf="@+id/subreddit_thumb_view"
-        android:text="KAKA"
-        android:textSize="@dimen/rating"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/sub_reddit_list_item_link_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/subreddit_thumb_view"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
+            android:layout_toRightOf="@+id/subreddit_thumb_view"
+            android:text="KAKALink"
+            android:textSize="@dimen/title"
+            android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/all_sub_favorite_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="false"
-        android:layout_centerInParent="true"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/imagebutton_go"
-        android:background="@null"
-        android:src="@drawable/ic_favorite_off_new" />
+        <TextView
+            android:id="@+id/sub_reddit_list_item_displayName_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sub_reddit_list_item_link_text"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
+            android:layout_toRightOf="@+id/subreddit_thumb_view"
+            android:text="KAKA"
+            android:textSize="@dimen/rating"
+            android:textStyle="bold" />
 
-    <ProgressBar
-        android:id="@+id/progressBar_allsub_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="2dp" />
+        <ImageButton
+            android:id="@+id/all_sub_favorite_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="false"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/imagebutton_go"
+            android:background="@null"
+            android:src="@drawable/ic_favorite_off_new" />
 
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progressBar_allsub_image"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="2dp" />
+    </RelativeLayout>
+
 </TableRow>

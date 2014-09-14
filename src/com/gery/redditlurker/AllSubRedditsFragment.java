@@ -101,7 +101,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				if(Connection.isNetworkConnected(context))
 				{
 					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
-					Intent nextActivity = new Intent(context, SubRedditChannelActivity.class);
+					Intent nextActivity = new Intent(context, ActivitySubRedditChannel.class);
 					nextActivity.putExtra("subReddit", subReddit.url);
 					nextActivity.putExtra("favorite", subReddit.favorite);
 					nextActivity.putExtra("subName", subReddit.name);
