@@ -228,7 +228,6 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 
 		if (this.adapter != null && subRedditsList != null && this.subRedditsList.size() != storiesDB.size()) {
 			for (SubRedditInfo subReddits : this.subRedditsList) {
-				System.out.println("BEFORE IF: " + subReddits.display_name + "-" + subReddits.name);
 				if (!storiesDB.contains(subReddits.name)) {
 					subReddits.favorite = false;
 				} else {

@@ -160,10 +160,11 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	public void onPause() {
 		SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
 		srDataSource.open();
-		if (subReddit.favorite) { // Its fav, Add to DB
+		if (subReddit.favorite) 
+		{ // Its fav, Add to DB
 			if (this.storieList != null)// && !this.storieList.isEmpty() 
 			{
-				if (subReddit == null && !srDataSource.isRawSubRedditExist(subReddit.name)) //Rethink this logic
+				if (!srDataSource.isRawSubRedditExist(subReddit.name)) //Rethink this logic
 				{
 					try {
 						System.out.println("Loading subreddit to add to DB: Highly expensive and must be avouded");
@@ -173,12 +174,13 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 					} catch (ExecutionException e) {
 						e.printStackTrace();
 					}
+					subReddit.favorite = true;
+					srDataSource.addSubRedditToDB(subReddit);
 				}
-				subReddit.favorite = true;
-				srDataSource.addSubRedditToDB(subReddit);
-				
 			}
-		} else { // Not fav Delete from DB
+		}
+		else
+		{ // Not fav Delete from DB
 			srDataSource.deleteSubReddit(subReddit.name);
 		}
 		srDataSource.close();
