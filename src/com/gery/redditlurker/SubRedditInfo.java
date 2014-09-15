@@ -72,6 +72,11 @@ public class SubRedditInfo implements Comparable<SubRedditInfo> {
 	public void setImageBitMap(Bitmap bitmap) {
 		this.imageBitMap = bitmap;
 	}
+	
+	public String getJsonObjectAsString()
+	{
+		return this.jsonObject.toJSONString();
+	}
 
 	public JSONObject getJsonObject() {
 		return jsonObject;

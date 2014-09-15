@@ -58,13 +58,15 @@ public class EnteredSubRedditsFragment extends Fragment {
 				{
 					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 					Intent nextActivity = new Intent(context, ActivitySubRedditChannel.class);
-					nextActivity.putExtra("subReddit", subReddit.url);
-					nextActivity.putExtra("subName", subReddit.name);
-					nextActivity.putExtra("displayName", subReddit.display_name);
+					nextActivity.putExtra("subRedditJSON", subReddit.getJsonObjectAsString());
 					nextActivity.putExtra("favorite", subReddit.favorite);
-					ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-					subReddit.imageBitMap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
-				    byte[] byteArray = bStream.toByteArray();
+					
+					byte[] byteArray = null;
+					if(subReddit.imageBitMap != null){
+						ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+						subReddit.imageBitMap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
+					    byteArray = bStream.toByteArray();
+					}
 					nextActivity.putExtra("imageBitMap", byteArray);
 				
 					startActivity(nextActivity);

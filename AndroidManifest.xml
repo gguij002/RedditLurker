@@ -53,7 +53,7 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".SubRedditChannelActivity" />
+                android:value=".ActivitySubRedditChannel" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

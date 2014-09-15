@@ -102,10 +102,9 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				{
 					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 					Intent nextActivity = new Intent(context, ActivitySubRedditChannel.class);
-					nextActivity.putExtra("subReddit", subReddit.url);
+					nextActivity.putExtra("subRedditJSON", subReddit.getJsonObjectAsString());
 					nextActivity.putExtra("favorite", subReddit.favorite);
-					nextActivity.putExtra("subName", subReddit.name);
-					nextActivity.putExtra("displayName", subReddit.display_name);
+					
 					byte[] byteArray = null;
 					if(subReddit.imageBitMap != null){
 						ByteArrayOutputStream bStream = new ByteArrayOutputStream();

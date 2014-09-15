@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import com.gery.database.LoadThumbsTask;
 import com.gery.database.RedditRSSReader;
@@ -15,6 +16,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -44,16 +47,24 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	public boolean isFromSearch = false;
 	public List<StoryInfo> storieList;
 	private boolean loadingMore;
-	private String query;
-	private boolean favorite = false;
+	
+	
 	SubRedditInfo subReddit = null;
-	private String subNname;
-	private String displayName;
 	private byte[] headerBarThumb;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+//		  ProgressDialog dialog = new ProgressDialog(this);
+//          dialog.setCancelable(true);
+//          dialog.setOnCancelListener(new OnCancelListener(){
+//             @Override
+//             public void onCancel(DialogInterface dialog){
+//                onBackPressed();
+//          }});
+//          dialog.show();
+		
 		setContentView(R.layout.activity_subreddit);
 
 		// get the action bar
@@ -66,44 +77,44 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		handleIntent(getIntent());
 		
 		setOnItemClickListener(this);
+		
+		//dialog.dismiss();
 	}
 	
-	private void setHeaderBarThumb(byte[] thumbBitmapArr)
+	private void setHeaderBarThumb(Bitmap thumbBitmap)
 	{
-		if(thumbBitmapArr != null){
-		Bitmap thumbBitmap = BitmapFactory.decodeByteArray(thumbBitmapArr, 0, thumbBitmapArr.length);
-		Resources res = getResources();
-		BitmapDrawable icon = null;
+		if(thumbBitmap != null){
+			Resources res = getResources();
+			BitmapDrawable icon = null;
 		
-		icon = new BitmapDrawable(res,thumbBitmap);
-		getActionBar().setIcon(icon);
+			icon = new BitmapDrawable(res,thumbBitmap);
+			getActionBar().setIcon(icon);
 		}
 		else
 			getActionBar().setIcon(R.drawable.ic_launcher);
 	}
 	
 	private void handleIntent(Intent intent){
-		query = null;
-
+		
+		subReddit = new SubRedditInfo(new JSONObject());
+		subReddit.favorite = false;
+		
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			displayName = query = intent.getStringExtra(SearchManager.QUERY);
-			query = "/r/" + query + "/";
+			subReddit.display_name = intent.getStringExtra(SearchManager.QUERY);
+			subReddit.url = "/r/" + subReddit.display_name + "/";
 			isFromSearch = true;
 		} else {// comes from the lists and not the search bar
-			query = intent.getStringExtra("subReddit");
-			favorite = intent.getBooleanExtra("favorite", false);
-			subNname = intent.getStringExtra("subName");
-			displayName = intent.getStringExtra("displayName");
-			this.headerBarThumb = intent.getByteArrayExtra("imageBitMap");
-			setHeaderBarThumb(this.headerBarThumb);
+			this.ReCreateSubReddit(intent);
+			setHeaderBarThumb(subReddit.imageBitMap);
 		}
-		setTitle("LurkR: " + displayName);
-		ProgressDialog dialogwait = ProgressDialog.show(this, "Loading...", "Please wait..", true);
-		AsyncTask<String, String, List<StoryInfo>> var = new LoadStories(this, query).execute();
-		dialogwait.dismiss();
+		
+		setTitle("LurkR: " + subReddit.display_name);
+		
+		AsyncTask<String, String, List<StoryInfo>> var = new LoadStories(this, subReddit.url).execute();
+		
 		try {
 			if (var.get() == null || var.get().isEmpty()) {
-				System.out.println("INVALID SUBREDDIT: " + query);
+				System.out.println("INVALID SUBREDDIT: " + subReddit.url);
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -113,6 +124,33 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		isFromSearch = false;
 	}
 
+	
+	private void ReCreateSubReddit(Intent intent)
+	{
+		String jsonObjectAsString = intent.getStringExtra("subRedditJSON");
+		JSONObject jsonObject = getJsonFromString(jsonObjectAsString);
+		subReddit = new SubRedditInfo(jsonObject).execute();
+		
+		byte[] imageBitmapArr = this.headerBarThumb = intent.getByteArrayExtra("imageBitMap");
+		if(imageBitmapArr != null) {
+			Bitmap thumbBitmap = BitmapFactory.decodeByteArray(imageBitmapArr, 0, imageBitmapArr.length);
+			subReddit.setImageBitMap(thumbBitmap);
+		}
+		boolean fav = intent.getBooleanExtra("favorite", false);
+		subReddit.favorite = fav;
+		
+	}
+	
+	private JSONObject getJsonFromString(String jsonString) {
+		JSONParser parser = new JSONParser();
+		JSONObject jsonObject = null;
+		try {
+			jsonObject = (JSONObject) parser.parse(jsonString);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonObject;
+	}
 
 	public void onResume() {
 		super.onResume();
@@ -122,10 +160,13 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	public void onPause() {
 		SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
 		srDataSource.open();
-		if (favorite) { // Its fav, Add to DB
-			if (this.storieList != null && !this.storieList.isEmpty()) {
-				if (subReddit == null) {
+		if (subReddit.favorite) { // Its fav, Add to DB
+			if (this.storieList != null)// && !this.storieList.isEmpty() 
+			{
+				if (subReddit == null && !srDataSource.isRawSubRedditExist(subReddit.name)) //Rethink this logic
+				{
 					try {
+						System.out.println("Loading subreddit to add to DB: Highly expensive and must be avouded");
 						subReddit = new LoadSubReddit(this, this.storieList.get(0).subreddit_id).execute().get();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -135,10 +176,10 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 				}
 				subReddit.favorite = true;
 				srDataSource.addSubRedditToDB(subReddit);
-				subNname = subReddit.name;
+				
 			}
 		} else { // Not fav Delete from DB
-			srDataSource.deleteSubReddit(subNname);
+			srDataSource.deleteSubReddit(subReddit.name);
 		}
 		srDataSource.close();
 		super.onPause();
@@ -154,11 +195,11 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		}
 
 		case R.id.action_fav:
-			if (favorite) {
-				favorite = false;
+			if (subReddit.favorite) {
+				subReddit.favorite = false;
 				item.setIcon(R.drawable.ic_favorite_off_new);
 			} else {
-				favorite = true;
+				subReddit.favorite = true;
 				item.setIcon(android.R.drawable.btn_star_big_on);
 			}
 
@@ -173,18 +214,18 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_main_actions, menu);
 		MenuItem item = menu.findItem(R.id.action_fav);
+		
 		setFavoriteButton(item);
+		
 		MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
 		itemSearch.setVisible(false);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	private void setFavoriteButton(MenuItem item) {
-		if (favorite) {
-			favorite = true;
+		if (subReddit.favorite) {
 			item.setIcon(android.R.drawable.btn_star_big_on);
 		} else {
-			favorite = false;
 			item.setIcon(R.drawable.ic_favorite_off_new);
 		}
 	}
@@ -203,8 +244,8 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 				StoryInfo subReddit = (StoryInfo) storieList.get(position);
 				Intent nextActivity = new Intent(context, ActivityStoryContent.class);//Pass in the name
 				nextActivity.putExtra("url", subReddit.url);
-				nextActivity.putExtra("name", displayName);
 				nextActivity.putExtra("imageBitMap", headerBarThumb);
+				nextActivity.putExtra("name", ActivitySubRedditChannel.this.subReddit.display_name);
 				startActivity(nextActivity);
 			}
 		});
@@ -233,7 +274,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			/*** do the work for load more Stories! ***/
 			if (!loadingMore) {
 				loadingMore = true;
-				new LoadStories(this, query).execute();
+				new LoadStories(this, subReddit.url).execute();
 			}
 		}
 	}
@@ -331,8 +372,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialogStories = new ProgressDialog(context);// CHANGE TO GETAPPLICATION
-													// CONTEXT
+			pDialogStories = new ProgressDialog(context);
 			pDialogStories.setMessage("Loading Stories ...");
 			pDialogStories.setIndeterminate(false);
 			pDialogStories.setCancelable(false);
@@ -363,10 +403,8 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 				listOfStories.add(item);
 			}
 
-			if (isFromSearch & length > 0) {
-				favorite = isFavoriteFromSearch(listOfStories.get(0).subreddit_id);
-
-				// addNewSUbredditFromSearch(listOfStories.get(0).subreddit_id);
+			if (isFromSearch && length > 0) {
+				subReddit.favorite = isFavoriteFromSearch(listOfStories.get(0).subreddit_id);
 			}
 
 			return listOfStories;

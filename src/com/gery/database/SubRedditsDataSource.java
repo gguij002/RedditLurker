@@ -46,7 +46,7 @@ public class SubRedditsDataSource {
 		}
 		ContentValues values = new ContentValues();
 		values.put(MySQLiteHelper.COLUMN_FAVORITE, subReddit.getFavoriteAsInt());
-		values.put(MySQLiteHelper.COLUMN_SUBREDDIT, subReddit.getJsonObject().toJSONString());
+		values.put(MySQLiteHelper.COLUMN_SUBREDDIT, subReddit.getJsonObjectAsString());
 		values.put(MySQLiteHelper.COLUMN_ID, SubName);
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		if (subReddit.getImageBitMap() != null) {
@@ -83,6 +83,7 @@ public class SubRedditsDataSource {
 		return ids;
 	}
 
+	//USES THE NAME to compare
 	public boolean isRawSubRedditExist(String id) {
 		Cursor cursor = getAllSubRedditRaw();
 		cursor.moveToFirst();

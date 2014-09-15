@@ -5,6 +5,8 @@ import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -30,13 +32,12 @@ public class ActivityStoryContent extends Activity {
 
 		if (isImage()) {
 			setContentView(R.layout.activity_image_display);
-
 			ImageView imageView = (ImageView) findViewById(R.id.image_viewer);
 			final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 			// This line shows progressBar again for recycled view
 			progressBar.setVisibility(View.VISIBLE);
-
+			
 			Picasso.with(this).load(url).into(imageView, new Callback() {
 				@Override
 				public void onSuccess() {
@@ -50,7 +51,18 @@ public class ActivityStoryContent extends Activity {
 			});
 
 		} else {
-			final ProgressDialog pd = ProgressDialog.show(this, "", "Loading ...", true);
+			
+			final ProgressDialog dialog = new ProgressDialog(this);
+			dialog.setCancelable(true);
+			dialog.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					onBackPressed();
+				}
+			});
+			dialog.setMessage("Loading...");
+			dialog.show();
+			
 			setContentView(R.layout.activity_story_content);
 			
 			webView = (WebView) findViewById(R.id.story_content_webview_view);
@@ -58,7 +70,7 @@ public class ActivityStoryContent extends Activity {
 			webView.setWebViewClient(new WebViewClient() {
 			    @Override
 			    public void onPageFinished(WebView view, String url) {
-			        pd.dismiss();
+			    	dialog.dismiss();
 			    }
 			});
 			webView.loadUrl(formatURL(url));
@@ -82,12 +94,12 @@ public class ActivityStoryContent extends Activity {
 	private void setHeaderBarThumb(byte[] thumbBitmapArr) {
 		if(thumbBitmapArr != null)
 		{
-		Bitmap thumbBitmap = BitmapFactory.decodeByteArray(thumbBitmapArr, 0, thumbBitmapArr.length);
-		Resources res = getResources();
-		BitmapDrawable icon = null;
-
-		icon = new BitmapDrawable(res, thumbBitmap);
-		getActionBar().setIcon(icon);
+			Bitmap thumbBitmap = BitmapFactory.decodeByteArray(thumbBitmapArr, 0, thumbBitmapArr.length);
+			Resources res = getResources();
+			BitmapDrawable icon = null;
+	
+			icon = new BitmapDrawable(res, thumbBitmap);
+			getActionBar().setIcon(icon);
 		}
 		else
 		{
