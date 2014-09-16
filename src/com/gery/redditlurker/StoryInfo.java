@@ -1,8 +1,6 @@
 package com.gery.redditlurker;
 
 import java.util.Date;
-import android.text.format.DateUtils;
-
 import org.json.simple.JSONObject;
 
 import android.graphics.Bitmap;
@@ -59,15 +57,13 @@ public class StoryInfo {
 	private String capitalize(String line) {
 		return Character.toUpperCase(line.charAt(0)) + line.substring(1);
 	}
-	
-	public Date getCreated_UTC_formatted()
-	{
+
+	public Date getCreated_UTC_formatted() {
 		Date d = new Date(created.longValue() * 1000);
 		return d;
 	}
-	
-	public boolean isValidThumbNail()
-	{
+
+	public boolean isValidThumbNail() {
 		return this.thumbnail != null && !this.thumbnail.isEmpty();
 	}
 

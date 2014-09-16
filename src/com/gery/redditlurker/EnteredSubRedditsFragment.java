@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,7 +24,6 @@ import com.gery.database.Timer;
 
 public class EnteredSubRedditsFragment extends Fragment {
 	public List<SubRedditInfo> subRedditsList;
-	private ProgressDialog pDialog;
 	View rootView;
 	private Context ActivityContext;
 	EnteredSubredditCustomBaseAdapter adapter;
@@ -54,24 +52,22 @@ public class EnteredSubRedditsFragment extends Fragment {
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				if(Connection.isNetworkConnected(context))
-				{
+				if (Connection.isNetworkConnected(context)) {
 					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 					Intent nextActivity = new Intent(context, ActivitySubRedditChannel.class);
 					nextActivity.putExtra("subRedditJSON", subReddit.getJsonObjectAsString());
 					nextActivity.putExtra("favorite", subReddit.favorite);
-					
+
 					byte[] byteArray = null;
-					if(subReddit.imageBitMap != null){
+					if (subReddit.imageBitMap != null) {
 						ByteArrayOutputStream bStream = new ByteArrayOutputStream();
 						subReddit.imageBitMap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
-					    byteArray = bStream.toByteArray();
+						byteArray = bStream.toByteArray();
 					}
 					nextActivity.putExtra("imageBitMap", byteArray);
-				
+
 					startActivity(nextActivity);
-				}
-				else 
+				} else
 					Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
 			}
 		});

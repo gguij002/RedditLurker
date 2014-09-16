@@ -70,8 +70,8 @@ public class ChannelBaseAdapter extends BaseAdapter {
 
 		final StoryInfo storyInfo = list.get(position);
 		holder.title.setText(storyInfo.title);
-		holder.author.setText(p.format(storyInfo.getCreated_UTC_formatted()) + " by "+ storyInfo.author);
-		holder.ups.setText("Up: "+ storyInfo.ups);
+		holder.author.setText(p.format(storyInfo.getCreated_UTC_formatted()) + " by " + storyInfo.author);
+		holder.ups.setText("Up: " + storyInfo.ups);
 		holder.comments.setText(storyInfo.num_comments + "");
 		holder.comments.setOnClickListener(new OnClickListener() {
 			@Override
@@ -80,56 +80,40 @@ public class ChannelBaseAdapter extends BaseAdapter {
 				nextActivity.putExtra("permalink", storyInfo.permalink);
 				nextActivity.putExtra("name", storyInfo.subreddit);
 				byte[] byteArray = null;
-				if(storyInfo.imageBitMap != null){
+				if (storyInfo.imageBitMap != null) {
 					ByteArrayOutputStream bStream = new ByteArrayOutputStream();
 					storyInfo.imageBitMap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
-				    byteArray = bStream.toByteArray();
+					byteArray = bStream.toByteArray();
 				}
 				nextActivity.putExtra("imageBitMap", byteArray);
 				nextActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				fragmentContext.startActivity(nextActivity);
 			}
 		});
-		
+
 		holder.progressBar.setVisibility(View.GONE);
-		if(storyInfo.isValidThumbNail()){
-			if(storyInfo.thumbnail.equalsIgnoreCase("nsfw"))
-			{
+		if (storyInfo.isValidThumbNail()) {
+			if (storyInfo.thumbnail.equalsIgnoreCase("nsfw")) {
 				holder.thumbView.setImageResource(R.drawable.ic_nsfw_image);
-			}
-			else if(storyInfo.thumbnail.equalsIgnoreCase("self"))
-			{
+			} else if (storyInfo.thumbnail.equalsIgnoreCase("self")) {
 				holder.thumbView.setImageResource(R.drawable.ic_launcher);
-			}
-			else
-			{
+			} else {
 				holder.progressBar.setVisibility(View.VISIBLE);
 				Picasso.with(fragmentContext).load(storyInfo.thumbnail).into(holder.thumbView, new Callback() {
-		            @Override
-		            public void onSuccess() {
-		                holder.progressBar.setVisibility(View.GONE);
-		            }
-		
-		            @Override
-		            public void onError() {
-		                //error
-		            }
-		        });
+					@Override
+					public void onSuccess() {
+						holder.progressBar.setVisibility(View.GONE);
+					}
+
+					@Override
+					public void onError() {
+						// error
+					}
+				});
 			}
 		}
 
 		return convertView;
-	}
-
-	private String constructCommentsUpsTime(int listItem) {
-		StoryInfo story = list.get(listItem);
-		long comments = story.num_comments;
-		long score = story.score;
-		double time = story.created;
-
-		String commentsUpsTime = "" + comments + "\n" + score;
-
-		return commentsUpsTime;
 	}
 
 	static class ViewHolder {

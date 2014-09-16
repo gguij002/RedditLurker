@@ -3,6 +3,7 @@ package com.gery.redditlurker;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -25,6 +26,7 @@ public class ActivityStoryContent extends Activity {
 	private String url;
 	private Bitmap imageBitmap = null;
 
+	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

@@ -1,5 +1,6 @@
 package com.gery.redditlurker;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ public class ActivityCommentsWebView extends Activity {
 	private WebView webView;
 	private String permalink;
 
+	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
