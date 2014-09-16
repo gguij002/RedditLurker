@@ -47,58 +47,43 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	public boolean isFromSearch = false;
 	public List<StoryInfo> storieList;
 	private boolean loadingMore;
-	
-	
+
 	SubRedditInfo subReddit = null;
 	private byte[] headerBarThumb;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-//		  ProgressDialog dialog = new ProgressDialog(this);
-//          dialog.setCancelable(true);
-//          dialog.setOnCancelListener(new OnCancelListener(){
-//             @Override
-//             public void onCancel(DialogInterface dialog){
-//                onBackPressed();
-//          }});
-//          dialog.show();
-		
+		storieList = new ArrayList<StoryInfo>();
+		handleIntent(getIntent());
+
 		setContentView(R.layout.activity_subreddit);
 
 		// get the action bar
 		ActionBar actionBar = getActionBar();
-		storieList = new ArrayList<StoryInfo>();
 
 		// Enabling Back navigation on Action Bar icon
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		handleIntent(getIntent());
-		
 		setOnItemClickListener(this);
-		
-		//dialog.dismiss();
 	}
-	
-	private void setHeaderBarThumb(Bitmap thumbBitmap)
-	{
-		if(thumbBitmap != null){
+
+	private void setHeaderBarThumb(Bitmap thumbBitmap) {
+		if (thumbBitmap != null) {
 			Resources res = getResources();
 			BitmapDrawable icon = null;
-		
-			icon = new BitmapDrawable(res,thumbBitmap);
+
+			icon = new BitmapDrawable(res, thumbBitmap);
 			getActionBar().setIcon(icon);
-		}
-		else
+		} else
 			getActionBar().setIcon(R.drawable.ic_launcher);
 	}
-	
-	private void handleIntent(Intent intent){
-		
+
+	private void handleIntent(Intent intent) {
+
 		subReddit = new SubRedditInfo(new JSONObject());
 		subReddit.favorite = false;
-		
+
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			subReddit.display_name = intent.getStringExtra(SearchManager.QUERY);
 			subReddit.url = "/r/" + subReddit.display_name + "/";
@@ -107,40 +92,29 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			this.ReCreateSubReddit(intent);
 			setHeaderBarThumb(subReddit.imageBitMap);
 		}
-		
+
 		setTitle("LurkR: " + subReddit.display_name);
-		
-		AsyncTask<String, String, List<StoryInfo>> var = new LoadStories(this, subReddit.url).execute();
-		
-		try {
-			if (var.get() == null || var.get().isEmpty()) {
-				System.out.println("INVALID SUBREDDIT: " + subReddit.url);
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
+
+		new LoadStories(this, subReddit.url).execute();
+
 		isFromSearch = false;
 	}
 
-	
-	private void ReCreateSubReddit(Intent intent)
-	{
+	private void ReCreateSubReddit(Intent intent) {
 		String jsonObjectAsString = intent.getStringExtra("subRedditJSON");
 		JSONObject jsonObject = getJsonFromString(jsonObjectAsString);
 		subReddit = new SubRedditInfo(jsonObject).execute();
-		
+
 		byte[] imageBitmapArr = this.headerBarThumb = intent.getByteArrayExtra("imageBitMap");
-		if(imageBitmapArr != null) {
+		if (imageBitmapArr != null) {
 			Bitmap thumbBitmap = BitmapFactory.decodeByteArray(imageBitmapArr, 0, imageBitmapArr.length);
 			subReddit.setImageBitMap(thumbBitmap);
 		}
 		boolean fav = intent.getBooleanExtra("favorite", false);
 		subReddit.favorite = fav;
-		
+
 	}
-	
+
 	private JSONObject getJsonFromString(String jsonString) {
 		JSONParser parser = new JSONParser();
 		JSONObject jsonObject = null;
@@ -160,11 +134,10 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	public void onPause() {
 		SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
 		srDataSource.open();
-		if (subReddit.favorite) 
-		{ // Its fav, Add to DB
-			if (this.storieList != null)// && !this.storieList.isEmpty() 
+		if (subReddit.favorite) { // Its fav, Add to DB
+			if (this.storieList != null)// && !this.storieList.isEmpty()
 			{
-				if (!srDataSource.isRawSubRedditExist(subReddit.name)) //Rethink this logic
+				if (!srDataSource.isRawSubRedditExist(subReddit.name)) 
 				{
 					try {
 						System.out.println("Loading subreddit to add to DB: Highly expensive and must be avouded");
@@ -178,9 +151,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 					srDataSource.addSubRedditToDB(subReddit);
 				}
 			}
-		}
-		else
-		{ // Not fav Delete from DB
+		} else { // Not fav Delete from DB
 			srDataSource.deleteSubReddit(subReddit.name);
 		}
 		srDataSource.close();
@@ -216,9 +187,9 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_main_actions, menu);
 		MenuItem item = menu.findItem(R.id.action_fav);
-		
+
 		setFavoriteButton(item);
-		
+
 		MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
 		itemSearch.setVisible(false);
 		return super.onCreateOptionsMenu(menu);
@@ -244,7 +215,10 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				StoryInfo subReddit = (StoryInfo) storieList.get(position);
-				Intent nextActivity = new Intent(context, ActivityStoryContent.class);//Pass in the name
+				Intent nextActivity = new Intent(context, ActivityStoryContent.class);// Pass
+																						// in
+																						// the
+																						// name
 				nextActivity.putExtra("url", subReddit.url);
 				nextActivity.putExtra("imageBitMap", headerBarThumb);
 				nextActivity.putExtra("name", ActivitySubRedditChannel.this.subReddit.display_name);
@@ -287,14 +261,15 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		private Context context;
 		private ProgressDialog pDialogChannel;
 
-		public LoadSubReddit(Context context ,String subRedditName) {
+		public LoadSubReddit(Context context, String subRedditName) {
 			this.subRedditName = subRedditName;
 			this.context = context;
 		}
 
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialogChannel = new ProgressDialog(context);// CHANGE TO GETAPPLICATION
+			pDialogChannel = new ProgressDialog(context);// CHANGE TO
+															// GETAPPLICATION
 			// CONTEXT
 			pDialogChannel.setMessage("Saving Favorite SubReddit ...");
 			pDialogChannel.setIndeterminate(false);
@@ -340,7 +315,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			String header_image_url = item.header_img;
 			if (header_image_url != null && !header_image_url.isEmpty()) {
 				System.out.println("ITS GOING IN HERE NO BUENO");
-				item.imageBitMap = new LoadThumbsTask(header_image_url).exceute().imageBitmap;//Picasso.with(context).load(header_image_url).get();
+				item.imageBitMap = new LoadThumbsTask(header_image_url).exceute().imageBitmap;// Picasso.with(context).load(header_image_url).get();
 			}
 			return item;
 		}
@@ -360,7 +335,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	class LoadStories extends AsyncTask<String, String, List<StoryInfo>> {
 		private String subRedditChannel;
 		private Context context;
-		private ProgressDialog pDialogStories;
+		ProgressDialog dialog;
 
 		public LoadStories(Context context, String subReddit) {
 			this.context = context;
@@ -374,11 +349,18 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialogStories = new ProgressDialog(context);
-			pDialogStories.setMessage("Loading Stories ...");
-			pDialogStories.setIndeterminate(false);
-			pDialogStories.setCancelable(false);
-			pDialogStories.show();
+			dialog = new ProgressDialog(context);
+			dialog.setCancelable(true);
+			dialog.setOnCancelListener(new OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					onBackPressed();
+					// ****cleanup code****
+				}
+			});
+			dialog.setMessage("Loading Posts from " + subReddit.display_name + "...");
+			dialog.show();
+
 		}
 
 		/**
@@ -420,10 +402,6 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			return fav;
 		}
 
-		private boolean isURL(String URL) {
-			return URL.contains("http");
-		}
-
 		private String URLCreate(String subReddit, int offset) {
 			String after = "";
 			if (storieList.size() > 0)
@@ -435,13 +413,15 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		/**
 		 * After completing background task Dismiss the progress dialog
 		 * **/
-		protected void onPostExecute(final List<StoryInfo> storiesInfoList) {
-			// dismiss the dialog after getting all products
-			pDialogStories.dismiss();
+		protected void onPostExecute(final List<StoryInfo> storiesInfoList) 
+		{
 			loadingMore = false;
 			if (storiesInfoList == null)
 				return;
 			storieList.addAll(storieList.size(), storiesInfoList);
+			
+			dialog.dismiss();
+			
 			final ListView storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
 			final int positionToSave = storiesListView.getFirstVisiblePosition();
 			// updating UI from Background Thread

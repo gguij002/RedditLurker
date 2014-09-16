@@ -63,7 +63,10 @@ public class SubRedditsDataSource {
 		String subName = subReddit;
 		String whereClause = MySQLiteHelper.COLUMN_ID + " = " + "\"" + subName + "\"";
 		int var = database.delete(MySQLiteHelper.TABLE_SUBREDDITS, whereClause, null);
-		System.out.println("SubReddit deleted with id: " + subName + "INT: " + var);
+		if(var == 1)
+			System.out.println("SubReddit deleted with id: " + subName);
+		else
+			System.out.println("TRIED to deleted SubReddit with id: " + subName);
 	}
 
 	private Cursor getAllSubRedditRaw() {
