@@ -2,6 +2,7 @@ package com.gery.redditlurker;
 
 import java.util.Date;
 import org.json.simple.JSONObject;
+import org.ocpsoft.prettytime.PrettyTime;
 
 import android.graphics.Bitmap;
 
@@ -58,9 +59,14 @@ public class StoryInfo {
 		return Character.toUpperCase(line.charAt(0)) + line.substring(1);
 	}
 
-	public Date getCreated_UTC_formatted() {
-		Date d = new Date(created.longValue() * 1000);
-		return d;
+	public String getCreated_UTC_formatted() {
+		PrettyTime p = new PrettyTime();
+		long l = Math.round(created * 1000.00);
+		Date d = new Date(l);
+		String prettyDate = p.format(d);
+		//Date d = new Date(created.longValue() * 1000);
+		
+		return prettyDate;
 	}
 
 	public boolean isValidThumbNail() {

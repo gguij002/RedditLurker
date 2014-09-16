@@ -58,7 +58,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ups_text_view"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dip"
             android:layout_toRightOf="@+id/story_thumb_view1"
             android:layout_toLeftOf="@+id/comments_button"
             android:text="9 hours ago by Margarito"

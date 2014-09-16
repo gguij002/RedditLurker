@@ -51,7 +51,6 @@ public class ChannelBaseAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
-		PrettyTime p = new PrettyTime();
 
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.channel_list_items, null);
@@ -70,7 +69,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 
 		final StoryInfo storyInfo = list.get(position);
 		holder.title.setText(storyInfo.title);
-		holder.author.setText(p.format(storyInfo.getCreated_UTC_formatted()) + " by " + storyInfo.author);
+		holder.author.setText(storyInfo.getCreated_UTC_formatted() + " by " + storyInfo.author);
 		holder.ups.setText("Up: " + storyInfo.ups);
 		holder.comments.setText(storyInfo.num_comments + "");
 		holder.comments.setOnClickListener(new OnClickListener() {
