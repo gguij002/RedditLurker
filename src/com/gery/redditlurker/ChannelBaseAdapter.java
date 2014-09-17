@@ -3,8 +3,6 @@ package com.gery.redditlurker;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import org.ocpsoft.prettytime.PrettyTime;
-
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

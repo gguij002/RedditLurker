@@ -39,6 +39,13 @@
             android:parentActivityName="com.gery.redditlurker.ActivitySubRedditChannel"
             android:screenOrientation="portrait" >
         </activity>
+        
+         <!-- Front Page activity-->
+        <activity
+            android:name=".ActivityFrontPage"
+            android:parentActivityName="com.gery.redditlurker.ActivityFrontPage"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- WEBVIEW activity Story Content -->
         <activity

@@ -215,10 +215,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				StoryInfo subReddit = (StoryInfo) storieList.get(position);
-				Intent nextActivity = new Intent(context, ActivityStoryContent.class);// Pass
-																						// in
-																						// the
-																						// name
+				Intent nextActivity = new Intent(context, ActivityStoryContent.class);
 				nextActivity.putExtra("url", subReddit.url);
 				nextActivity.putExtra("imageBitMap", headerBarThumb);
 				nextActivity.putExtra("name", ActivitySubRedditChannel.this.subReddit.display_name);

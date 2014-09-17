@@ -64,8 +64,6 @@ public class StoryInfo {
 		long l = Math.round(created * 1000.00);
 		Date d = new Date(l);
 		String prettyDate = p.format(d);
-		//Date d = new Date(created.longValue() * 1000);
-		
 		return prettyDate;
 	}
 

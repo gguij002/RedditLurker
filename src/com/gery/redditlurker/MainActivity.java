@@ -34,10 +34,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
+		setTitle("::Front Page");
+		//actionBar.setHomeButtonEnabled(true);
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
 		viewPager.setAdapter(mAdapter);
-		actionBar.setHomeButtonEnabled(false);
+		actionBar.setHomeButtonEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		// Adding Tabs
@@ -74,9 +76,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	@Override
 	public boolean onSearchRequested() {
-
-//		Intent i = new Intent(MainActivity.this, ActivitySubRedditChannel.class);
-//		startActivity(i);
 		goToSubReddit();
 
 		return false; // don't go ahead and show the search box
@@ -106,6 +105,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			item.getActionView().findViewById(id.action_search_widget);
 			goToSubReddit();
 			return true;
+		case android.R.id.home:
+			  Intent intent = new Intent(this, ActivityFrontPage.class);
+		      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		      startActivity(intent);
 		default:
 			return super.onOptionsItemSelected(item);
 		}
