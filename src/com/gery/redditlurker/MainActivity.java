@@ -34,12 +34,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		// Initilization
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
+		actionBar.setHomeButtonEnabled(true);
 		setTitle("::Front Page");
-		//actionBar.setHomeButtonEnabled(true);
+		
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
 		viewPager.setAdapter(mAdapter);
-		actionBar.setHomeButtonEnabled(true);
+		
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		// Adding Tabs
@@ -89,8 +90,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		SearchView searchView = (SearchView) menu.findItem(R.id.action_search_widget).getActionView();
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-		MenuItem item = menu.findItem(R.id.action_fav);
-		item.setVisible(false);
+		MenuItem itemFav = menu.findItem(R.id.action_fav);
+		itemFav.setVisible(false);
+		
+		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
+		itemSaveImage.setVisible(false);
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 

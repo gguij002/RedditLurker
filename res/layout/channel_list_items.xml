@@ -94,6 +94,17 @@
             android:layout_marginTop="2dp"
             />
 
+     <!--    <TextView
+            android:id="@+id/subreddit_channel_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ups_text_view"
+            android:layout_below="@+id/story_title1"
+            android:layout_marginTop="1dip"
+            android:text="Funny"
+            android:textSize="@dimen/rating" >
+		</TextView> -->
+
     </RelativeLayout>
 
 </TableRow>

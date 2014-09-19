@@ -21,6 +21,11 @@
           android:title="@string/action_search"
           android:showAsAction="ifRoom" />
 	 
+	 <item android:id="@+id/action_save_image"
+	      android:icon="@drawable/ic_save_image"
+          android:title="@string/action_search"
+          android:showAsAction="ifRoom" />
+	 
 	 
 
 </menu>

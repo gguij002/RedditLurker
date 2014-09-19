@@ -61,9 +61,8 @@
             android:layout_alignParentTop="false"
             android:layout_centerInParent="true"
             android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/imagebutton_go"
             android:background="@null"
-            android:src="@drawable/ic_favorite_off_new" />
+            android:src="@drawable/ic_favorite_on_gaby" />
 
         <ProgressBar
             android:id="@+id/progressBar_allsub_image"
@@ -75,6 +74,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp" />
+
     </RelativeLayout>
 
 </TableRow>

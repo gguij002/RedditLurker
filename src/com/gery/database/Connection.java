@@ -15,6 +15,4 @@ public class Connection {
 		} else
 			return true;
 	}
-
-
 }

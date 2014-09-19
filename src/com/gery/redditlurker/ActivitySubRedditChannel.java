@@ -170,7 +170,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		case R.id.action_fav:
 			if (subReddit.favorite) {
 				subReddit.favorite = false;
-				item.setIcon(R.drawable.ic_favorite_off_new);
+				item.setIcon(android.R.drawable.btn_star_big_off);
 			} else {
 				subReddit.favorite = true;
 				item.setIcon(android.R.drawable.btn_star_big_on);
@@ -192,6 +192,10 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 
 		MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
 		itemSearch.setVisible(false);
+		
+		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
+		itemSaveImage.setVisible(false);
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -199,7 +203,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		if (subReddit.favorite) {
 			item.setIcon(android.R.drawable.btn_star_big_on);
 		} else {
-			item.setIcon(R.drawable.ic_favorite_off_new);
+			item.setIcon(android.R.drawable.btn_star_big_off);
 		}
 	}
 
@@ -355,7 +359,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 					// ****cleanup code****
 				}
 			});
-			dialog.setMessage("Loading Posts from " + subReddit.display_name + "...");
+			dialog.setMessage("Loading Stories...");
 			dialog.show();
 
 		}

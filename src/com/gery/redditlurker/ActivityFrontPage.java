@@ -7,9 +7,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.gery.database.RedditRSSReader;
-import com.gery.database.SubRedditsDataSource;
-import com.gery.redditlurker.ActivitySubRedditChannel.LoadStories;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -41,6 +38,7 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("::Front Page");
 		storieList = new ArrayList<StoryInfo>();
 
 		setContentView(R.layout.activity_subreddit);
@@ -129,7 +127,7 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 					// ****cleanup code****
 				}
 			});
-			dialog.setMessage("Loading Front Page...");
+			dialog.setMessage("Loading Stories...");
 			dialog.show();
 
 		}

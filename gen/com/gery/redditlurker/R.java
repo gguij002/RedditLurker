@@ -43,48 +43,50 @@ public final class R {
         public static final int ic_delete_image_1=0x7f020004;
         public static final int ic_delete_image_new=0x7f020005;
         public static final int ic_downs_image=0x7f020006;
-        public static final int ic_favorite_off_new=0x7f020007;
-        public static final int ic_go_button=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
-        public static final int ic_launcherd=0x7f02000a;
-        public static final int ic_nsfw_image=0x7f02000b;
-        public static final int ic_search_button=0x7f02000c;
-        public static final int ic_ups_image=0x7f02000d;
-        public static final int ic_ups_image_arror=0x7f02000e;
+        public static final int ic_favorite_gaby=0x7f020007;
+        public static final int ic_favorite_gaby_full=0x7f020008;
+        public static final int ic_favorite_gaby_larger=0x7f020009;
+        public static final int ic_favorite_off_new=0x7f02000a;
+        public static final int ic_favorite_on_gaby=0x7f02000b;
+        public static final int ic_go_button=0x7f02000c;
+        public static final int ic_launcher=0x7f02000d;
+        public static final int ic_launcherd=0x7f02000e;
+        public static final int ic_nsfw_image=0x7f02000f;
+        public static final int ic_save_image=0x7f020010;
+        public static final int ic_search_button=0x7f020011;
+        public static final int ic_ups_image=0x7f020012;
+        public static final int ic_ups_image_arror=0x7f020013;
     }
     public static final class id {
-        public static final int action_fav=0x7f0a001f;
-        public static final int action_search_widget=0x7f0a001e;
+        public static final int action_fav=0x7f0a001b;
+        public static final int action_save_image=0x7f0a001c;
+        public static final int action_search_widget=0x7f0a001a;
         public static final int all_sub_favorite_image_button=0x7f0a000a;
         public static final int all_sub_relative_layout=0x7f0a0007;
-        public static final int all_subreddit_list=0x7f0a0019;
-        public static final int author_textview=0x7f0a0013;
-        public static final int comments_button=0x7f0a0011;
-        public static final int comments_button_transparent1=0x7f0a001b;
+        public static final int all_subreddit_list=0x7f0a0018;
+        public static final int author_textview=0x7f0a0012;
+        public static final int comments_button=0x7f0a0010;
         public static final int comments_webview_view=0x7f0a0000;
-        public static final int commets_button1=0x7f0a001c;
-        public static final int entered_imagebutton_delete=0x7f0a0017;
-        public static final int entered_sub_reddit_list_item_displayName_text=0x7f0a0018;
-        public static final int entered_sub_reddit_list_item_link_text=0x7f0a0016;
-        public static final int entered_subreddit_list=0x7f0a001a;
-        public static final int entered_subreddit_thumb_view=0x7f0a0015;
+        public static final int entered_imagebutton_delete=0x7f0a0016;
+        public static final int entered_sub_reddit_list_item_displayName_text=0x7f0a0017;
+        public static final int entered_sub_reddit_list_item_link_text=0x7f0a0015;
+        public static final int entered_subreddit_list=0x7f0a0019;
+        public static final int entered_subreddit_thumb_view=0x7f0a0014;
         public static final int image_viewer=0x7f0a0001;
-        public static final int imagebutton_go=0x7f0a000c;
         public static final int pager=0x7f0a0003;
         public static final int placeholder=0x7f0a0006;
         public static final int progressBar=0x7f0a0002;
-        public static final int progressBar_allsub_image=0x7f0a000d;
-        public static final int progressBar_channel_image=0x7f0a0014;
+        public static final int progressBar_allsub_image=0x7f0a000c;
+        public static final int progressBar_channel_image=0x7f0a0013;
         public static final int story_content_webview_view=0x7f0a0004;
-        public static final int story_thumb_view1=0x7f0a000f;
-        public static final int story_title1=0x7f0a0010;
+        public static final int story_thumb_view1=0x7f0a000e;
+        public static final int story_title1=0x7f0a000f;
         public static final int sub_reddit_list_item_displayName_text=0x7f0a000b;
         public static final int sub_reddit_list_item_link_text=0x7f0a0009;
         public static final int subreddit_channel_list=0x7f0a0005;
         public static final int subreddit_thumb_view=0x7f0a0008;
-        public static final int test_row_stuff=0x7f0a000e;
-        public static final int time_likes_button=0x7f0a001d;
-        public static final int ups_text_view=0x7f0a0012;
+        public static final int test_row_stuff=0x7f0a000d;
+        public static final int ups_text_view=0x7f0a0011;
     }
     public static final class layout {
         public static final int activity_comments_webview=0x7f030000;
@@ -97,7 +99,6 @@ public final class R {
         public static final int entered_subreddit_list_item=0x7f030007;
         public static final int fragment_all_subreddit=0x7f030008;
         public static final int fragment_entered_subreddit=0x7f030009;
-        public static final int texting_rows=0x7f03000a;
     }
     public static final class menu {
         public static final int activity_main_actions=0x7f090000;
