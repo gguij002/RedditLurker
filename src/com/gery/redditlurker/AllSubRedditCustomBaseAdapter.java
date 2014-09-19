@@ -48,8 +48,8 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.all_aubreddit_list_item, null);
 			holder = new ViewHolder();
-			holder.displayName = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_displayName_text);
-			holder.txtLink = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_link_text);
+			holder.linkText = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_link_text);
+			holder.displayNameN = (TextView) convertView.findViewById(R.id.sub_reddit_list_item_displayName_text);
 			holder.favoriteButton = (ImageButton) convertView.findViewById(R.id.all_sub_favorite_image_button);
 			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.progressBar_allsub_image);
 			holder.thumbView = (ImageView) convertView.findViewById(R.id.subreddit_thumb_view);
@@ -88,12 +88,12 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 		// Second TextView in the list item
 		String header_title_text = subRedditInfo.header_title;
 		if (header_title_text != null && !header_title_text.isEmpty())
-			holder.displayName.setText(header_title_text);
+			holder.linkText.setText(header_title_text);
 		else
-			holder.displayName.setText(subRedditInfo.display_name);
+			holder.linkText.setText(subRedditInfo.display_name);
 
 		String link = subRedditInfo.url;
-		holder.txtLink.setText(link.substring(0, link.length() - 1));
+		holder.displayNameN.setText(link.substring(0, link.length() - 1));
 
 		holder.progressBar.setVisibility(View.GONE);
 		if (subRedditInfo.isValidThumbNail()) {
@@ -129,8 +129,8 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 
 	static class ViewHolder {
 		public ProgressBar progressBar;
-		TextView displayName;
-		TextView txtLink;
+		TextView linkText;
+		TextView displayNameN;
 		ImageView thumbView;
 		TextView comment;
 		ImageButton favoriteButton;

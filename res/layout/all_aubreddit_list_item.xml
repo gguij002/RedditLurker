@@ -22,13 +22,25 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="2dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="1dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
             android:contentDescription="@string/subreddit_thumbview_desc"
             android:src="@drawable/ic_launcher" />
 
-        <TextView
+		<TextView
+            android:id="@+id/sub_reddit_list_item_displayName_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sub_reddit_list_item_link_text"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
+            android:layout_toRightOf="@+id/subreddit_thumb_view"
+            android:text="Link"
+            android:textSize="@dimen/rating"
+             />
+		
+		<TextView
             android:id="@+id/sub_reddit_list_item_link_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,21 +48,10 @@
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
             android:layout_toRightOf="@+id/subreddit_thumb_view"
-            android:text="KAKALink"
+            android:text="Title the Title"
             android:textSize="@dimen/title"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/sub_reddit_list_item_displayName_text"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/sub_reddit_list_item_link_text"
-            android:layout_marginBottom="10dp"
-            android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
-            android:layout_toRightOf="@+id/subreddit_thumb_view"
-            android:text="KAKA"
-            android:textSize="@dimen/rating"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+             />
 
         <ImageButton
             android:id="@+id/all_sub_favorite_image_button"
@@ -60,7 +61,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="false"
             android:layout_centerInParent="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="1dp"
             android:background="@null"
             android:src="@drawable/ic_favorite_on_gaby" />
 

@@ -42,8 +42,8 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.entered_subreddit_list_item, null);
 			holder = new ViewHolder();
+			holder.linkText = (TextView) convertView.findViewById(R.id.entered_sub_reddit_list_item_link_text);
 			holder.displayName = (TextView) convertView.findViewById(R.id.entered_sub_reddit_list_item_displayName_text);
-			holder.txtLink = (TextView) convertView.findViewById(R.id.entered_sub_reddit_list_item_link_text);
 
 			holder.deleteButton = (ImageButton) convertView.findViewById(R.id.entered_imagebutton_delete);
 
@@ -71,12 +71,12 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 		// Second TextView in the list item
 		String header_title_text = list.get(position).header_title;
 		if (header_title_text != null && !header_title_text.isEmpty())
-			holder.displayName.setText(header_title_text);
+			holder.linkText.setText(header_title_text);
 		else
-			holder.displayName.setText(list.get(position).display_name);
+			holder.linkText.setText(list.get(position).display_name);
 
 		String link = list.get(position).url;
-		holder.txtLink.setText(link.substring(0, link.length() - 1));
+		holder.displayName.setText(link.substring(0, link.length() - 1));
 
 		Bitmap image_bits = list.get(position).imageBitMap;
 		if (image_bits != null)
@@ -86,8 +86,8 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 	}
 
 	static class ViewHolder {
+		TextView linkText;
 		TextView displayName;
-		TextView txtLink;
 		ImageView thumbView;
 		ImageButton deleteButton;
 	}

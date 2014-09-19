@@ -202,7 +202,7 @@ public class ActivityStoryContent extends Activity {
 		
 		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
 		if(isImage())
-			itemSaveImage.setVisible(true);
+			itemSaveImage.setVisible(true);//Change to true after testings
 		else
 			itemSaveImage.setVisible(false);
 		
