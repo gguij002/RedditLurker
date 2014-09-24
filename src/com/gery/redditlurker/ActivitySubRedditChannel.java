@@ -196,6 +196,9 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
 		itemSaveImage.setVisible(false);
 		
+		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
+		copyUrl.setVisible(false);
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 

@@ -24,7 +24,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
 	// Tab titles
-	private String[] tabs = { "All", "Favorite"};
+	private String[] tabs = {"Front Page", "All", "Favorite"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
 		actionBar.setHomeButtonEnabled(true);
-		setTitle("::Front Page");
+		setTitle("Reddit Lurker");
 		
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
@@ -96,6 +96,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
 		itemSaveImage.setVisible(false);
 		
+		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
+		copyUrl.setVisible(false);
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -110,10 +113,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			item.getActionView().findViewById(id.action_search_widget);
 			goToSubReddit();
 			return true;
-		case android.R.id.home:
-			  Intent intent = new Intent(this, ActivityFrontPage.class);
-		      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		      startActivity(intent);
+//		case android.R.id.home:
+//			  Intent intent = new Intent(this, ActivityFrontPage.class);
+//		      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//		      startActivity(intent);
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -135,12 +138,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 		Fragment fragment = mAdapter.getItem(tab.getPosition());
 
-		if (tab.getPosition() == 1) {
+		if (tab.getPosition() == 2) {
 			EnteredSubRedditsFragment enteredFragment = (EnteredSubRedditsFragment) fragment;
 			enteredFragment.UpdateSubRedditList(srDataSource.getAllSubReddit());
-		} else if (tab.getPosition() == 0) {
+		} else if (tab.getPosition() == 1) {
 			AllSubRedditsFragment allFragment = (AllSubRedditsFragment) fragment;
 			allFragment.UpdateFavs(srDataSource.getAllSubRedditsID());
+		}
+		else if(tab.getPosition() == 0)
+		{
+			System.out.println("Front PaGE FRAgment");
 		}
 		srDataSource.close();
 		viewPager.setCurrentItem(tab.getPosition());

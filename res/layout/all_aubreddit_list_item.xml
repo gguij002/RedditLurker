@@ -33,9 +33,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/sub_reddit_list_item_link_text"
-            android:layout_marginBottom="10dp"
             android:layout_toLeftOf="@+id/all_sub_favorite_image_button"
             android:layout_toRightOf="@+id/subreddit_thumb_view"
+            android:layout_marginBottom="10dp"
             android:text="Link"
             android:textSize="@dimen/rating"
              />

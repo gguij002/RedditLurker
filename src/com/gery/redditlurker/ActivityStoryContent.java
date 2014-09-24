@@ -5,15 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import com.gery.database.Connection;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.app.SearchManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,11 +30,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
+import android.widget.Toast;
 
 public class ActivityStoryContent extends Activity {
 	private WebView webView;
@@ -48,11 +48,10 @@ public class ActivityStoryContent extends Activity {
 		super.onCreate(savedInstanceState);
 
 		this.handleIntent(getIntent());
+		this.webView = new WebView(this);
 
 		if (isImage()) {
 			setContentView(R.layout.activity_image_display);
-			
-			
 			
 			final ImageView imageView = (ImageView) findViewById(R.id.image_viewer);
 			final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -89,7 +88,14 @@ public class ActivityStoryContent extends Activity {
 			setContentView(R.layout.activity_story_content);
 			
 			webView = (WebView) findViewById(R.id.story_content_webview_view);
-			webView.getSettings().setJavaScriptEnabled(true);
+			WebSettings webSettings = webView.getSettings(); 
+			webSettings.setJavaScriptEnabled(true);
+			webSettings.setBuiltInZoomControls(true);
+			webSettings.setAllowContentAccess(true);
+	        webSettings.setLoadsImagesAutomatically(true);
+	        webSettings.setLoadWithOverviewMode(true);
+	        webSettings.setSupportZoom(true);
+	        webSettings.setUseWideViewPort(true);
 			webView.setWebViewClient(new WebViewClient() {
 			    @Override
 			    public void onPageFinished(WebView view, String url) {
@@ -161,7 +167,8 @@ public class ActivityStoryContent extends Activity {
         File dir = new File(filepath.getAbsolutePath() + "/RedditLurkerIMG/");
         dir.mkdirs(); 
         
-        File file = new File(dir, "Wallpaper.jpg" );
+        
+        File file = new File(dir, System.currentTimeMillis()+".jpg" );
         
         try {
 			output = new FileOutputStream(file);
@@ -175,7 +182,6 @@ public class ActivityStoryContent extends Activity {
 			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -186,7 +192,15 @@ public class ActivityStoryContent extends Activity {
 	    values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
 
 	    this.getContentResolver().insert(Images.Media.EXTERNAL_CONTENT_URI, values);
-
+	    Toast.makeText(getApplicationContext(), "Image Saved to Gallery",
+	    Toast.LENGTH_SHORT).show();
+	}
+	
+	@Override
+	public void onPause()
+	{
+		webView.onPause();
+		super.onPause();
 	}
 	
 	@Override
@@ -200,26 +214,42 @@ public class ActivityStoryContent extends Activity {
 		MenuItem itemFav = menu.findItem(R.id.action_fav);
 		itemFav.setVisible(false);
 		
+		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
+		copyUrl.setVisible(true);
+		
 		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
 		if(isImage())
 			itemSaveImage.setVisible(true);//Change to true after testings
 		else
+		{
 			itemSaveImage.setVisible(false);
+			copyUrl.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		}
 		
 		return super.onCreateOptionsMenu(menu);
 	}
-
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case android.R.id.home: {
+			webView.onPause();
 			super.onBackPressed();
+			this.finish();
 			return true;
 		}
 		case R.id.action_save_image: {
 			this.saveImageToGallery();
+			return true;
+		}
+		case R.id.action_copy_url: {
+			ClipboardManager clipboard = (ClipboardManager)
+			getSystemService(Context.CLIPBOARD_SERVICE);
+			ClipData clip = ClipData.newPlainText("simple text", url);
+			clipboard.setPrimaryClip(clip);
+			Toast.makeText(getApplicationContext(), "Copied to Clipboard",
+			Toast.LENGTH_SHORT).show();
 			return true;
 		}
 		default:

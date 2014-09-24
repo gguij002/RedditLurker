@@ -16,6 +16,9 @@ import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -38,7 +41,7 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTitle("::Front Page");
+		setTitle(":Front Page");
 		storieList = new ArrayList<StoryInfo>();
 
 		setContentView(R.layout.activity_subreddit);
@@ -53,6 +56,27 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 
 		setOnItemClickListener(this);
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_main_actions, menu);
+
+		MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
+		itemSearch.setVisible(false);
+		
+		MenuItem itemFav = menu.findItem(R.id.action_fav);
+		itemFav.setVisible(false);
+		
+		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
+		copyUrl.setVisible(false);
+		
+		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
+		itemSaveImage.setVisible(false);
+		
+		return super.onCreateOptionsMenu(menu);
+	}
+
 	
 	private void setOnItemClickListener(final Context context) {
 		final ListView storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);

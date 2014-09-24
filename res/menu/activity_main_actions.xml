@@ -22,9 +22,14 @@
           android:showAsAction="ifRoom" />
 	 
 	 <item android:id="@+id/action_save_image"
-	      android:icon="@drawable/ic_save_image"
-          android:title="@string/action_search"
-          android:showAsAction="ifRoom" />
+	      android:icon="@drawable/ic_action_save_floppy"
+          android:title="Save Image"
+          android:showAsAction="collapseActionView" />
+	 
+	 <item android:id="@+id/action_copy_url"
+	      android:icon="@drawable/ic_action_copy_url"
+          android:title="Copy Link"
+          android:showAsAction="collapseActionView" />
 	 
 	 
 

@@ -11,6 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -72,6 +74,27 @@ public class ActivityCommentsWebView extends Activity {
 			getActionBar().setIcon(R.drawable.ic_launcher);
 		}
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_main_actions, menu);
+
+		MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
+		itemSearch.setVisible(false);
+		
+		MenuItem itemFav = menu.findItem(R.id.action_fav);
+		itemFav.setVisible(false);
+		
+		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
+		copyUrl.setVisible(false);
+		
+		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
+		itemSaveImage.setVisible(false);
+		
+		return super.onCreateOptionsMenu(menu);
+	}
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

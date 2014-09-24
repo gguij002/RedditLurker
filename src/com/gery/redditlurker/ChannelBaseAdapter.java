@@ -109,6 +109,10 @@ public class ChannelBaseAdapter extends BaseAdapter {
 				});
 			}
 		}
+		else
+		{
+			holder.thumbView.setImageResource(R.drawable.ic_launcher);
+		}
 
 		return convertView;
 	}

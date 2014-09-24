@@ -73,7 +73,7 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 				else {
 					subRedditInfo.favorite = true;
 					srDataSource.addSubRedditToDB(subRedditInfo);
-					holder.favoriteButton.setImageResource(R.drawable.ic_favorite_on_gaby);
+					holder.favoriteButton.setImageResource(R.drawable.ic_favorite_yellow);
 				}
 
 				srDataSource.close();
@@ -81,7 +81,7 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 		});
 
 		if (subRedditInfo.favorite)
-			holder.favoriteButton.setImageResource(R.drawable.ic_favorite_on_gaby);
+			holder.favoriteButton.setImageResource(R.drawable.ic_favorite_yellow);
 		else
 			holder.favoriteButton.setImageResource(R.drawable.ic_favorite_off_new);
 
@@ -117,6 +117,9 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 				});
 			}
 		}
+		else
+			holder.thumbView.setImageResource(R.drawable.ic_launcher);
+		
 		return convertView;
 	}
 

@@ -8,6 +8,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 	private AllSubRedditsFragment allSubRedditsFragment;
 	private EnteredSubRedditsFragment enteredSubRedditsFragment;
+	private FrontPageFragment frontPageFragment;
 
 	public TabsPagerAdapter(FragmentManager fm) {
 		super(fm);
@@ -22,10 +23,14 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 		switch (index) {
 		case 0:
+			if (frontPageFragment == null)
+				frontPageFragment = new FrontPageFragment();
+			return frontPageFragment;
+		case 1:
 			if (allSubRedditsFragment == null)
 				allSubRedditsFragment = new AllSubRedditsFragment();
 			return allSubRedditsFragment;
-		case 1:
+		case 2:
 			if (enteredSubRedditsFragment == null)
 				enteredSubRedditsFragment = new EnteredSubRedditsFragment();
 			return enteredSubRedditsFragment;
@@ -37,9 +42,12 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 	public Fragment getFragmentAlreadyCreated(int index) {
 		switch (index) {
 		case 0:
+			// List front Page
+			return frontPageFragment;
+		case 1:
 			// List Subreddits
 			return allSubRedditsFragment;
-		case 1:
+		case 2:
 			// Entered Subreddits
 			return enteredSubRedditsFragment;
 		}
@@ -50,7 +58,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		// get item count - equal to number of tabs
-		return 2;
+		return 3;
 	}
 
 }
