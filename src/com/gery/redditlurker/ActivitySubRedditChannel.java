@@ -2,13 +2,10 @@ package com.gery.redditlurker;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
-import com.gery.database.LoadThumbsTask;
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 import android.app.ActionBar;
@@ -139,14 +136,8 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			{
 				if (!srDataSource.isRawSubRedditExist(subReddit.name)) 
 				{
-					try {
-						System.out.println("Loading subreddit to add to DB: Highly expensive and must be avouded");
-						subReddit = new LoadSubReddit(this, this.storieList.get(0).subreddit_id).execute().get();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} catch (ExecutionException e) {
-						e.printStackTrace();
-					}
+					System.out.println("Loading subreddit to add to DB: Highly expensive and must be avouded");
+					new LoadSubReddit(this, this.storieList.get(0).subreddit).execute();
 					subReddit.favorite = true;
 					srDataSource.addSubRedditToDB(subReddit);
 				}
@@ -272,9 +263,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialogChannel = new ProgressDialog(context);// CHANGE TO
-															// GETAPPLICATION
-			// CONTEXT
+			pDialogChannel = new ProgressDialog(context);
 			pDialogChannel.setMessage("Saving Favorite SubReddit ...");
 			pDialogChannel.setIndeterminate(false);
 			pDialogChannel.setCancelable(false);
@@ -282,54 +271,27 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		}
 
 		protected SubRedditInfo doInBackground(String... args) {
-			SubRedditInfo sub = addNewSUbredditFromSearch(this.subRedditName);
-			return sub;
+			// "http://reddit.com/r/reddits.rss?limit=[limit]&after=[after]";
+			final String REDDIT_SUBREDDITS_URL = URLCreate();
+			System.out.println("REDDIT_SUBREDDITS_URL: " + REDDIT_SUBREDDITS_URL);
+
+			// Create List Of Subreddit
+			JSONObject subRedditsJSON = new RedditRSSReader(REDDIT_SUBREDDITS_URL).execute();
+			JSONObject data = (JSONObject) subRedditsJSON.get("data");
+			
+			SubRedditInfo item = new SubRedditInfo(data).execute();
+			item.favorite = true;
+			subReddit = item;
+			return item;
+		}
+		
+		private String URLCreate() {
+			return "http://www.reddit.com/r/" + subRedditName+ "/about.json";
 		}
 
 		protected void onPostExecute(final SubRedditInfo subRedditInfo) {
 			pDialogChannel.dismiss();
 			super.onPostExecute(subRedditInfo);
-		}
-
-		private SubRedditInfo addNewSUbredditFromSearch(String subId) {
-			String beforeURL = fetchBeforeURL(subId);
-
-			SubRedditInfo subReddit = createSubReddit(beforeURL);
-			isFromSearch = false;
-			return subReddit;
-		}
-
-		private String fetchBeforeURL(String subId) {
-			String afterURL = URLCreateAfter(subId);
-			JSONObject subRedditsJSONAfter = new RedditRSSReader(afterURL).execute();
-			JSONObject dataAFter = (JSONObject) subRedditsJSONAfter.get("data");
-			JSONArray dataAfterRaw = (JSONArray) dataAFter.get("children");
-			JSONObject varA = (JSONObject) ((JSONObject) dataAfterRaw.get(0)).get("data");
-			String name = (String) varA.get("name");
-			String beforeURL = URLBeforeAfter(name);
-			return beforeURL;
-		}
-
-		private SubRedditInfo createSubReddit(String beforeURL) {
-			JSONObject subRedditsJSONB = new RedditRSSReader(beforeURL).execute();
-			JSONObject dataB = (JSONObject) subRedditsJSONB.get("data");
-			JSONArray dataBRaw = (JSONArray) dataB.get("children");
-			JSONObject varB = (JSONObject) ((JSONObject) dataBRaw.get(0)).get("data");
-			SubRedditInfo item = new SubRedditInfo(varB).execute();
-			String header_image_url = item.header_img;
-			if (header_image_url != null && !header_image_url.isEmpty()) {
-				System.out.println("ITS GOING IN HERE NO BUENO");
-				item.imageBitMap = new LoadThumbsTask(header_image_url).exceute().imageBitmap;// Picasso.with(context).load(header_image_url).get();
-			}
-			return item;
-		}
-
-		private String URLCreateAfter(String after) {
-			return "http://www.reddit.com/reddits/.json" + "?limit=1&after=" + after;
-		}
-
-		private String URLBeforeAfter(String before) {
-			return "http://www.reddit.com/reddits/.json" + "?limit=1&before=" + before;
 		}
 	}
 
