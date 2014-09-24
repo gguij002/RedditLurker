@@ -11,7 +11,6 @@ import com.gery.database.SubRedditsDataSource;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -41,7 +40,6 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	Long offset = 20L;
 	// List Items
 
-	public boolean isFromSearch = false;
 	public List<StoryInfo> storieList;
 	private boolean loadingMore;
 
@@ -81,20 +79,12 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		subReddit = new SubRedditInfo(new JSONObject());
 		subReddit.favorite = false;
 
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			subReddit.display_name = intent.getStringExtra(SearchManager.QUERY);
-			subReddit.url = "/r/" + subReddit.display_name + "/";
-			isFromSearch = true;
-		} else {// comes from the lists and not the search bar
-			this.ReCreateSubReddit(intent);
-			setHeaderBarThumb(subReddit.imageBitMap);
-		}
+		this.ReCreateSubReddit(intent);
+		setHeaderBarThumb(subReddit.imageBitMap);
 
 		setTitle("LurkR: " + subReddit.display_name);
 
 		new LoadStories(this, subReddit.url).execute();
-
-		isFromSearch = false;
 	}
 
 	private void ReCreateSubReddit(Intent intent) {
@@ -136,7 +126,6 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			{
 				if (!srDataSource.isRawSubRedditExist(subReddit.name)) 
 				{
-					System.out.println("Loading subreddit to add to DB: Highly expensive and must be avouded");
 					new LoadSubReddit(this, this.storieList.get(0).subreddit).execute();
 					subReddit.favorite = true;
 					srDataSource.addSubRedditToDB(subReddit);
@@ -353,19 +342,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 				listOfStories.add(item);
 			}
 
-			if (isFromSearch && length > 0) {
-				subReddit.favorite = isFavoriteFromSearch(listOfStories.get(0).subreddit_id);
-			}
-
 			return listOfStories;
-		}
-
-		private boolean isFavoriteFromSearch(String subRedditId) {
-			SubRedditsDataSource srDataSource = new SubRedditsDataSource(getApplicationContext());
-			srDataSource.open();
-			boolean fav = srDataSource.isRawSubRedditExist(subRedditId);
-			srDataSource.close();
-			return fav;
 		}
 
 		private String URLCreate(String subReddit, int offset) {
