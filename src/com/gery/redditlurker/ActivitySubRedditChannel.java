@@ -21,6 +21,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,11 +46,16 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 
 	SubRedditInfo subReddit = null;
 	private byte[] headerBarThumb;
+	private ListView storiesListView;
+	private View footer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		storieList = new ArrayList<StoryInfo>();
+		storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
+		footer = LayoutInflater.from(this).inflate(R.layout.footer_loader, null);
+		
 		handleIntent(getIntent());
 
 		setContentView(R.layout.activity_subreddit);
@@ -304,17 +310,22 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			dialog = new ProgressDialog(context);
-			dialog.setCancelable(true);
-			dialog.setOnCancelListener(new OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					onBackPressed();
-					// ****cleanup code****
-				}
-			});
-			dialog.setMessage("Loading Stories...");
-			dialog.show();
+			
+			if(storieList.isEmpty()){
+				dialog = new ProgressDialog(context);
+				dialog.setCancelable(true);
+				dialog.setOnCancelListener(new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						onBackPressed();
+						// ****cleanup code****
+					}
+				});
+				dialog.setMessage("Loading Stories...");
+				dialog.show();
+			}
+			else
+				storiesListView.addFooterView(footer, null, false);
 
 		}
 
@@ -363,11 +374,16 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 				return;
 			storieList.addAll(storieList.size(), storiesInfoList);
 			
-			dialog.dismiss();
-			
-			final ListView storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
+			storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
 			final int positionToSave = storiesListView.getFirstVisiblePosition();
-			// updating UI from Background Thread
+			
+			if(dialog != null){
+				dialog.dismiss();
+				dialog = null;
+			}
+			else 
+				storiesListView.removeFooterView(footer);
+			
 			runOnUiThread(new Runnable() {
 				public void run() {
 					ChannelBaseAdapter var = new ChannelBaseAdapter(getApplicationContext(), storieList);

@@ -100,8 +100,9 @@ public final class R {
         public static final int all_aubreddit_list_item=0x7f030005;
         public static final int channel_list_items=0x7f030006;
         public static final int entered_subreddit_list_item=0x7f030007;
-        public static final int fragment_all_subreddit=0x7f030008;
-        public static final int fragment_entered_subreddit=0x7f030009;
+        public static final int footer_loader=0x7f030008;
+        public static final int fragment_all_subreddit=0x7f030009;
+        public static final int fragment_entered_subreddit=0x7f03000a;
     }
     public static final class menu {
         public static final int activity_main_actions=0x7f090000;

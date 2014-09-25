@@ -15,7 +15,9 @@ import com.gery.database.SubRedditsDataSource;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,6 +46,8 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	private ProgressDialog pDialog;
 	private View rootView;
 	Context context;
+	private View footer;
+	private ListView storiesListView;
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -54,14 +58,18 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		context = inflater.getContext();
-
+		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container, false);
+		storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);
+		
+		footer = LayoutInflater.from(context).inflate(R.layout.footer_loader, null);
+        storiesListView.addFooterView(footer, null, false);
+		
 		if (Connection.isNetworkConnected(context)) {
 			new LoadSubReddits(context).execute();
 		} else {
 			Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
 		}
 		
-		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container, false);
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
 	}
@@ -91,6 +99,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				new LoadSubReddits(context).execute();
 			}
 		}
+		//storiesListView.removeFooterView(footer);
 	}
 
 	private void setOnItemClickListener(final Context context) {
@@ -153,11 +162,16 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(fragmentContext);
-			pDialog.setMessage("Loading SubReddits ...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(false);
-			pDialog.show();
+			
+			if(subRedditsList.isEmpty()){
+				pDialog = new ProgressDialog(fragmentContext);
+				pDialog.setMessage("Loading SubReddits ...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(false);
+				pDialog.show();
+			}
+			else
+				storiesListView.addFooterView(footer, null, false);
 		}
 
 		/**
@@ -204,19 +218,25 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		/**
 		 * After completing background task Dismiss the progress dialog
 		 * **/
-		protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) {
-			// dismiss the dialog after getting all products
-			pDialog.dismiss();
+		protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) 
+		{
 			loadingMore = false;
 			subRedditsList.addAll(subRedditsList.size(), listOfSubReddits);
-			final ListView storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);
+			
 			final int positionToSave = storiesListView.getFirstVisiblePosition();
-			// updating UI from Background Thread
+			if(pDialog != null){
+				pDialog.dismiss();
+				pDialog = null;
+			}
+			else 
+				storiesListView.removeFooterView(footer);
+			
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
 					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext, R.layout.fragment_all_subreddit, subRedditsList);
 					storiesListView.setAdapter(adapter);
 					storiesListView.setSelection(positionToSave);
+				
 				}
 			});
 			super.onPostExecute(listOfSubReddits);

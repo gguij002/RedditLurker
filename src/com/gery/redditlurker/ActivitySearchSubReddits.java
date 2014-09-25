@@ -15,10 +15,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -42,11 +45,15 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 		private ProgressDialog pDialog;
 		public AllSubRedditCustomBaseAdapter adapter;
 		private String searchQuery;
+		private ListView storiesListView;
+		private View footer;
 		
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			subRedditsList = new ArrayList<SubRedditInfo>();
+			storiesListView = (ListView) findViewById(R.id.all_subreddit_list);
+			footer = LayoutInflater.from(this).inflate(R.layout.footer_loader, null);
 
 			setContentView(R.layout.fragment_all_subreddit);
 			handleIntent(getIntent());
@@ -162,11 +169,22 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
-				pDialog = new ProgressDialog(fragmentContext);
-				pDialog.setMessage("Loading SubReddits ...");
-				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(false);
-				pDialog.show();
+				if(subRedditsList.isEmpty()){
+					pDialog = new ProgressDialog(fragmentContext);
+					pDialog.setCancelable(true);
+					pDialog.setOnCancelListener(new OnCancelListener() {
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							onBackPressed();
+							// ****cleanup code****
+						}
+					});
+					pDialog.setMessage("Loading Stories...");
+					pDialog.show();
+				}
+				else
+					storiesListView.addFooterView(footer, null, false);
+
 			}
 
 			/**
@@ -214,12 +232,19 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 			/**
 			 * After completing background task Dismiss the progress dialog
 			 * **/
-			protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) {
-				// dismiss the dialog after getting all products
-				pDialog.dismiss();
+			protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) 
+			{
 				loadingMore = false;
 				subRedditsList.addAll(subRedditsList.size(), listOfSubReddits);
-				final ListView storiesListView = (ListView) findViewById(R.id.all_subreddit_list);
+				storiesListView = (ListView) findViewById(R.id.all_subreddit_list);
+				
+				if(pDialog != null){
+					pDialog.dismiss();
+					pDialog = null;
+				}
+				else 
+					storiesListView.removeFooterView(footer);
+				
 				final int positionToSave = storiesListView.getFirstVisiblePosition();
 				// updating UI from Background Thread
 				runOnUiThread(new Runnable() {

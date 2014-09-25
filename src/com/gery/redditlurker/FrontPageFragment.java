@@ -41,6 +41,8 @@ public class FrontPageFragment extends Fragment implements OnScrollListener
 		public List<StoryInfo> storieList;
 		private Context context;
 		private View rootView;
+		private View footer = null;
+		private ListView storiesListView = null;
 		
 		@Override
 		public void onCreate(Bundle bundle) {
@@ -51,14 +53,18 @@ public class FrontPageFragment extends Fragment implements OnScrollListener
 		@Override
 		public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			context = inflater.getContext();
-
+			rootView = inflater.inflate(R.layout.activity_subreddit, container, false);
+			storiesListView = (ListView) rootView.findViewById(R.id.subreddit_channel_list);
+			
+			footer = LayoutInflater.from(context).inflate(R.layout.footer_loader, null);
+			
 			if (Connection.isNetworkConnected(context)) {
 				new LoadStories(context, "").execute();
 			} else {
 				Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
 			}
 			
-			rootView = inflater.inflate(R.layout.activity_subreddit, container, false);
+			
 			setOnItemClickListener(inflater.getContext());
 			return rootView;
 		}
@@ -111,7 +117,7 @@ public class FrontPageFragment extends Fragment implements OnScrollListener
 		class LoadStories extends AsyncTask<String, String, List<StoryInfo>> {
 			private String subRedditChannel;
 			private Context context;
-			ProgressDialog dialog;
+			private ProgressDialog dialog = null;
 
 			public LoadStories(Context context, String subReddit) {
 				this.context = context;
@@ -125,17 +131,21 @@ public class FrontPageFragment extends Fragment implements OnScrollListener
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
-				dialog = new ProgressDialog(context);
-				dialog.setCancelable(true);
-				dialog.setOnCancelListener(new OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-				//		onBackPressed();
-						// ****cleanup code****
-					}
-				});
-				dialog.setMessage("Loading Stories...");
-				dialog.show();
+				if(storieList.isEmpty()){
+					dialog = new ProgressDialog(context);
+					dialog.setCancelable(true);
+					dialog.setOnCancelListener(new OnCancelListener() {
+						@Override
+						public void onCancel(DialogInterface dialog) {
+					//		onBackPressed();
+							// ****cleanup code****
+						}
+					});
+					dialog.setMessage("Loading Stories...");
+					dialog.show();
+				}
+				else
+					storiesListView.addFooterView(footer, null, false);
 
 			}
 
@@ -185,10 +195,15 @@ public class FrontPageFragment extends Fragment implements OnScrollListener
 					return;
 				storieList.addAll(storieList.size(), storiesInfoList);
 				
-				dialog.dismiss();
-				
-				final ListView storiesListView = (ListView) rootView.findViewById(R.id.subreddit_channel_list);
 				final int positionToSave = storiesListView.getFirstVisiblePosition();
+				
+				if(dialog != null){
+					dialog.dismiss();
+					dialog = null;
+				}
+				else 
+					storiesListView.removeFooterView(footer);
+					
 				// updating UI from Background Thread
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
