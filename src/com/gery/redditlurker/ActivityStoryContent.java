@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -72,38 +73,55 @@ public class ActivityStoryContent extends Activity {
 				}
 			});
 
-		} else {
-			
+		}
+		else if(isGif())
+		{
+			GifWebView view = new GifWebView(this, url); 
+			setContentView(view); 
+		}
+		else
+		{
 			final ProgressDialog dialog = new ProgressDialog(this);
-			dialog.setCancelable(true);
-			dialog.setOnCancelListener(new OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					onBackPressed();
-				}
-			});
-			dialog.setMessage("Loading...");
-			dialog.show();
-			
+			if(!isGif())
+			{
+				dialog.setCancelable(true);
+				dialog.setOnCancelListener(new OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						onBackPressed();
+					}
+				});
+				dialog.setMessage("Loading...");
+				dialog.show();
+			}
 			setContentView(R.layout.activity_story_content);
 			
 			webView = (WebView) findViewById(R.id.story_content_webview_view);
 			WebSettings webSettings = webView.getSettings(); 
 			webSettings.setJavaScriptEnabled(true);
-			webSettings.setBuiltInZoomControls(true);
-			webSettings.setAllowContentAccess(true);
-	        webSettings.setLoadsImagesAutomatically(true);
-	        webSettings.setLoadWithOverviewMode(true);
-	        webSettings.setSupportZoom(true);
-	        webSettings.setUseWideViewPort(true);
+			webView.setWebChromeClient(new WebChromeClient() {
+			});
+			
+//			webSettings.setBuiltInZoomControls(true);
+//			webSettings.setAllowContentAccess(true);
+//	        webSettings.setLoadsImagesAutomatically(true);
+//	        webSettings.setLoadWithOverviewMode(true);
+//	        webSettings.setSupportZoom(true);
+//	        webSettings.setUseWideViewPort(true);
 			webView.setWebViewClient(new WebViewClient() {
 			    @Override
 			    public void onPageFinished(WebView view, String url) {
-			    	dialog.dismiss();
+			    	if(!isGif())
+			    		dialog.dismiss();
 			    }
 			});
 			webView.loadUrl(formatURL(url));
 		}
+	}
+	
+	private boolean isGif()
+	{
+		return url.endsWith(".gif");
 	}
 	
 	private Bitmap getImageBitmap(ImageView v) {
@@ -152,7 +170,7 @@ public class ActivityStoryContent extends Activity {
 	}
 
 	private boolean isImage() {
-		return (url.endsWith(".jpg") || url.endsWith(".gif") || url.endsWith("png"));
+		return (url.endsWith(".jpg") || url.endsWith("png"));
 	}
 
 	

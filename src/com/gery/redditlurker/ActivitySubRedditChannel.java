@@ -3,6 +3,7 @@ package com.gery.redditlurker;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.protocol.HTTP;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,6 +20,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -207,15 +209,27 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+				
 				StoryInfo subReddit = (StoryInfo) storieList.get(position);
-				Intent nextActivity = new Intent(context, ActivityStoryContent.class);
-				nextActivity.putExtra("url", subReddit.url);
-				nextActivity.putExtra("imageBitMap", headerBarThumb);
-				nextActivity.putExtra("name", ActivitySubRedditChannel.this.subReddit.display_name);
-				startActivity(nextActivity);
+				if(isYoutubeVid(subReddit.url))
+				{
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(subReddit.url)));
+				}
+				else
+				{
+					Intent nextActivity = new Intent(context, ActivityStoryContent.class);
+					nextActivity.putExtra("url", subReddit.url);
+					nextActivity.putExtra("imageBitMap", headerBarThumb);
+					nextActivity.putExtra("name", ActivitySubRedditChannel.this.subReddit.display_name);
+					startActivity(nextActivity);
+				}
 			}
 		});
 		storiesListView.setOnScrollListener(this);
+	}
+	private boolean isYoutubeVid(String url) {
+		
+		return 	url.contains("youtube.com") || url.contains("youtu.be");
 	}
 
 	@Override
