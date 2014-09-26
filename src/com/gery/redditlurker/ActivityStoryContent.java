@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -46,6 +47,7 @@ public class ActivityStoryContent extends Activity {
 
 	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState) {
+		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 
 		this.handleIntent(getIntent());
@@ -53,17 +55,19 @@ public class ActivityStoryContent extends Activity {
 
 		if (isImage()) {
 			setContentView(R.layout.activity_image_display);
-			
+			setProgressBarIndeterminateVisibility(true);
 			final ImageView imageView = (ImageView) findViewById(R.id.image_viewer);
-			final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+			
+		//	final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 			// This line shows progressBar again for recycled view
-			progressBar.setVisibility(View.VISIBLE);
+		//	progressBar.setVisibility(View.VISIBLE);
 			
 			Picasso.with(this).load(url).into(imageView, new Callback() {
 				@Override
 				public void onSuccess() {
-					progressBar.setVisibility(View.GONE);
+					setProgressBarIndeterminateVisibility(false);
+			//		progressBar.setVisibility(View.GONE);
 					storyImageBitmap = getImageBitmap(imageView);
 				}
 
@@ -74,28 +78,11 @@ public class ActivityStoryContent extends Activity {
 			});
 
 		}
-		else if(isGif())
-		{
-			GifWebView view = new GifWebView(this, url); 
-			setContentView(view); 
-		}
 		else
 		{
-			final ProgressDialog dialog = new ProgressDialog(this);
-			if(!isGif())
-			{
-				dialog.setCancelable(true);
-				dialog.setOnCancelListener(new OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						onBackPressed();
-					}
-				});
-				dialog.setMessage("Loading...");
-				dialog.show();
-			}
-			setContentView(R.layout.activity_story_content);
 			
+			setContentView(R.layout.activity_story_content);
+			setProgressBarIndeterminateVisibility(true);
 			webView = (WebView) findViewById(R.id.story_content_webview_view);
 			WebSettings webSettings = webView.getSettings(); 
 			webSettings.setJavaScriptEnabled(true);
@@ -111,17 +98,11 @@ public class ActivityStoryContent extends Activity {
 			webView.setWebViewClient(new WebViewClient() {
 			    @Override
 			    public void onPageFinished(WebView view, String url) {
-			    	if(!isGif())
-			    		dialog.dismiss();
+			    	setProgressBarIndeterminateVisibility(false);
 			    }
 			});
 			webView.loadUrl(formatURL(url));
 		}
-	}
-	
-	private boolean isGif()
-	{
-		return url.endsWith(".gif");
 	}
 	
 	private Bitmap getImageBitmap(ImageView v) {

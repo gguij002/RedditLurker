@@ -8,12 +8,5 @@
     android:layout_height="match_parent" 
     ></ImageView>
 
-<ProgressBar
-    android:id="@+id/progressBar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="false"
-    android:layout_alignParentLeft="false"
-    android:layout_alignParentStart="false"
-    android:layout_centerInParent= "true" />
+
 </RelativeLayout>
