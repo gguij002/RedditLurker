@@ -1,6 +1,9 @@
 package com.gery.redditlurker;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
+
 import org.json.simple.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -26,8 +29,9 @@ public class StoryInfo {
 	public long score;
 	public Bitmap imageBitMap = null;
 	public String permalink;
-
+	private Double created_utc;
 	JSONObject jsonObject;
+	
 
 	public StoryInfo(JSONObject jObject) {
 		this.jsonObject = jObject;
@@ -45,6 +49,7 @@ public class StoryInfo {
 		this.downs = (Long) jsonObject.get("downs");
 		this.ups = (Long) jsonObject.get("ups");
 		this.created = (Double) jsonObject.get("created");
+		this.created_utc = (Double) jsonObject.get("created_utc");
 		this.url = (String) jsonObject.get("url");
 		this.permalink = (String) jsonObject.get("permalink");
 		this.author_flair_text = (String) jsonObject.get("author_flair_text");
@@ -60,10 +65,19 @@ public class StoryInfo {
 	}
 
 	public String getCreated_UTC_formatted() {
-		PrettyTime p = new PrettyTime();
-		long l = Math.round(created * 1000.00);
+		
+		long l = Math.round(created_utc * 1000.00);
 		Date d = new Date(l);
-		String prettyDate = p.format(d);
+		String format = "yyyy/MM/dd HH:mm:ss";
+		SimpleDateFormat sdf = new SimpleDateFormat (format);
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Date gmtTime = new Date(sdf.format(d));
+		
+		Date fromGmt = new Date(gmtTime.getTime() + TimeZone.getDefault().getOffset(d.getTime()));
+		
+		PrettyTime p = new PrettyTime();
+		
+		String prettyDate = p.format(fromGmt);
 		return prettyDate;
 	}
 

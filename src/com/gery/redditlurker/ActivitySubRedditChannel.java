@@ -187,6 +187,12 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
 		copyUrl.setVisible(false);
 		
+		MenuItem openInBrowser = menu.findItem(R.id.action_open_in_browser);
+		openInBrowser.setVisible(false);
+		
+		MenuItem itemShare = menu.findItem(R.id.action_share_menu);
+		itemShare.setVisible(false);
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 

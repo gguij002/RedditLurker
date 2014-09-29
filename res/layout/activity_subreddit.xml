@@ -5,6 +5,8 @@
     
     <ListView
         android:id="@+id/subreddit_channel_list"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
   	    android:layout_width="fill_parent"
         android:focusable="true"
          android:divider="@color/list_divider"

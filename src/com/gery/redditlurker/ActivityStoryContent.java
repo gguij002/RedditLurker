@@ -10,13 +10,10 @@ import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -29,14 +26,13 @@ import android.provider.MediaStore.Images;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 public class ActivityStoryContent extends Activity {
@@ -44,6 +40,7 @@ public class ActivityStoryContent extends Activity {
 	private String url;
 	private Bitmap imageBitmap = null;
 	private Bitmap storyImageBitmap = null;
+	private ShareActionProvider myShareActionProvider;
 
 	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,17 +54,18 @@ public class ActivityStoryContent extends Activity {
 			setContentView(R.layout.activity_image_display);
 			setProgressBarIndeterminateVisibility(true);
 			final ImageView imageView = (ImageView) findViewById(R.id.image_viewer);
-			
-		//	final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+			// final ProgressBar progressBar = (ProgressBar)
+			// findViewById(R.id.progressBar);
 
 			// This line shows progressBar again for recycled view
-		//	progressBar.setVisibility(View.VISIBLE);
-			
+			// progressBar.setVisibility(View.VISIBLE);
+
 			Picasso.with(this).load(url).into(imageView, new Callback() {
 				@Override
 				public void onSuccess() {
 					setProgressBarIndeterminateVisibility(false);
-			//		progressBar.setVisibility(View.GONE);
+					// progressBar.setVisibility(View.GONE);
 					storyImageBitmap = getImageBitmap(imageView);
 				}
 
@@ -77,34 +75,32 @@ public class ActivityStoryContent extends Activity {
 				}
 			});
 
-		}
-		else
-		{
-			
+		} else {
+
 			setContentView(R.layout.activity_story_content);
 			setProgressBarIndeterminateVisibility(true);
 			webView = (WebView) findViewById(R.id.story_content_webview_view);
-			WebSettings webSettings = webView.getSettings(); 
+			WebSettings webSettings = webView.getSettings();
 			webSettings.setJavaScriptEnabled(true);
 			webView.setWebChromeClient(new WebChromeClient() {
 			});
-			
-//			webSettings.setBuiltInZoomControls(true);
-//			webSettings.setAllowContentAccess(true);
-//	        webSettings.setLoadsImagesAutomatically(true);
-//	        webSettings.setLoadWithOverviewMode(true);
-//	        webSettings.setSupportZoom(true);
-//	        webSettings.setUseWideViewPort(true);
+
+			// webSettings.setBuiltInZoomControls(true);
+			// webSettings.setAllowContentAccess(true);
+			// webSettings.setLoadsImagesAutomatically(true);
+			// webSettings.setLoadWithOverviewMode(true);
+			// webSettings.setSupportZoom(true);
+			// webSettings.setUseWideViewPort(true);
 			webView.setWebViewClient(new WebViewClient() {
-			    @Override
-			    public void onPageFinished(WebView view, String url) {
-			    	setProgressBarIndeterminateVisibility(false);
-			    }
+				@Override
+				public void onPageFinished(WebView view, String url) {
+					setProgressBarIndeterminateVisibility(false);
+				}
 			});
 			webView.loadUrl(formatURL(url));
 		}
 	}
-	
+
 	private Bitmap getImageBitmap(ImageView v) {
 		BitmapDrawable drawable = (BitmapDrawable) v.getDrawable();
 		Bitmap bitmap = drawable.getBitmap();
@@ -112,7 +108,6 @@ public class ActivityStoryContent extends Activity {
 		return bitmap;
 	}
 
-	
 	private String formatURL(String url) {
 		if (url.contains("www.reddit.com"))
 			return url + ".compact";
@@ -128,17 +123,14 @@ public class ActivityStoryContent extends Activity {
 	}
 
 	private void setHeaderBarThumb(byte[] thumbBitmapArr) {
-		if(thumbBitmapArr != null)
-		{
+		if (thumbBitmapArr != null) {
 			Bitmap thumbBitmap = BitmapFactory.decodeByteArray(thumbBitmapArr, 0, thumbBitmapArr.length);
 			Resources res = getResources();
 			BitmapDrawable icon = null;
-	
+
 			icon = new BitmapDrawable(res, thumbBitmap);
 			getActionBar().setIcon(icon);
-		}
-		else
-		{
+		} else {
 			getActionBar().setIcon(R.drawable.ic_launcher);
 		}
 	}
@@ -154,80 +146,92 @@ public class ActivityStoryContent extends Activity {
 		return (url.endsWith(".jpg") || url.endsWith("png"));
 	}
 
-	
-	private void saveImageToGallery()
-	{
+	private void saveImageToGallery() {
 		OutputStream output;
-		
-		// Find the SD Card path
-        File filepath = Environment.getExternalStorageDirectory();
 
-        // Create a new folder in SD Card
-        File dir = new File(filepath.getAbsolutePath() + "/RedditLurkerIMG/");
-        dir.mkdirs(); 
-        
-        
-        File file = new File(dir, System.currentTimeMillis()+".jpg" );
-        
-        try {
+		// Find the SD Card path
+		File filepath = Environment.getExternalStorageDirectory();
+
+		// Create a new folder in SD Card
+		File dir = new File(filepath.getAbsolutePath() + "/RedditLurkerIMG/");
+		dir.mkdirs();
+
+		File file = new File(dir, System.currentTimeMillis() + ".jpg");
+
+		try {
 			output = new FileOutputStream(file);
-			 // Compress into png format image from 0% - 100%
-			if(storyImageBitmap != null){
+			// Compress into png format image from 0% - 100%
+			if (storyImageBitmap != null) {
 				storyImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
 				output.flush();
 				output.close();
 			}
 		} catch (FileNotFoundException e) {
-			
+
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-        ContentValues values = new ContentValues();
+		ContentValues values = new ContentValues();
 
-	    values.put(Images.Media.DATE_TAKEN, System.currentTimeMillis());
-	    values.put(Images.Media.MIME_TYPE, "image/jpeg");
-	    values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
+		values.put(Images.Media.DATE_TAKEN, System.currentTimeMillis());
+		values.put(Images.Media.MIME_TYPE, "image/jpeg");
+		values.put(MediaStore.MediaColumns.DATA, file.getAbsolutePath());
 
-	    this.getContentResolver().insert(Images.Media.EXTERNAL_CONTENT_URI, values);
-	    Toast.makeText(getApplicationContext(), "Image Saved to Gallery",
-	    Toast.LENGTH_SHORT).show();
+		this.getContentResolver().insert(Images.Media.EXTERNAL_CONTENT_URI, values);
+		Toast.makeText(getApplicationContext(), "Image Saved to Gallery", Toast.LENGTH_SHORT).show();
 	}
-	
+
 	@Override
-	public void onPause()
-	{
+	public void onPause() {
 		webView.onPause();
 		super.onPause();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_main_actions, menu);
+		// inflater.inflate(R.menu.share, menu);
 
 		MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
 		itemSearch.setVisible(false);
-		
+
 		MenuItem itemFav = menu.findItem(R.id.action_fav);
 		itemFav.setVisible(false);
-		
+
 		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
 		copyUrl.setVisible(true);
-		
+
+		MenuItem openInBrowser = menu.findItem(R.id.action_open_in_browser);
+		openInBrowser.setVisible(true);
+
 		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
-		if(isImage())
-			itemSaveImage.setVisible(true);//Change to true after testings
-		else
-		{
+		if (isImage())
+			itemSaveImage.setVisible(true);// Change to true after testings
+		else {
 			itemSaveImage.setVisible(false);
-			copyUrl.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+			// copyUrl.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		}
+
+		MenuItem itemShare = menu.findItem(R.id.action_share_menu);
+		myShareActionProvider = (ShareActionProvider) itemShare.getActionProvider();
+		if (myShareActionProvider != null) {
+			myShareActionProvider.setShareIntent(createShareIntent());
 		}
 		
+
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
+	private Intent createShareIntent() {
+		Intent shareIntent = new Intent(Intent.ACTION_SEND);
+		shareIntent.setType("text/plain");
+		shareIntent.putExtra(Intent.EXTRA_TEXT, url);
+		return shareIntent;
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Take appropriate action for each action item click
@@ -243,12 +247,10 @@ public class ActivityStoryContent extends Activity {
 			return true;
 		}
 		case R.id.action_copy_url: {
-			ClipboardManager clipboard = (ClipboardManager)
-			getSystemService(Context.CLIPBOARD_SERVICE);
+			ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 			ClipData clip = ClipData.newPlainText("simple text", url);
 			clipboard.setPrimaryClip(clip);
-			Toast.makeText(getApplicationContext(), "Copied to Clipboard",
-			Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Copied to Clipboard", Toast.LENGTH_SHORT).show();
 			return true;
 		}
 		default:

@@ -63,8 +63,10 @@ public final class R {
     public static final class id {
         public static final int action_copy_url=0x7f0a001c;
         public static final int action_fav=0x7f0a001a;
+        public static final int action_open_in_browser=0x7f0a001d;
         public static final int action_save_image=0x7f0a001b;
         public static final int action_search_widget=0x7f0a0019;
+        public static final int action_share_menu=0x7f0a001e;
         public static final int all_sub_favorite_image_button=0x7f0a0009;
         public static final int all_sub_relative_layout=0x7f0a0005;
         public static final int all_subreddit_list=0x7f0a0016;

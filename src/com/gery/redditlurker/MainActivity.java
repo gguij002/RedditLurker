@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.SearchView;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -99,6 +100,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
 		copyUrl.setVisible(false);
 		
+		MenuItem openInBrowser = menu.findItem(R.id.action_open_in_browser);
+		openInBrowser.setVisible(false);
+		
+		MenuItem itemShare = menu.findItem(R.id.action_share_menu);
+		itemShare.setVisible(false);
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -133,23 +140,27 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
-		srDataSource.open();
-
+	
 		Fragment fragment = mAdapter.getItem(tab.getPosition());
 
 		if (tab.getPosition() == 2) {
+			SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
+			srDataSource.open();
 			EnteredSubRedditsFragment enteredFragment = (EnteredSubRedditsFragment) fragment;
 			enteredFragment.UpdateSubRedditList(srDataSource.getAllSubReddit());
+			srDataSource.close();
 		} else if (tab.getPosition() == 1) {
+			SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
+			srDataSource.open();
 			AllSubRedditsFragment allFragment = (AllSubRedditsFragment) fragment;
 			allFragment.UpdateFavs(srDataSource.getAllSubRedditsID());
+			srDataSource.close();
 		}
 		else if(tab.getPosition() == 0)
 		{
 			System.out.println("Front PaGE FRAgment");
 		}
-		srDataSource.close();
+	
 		viewPager.setCurrentItem(tab.getPosition());
 	}
 

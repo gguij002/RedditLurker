@@ -31,6 +31,14 @@
           android:title="Copy Link"
           android:showAsAction="collapseActionView" />
 	 
+	 <item android:id="@+id/action_open_in_browser"
+	      android:title="Open In Browser"
+          android:showAsAction="collapseActionView" />
 	 
+	  <item android:id="@+id/action_share_menu"
+          android:title="Share"
+          android:showAsAction="ifRoom"
+          android:actionProviderClass="android.widget.ShareActionProvider"
+          />
 
 </menu>
