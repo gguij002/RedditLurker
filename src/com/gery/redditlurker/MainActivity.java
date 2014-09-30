@@ -16,7 +16,6 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.SearchView;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -25,7 +24,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	private TabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
 	// Tab titles
-	private String[] tabs = {"Front Page", "All", "Favorite"};
+	private String[] tabs = { "Front Page", "All", "Favorite" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +36,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		actionBar = getActionBar();
 		actionBar.setHomeButtonEnabled(true);
 		setTitle("Reddit Lurker");
-		
+
 		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
 		viewPager.setAdapter(mAdapter);
-		
+
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		// Adding Tabs
@@ -89,23 +88,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		inflater.inflate(R.menu.activity_main_actions, menu);
 		// Associate searchable configuration with the SearchView
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.action_search_widget).getActionView();
+		MenuItem var = menu.findItem(R.id.action_search_widget);
+		var.setVisible(true);
+		SearchView searchView = (SearchView) var.getActionView();
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-		MenuItem itemFav = menu.findItem(R.id.action_fav);
-		itemFav.setVisible(false);
-		
-		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
-		itemSaveImage.setVisible(false);
-		
-		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
-		copyUrl.setVisible(false);
-		
-		MenuItem openInBrowser = menu.findItem(R.id.action_open_in_browser);
-		openInBrowser.setVisible(false);
-		
-		MenuItem itemShare = menu.findItem(R.id.action_share_menu);
-		itemShare.setVisible(false);
-		
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -120,10 +107,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			item.getActionView().findViewById(id.action_search_widget);
 			goToSubReddit();
 			return true;
-//		case android.R.id.home:
-//			  Intent intent = new Intent(this, ActivityFrontPage.class);
-//		      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//		      startActivity(intent);
+			// case android.R.id.home:
+			// Intent intent = new Intent(this, ActivityFrontPage.class);
+			// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			// startActivity(intent);
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -140,7 +127,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-	
+
 		Fragment fragment = mAdapter.getItem(tab.getPosition());
 
 		if (tab.getPosition() == 2) {
@@ -155,12 +142,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			AllSubRedditsFragment allFragment = (AllSubRedditsFragment) fragment;
 			allFragment.UpdateFavs(srDataSource.getAllSubRedditsID());
 			srDataSource.close();
-		}
-		else if(tab.getPosition() == 0)
-		{
+		} else if (tab.getPosition() == 0) {
 			System.out.println("Front PaGE FRAgment");
 		}
-	
+
 		viewPager.setCurrentItem(tab.getPosition());
 	}
 

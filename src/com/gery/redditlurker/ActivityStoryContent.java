@@ -1,5 +1,6 @@
 package com.gery.redditlurker;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,6 +20,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -40,7 +42,8 @@ public class ActivityStoryContent extends Activity {
 	private String url;
 	private Bitmap imageBitmap = null;
 	private Bitmap storyImageBitmap = null;
-	private ShareActionProvider myShareActionProvider;
+	private String permalink;
+	private String displayName;
 
 	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState) {
@@ -137,9 +140,10 @@ public class ActivityStoryContent extends Activity {
 
 	private void handleIntent(Intent intent) {
 		url = intent.getStringExtra("url");
-		String displayName = intent.getStringExtra("name");
+		permalink = intent.getStringExtra("permalink");
+		displayName = intent.getStringExtra("name");
 		setHeaderBarThumb(intent.getByteArrayExtra("imageBitMap"));
-		setTitle("LurkR: " + displayName);
+		setTitle(displayName);
 	}
 
 	private boolean isImage() {
@@ -195,32 +199,28 @@ public class ActivityStoryContent extends Activity {
 		inflater.inflate(R.menu.activity_main_actions, menu);
 		// inflater.inflate(R.menu.share, menu);
 
-		MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
-		itemSearch.setVisible(false);
-
-		MenuItem itemFav = menu.findItem(R.id.action_fav);
-		itemFav.setVisible(false);
-
 		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
 		copyUrl.setVisible(true);
 
 		MenuItem openInBrowser = menu.findItem(R.id.action_open_in_browser);
 		openInBrowser.setVisible(true);
 
+		MenuItem itemViewCommewnts = menu.findItem(R.id.action_view_comments);
+		itemViewCommewnts.setVisible(true);
+
 		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
-		if (isImage())
+
+		if (isImage()) {
 			itemSaveImage.setVisible(true);// Change to true after testings
-		else {
-			itemSaveImage.setVisible(false);
-			// copyUrl.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
 		}
 
 		MenuItem itemShare = menu.findItem(R.id.action_share_menu);
-		myShareActionProvider = (ShareActionProvider) itemShare.getActionProvider();
+		itemShare.setVisible(true);
+		ShareActionProvider myShareActionProvider = (ShareActionProvider) itemShare.getActionProvider();
 		if (myShareActionProvider != null) {
 			myShareActionProvider.setShareIntent(createShareIntent());
 		}
-		
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -244,6 +244,26 @@ public class ActivityStoryContent extends Activity {
 		}
 		case R.id.action_save_image: {
 			this.saveImageToGallery();
+			return true;
+		}
+		case R.id.action_view_comments: {
+			Intent nextActivity = new Intent(this, ActivityCommentsWebView.class);
+			nextActivity.putExtra("permalink", permalink);
+			nextActivity.putExtra("name", displayName);
+			byte[] byteArray = null;
+			if (imageBitmap != null) {
+				ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+				imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
+				byteArray = bStream.toByteArray();
+			}
+			nextActivity.putExtra("imageBitMap", byteArray);
+			nextActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(nextActivity);
+			return true;
+		}
+		case R.id.action_open_in_browser: {
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+			startActivity(browserIntent);
 			return true;
 		}
 		case R.id.action_copy_url: {

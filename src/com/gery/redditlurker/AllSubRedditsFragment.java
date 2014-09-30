@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import android.graphics.Bitmap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,9 +14,7 @@ import com.gery.database.SubRedditsDataSource;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,16 +57,16 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		context = inflater.getContext();
 		rootView = inflater.inflate(R.layout.fragment_all_subreddit, container, false);
 		storiesListView = (ListView) rootView.findViewById(R.id.all_subreddit_list);
-		
+
 		footer = LayoutInflater.from(context).inflate(R.layout.footer_loader, null);
-        storiesListView.addFooterView(footer, null, false);
-		
+		storiesListView.addFooterView(footer, null, false);
+
 		if (Connection.isNetworkConnected(context)) {
 			new LoadSubReddits(context).execute();
 		} else {
 			Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
 		}
-		
+
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
 	}
@@ -99,7 +96,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 				new LoadSubReddits(context).execute();
 			}
 		}
-		//storiesListView.removeFooterView(footer);
+		// storiesListView.removeFooterView(footer);
 	}
 
 	private void setOnItemClickListener(final Context context) {
@@ -107,24 +104,22 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				if(Connection.isNetworkConnected(context))
-				{
+				if (Connection.isNetworkConnected(context)) {
 					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 					Intent nextActivity = new Intent(context, ActivitySubRedditChannel.class);
 					nextActivity.putExtra("subRedditJSON", subReddit.getJsonObjectAsString());
 					nextActivity.putExtra("favorite", subReddit.favorite);
-					
+
 					byte[] byteArray = null;
-					if(subReddit.imageBitMap != null){
+					if (subReddit.imageBitMap != null) {
 						ByteArrayOutputStream bStream = new ByteArrayOutputStream();
 						subReddit.imageBitMap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
-					    byteArray = bStream.toByteArray();
+						byteArray = bStream.toByteArray();
 					}
 					nextActivity.putExtra("imageBitMap", byteArray);
-					
+
 					startActivity(nextActivity);
-				}
-				else 
+				} else
 					Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
 			}
 		});
@@ -162,15 +157,14 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			
-			if(subRedditsList.isEmpty()){
+
+			if (subRedditsList.isEmpty()) {
 				pDialog = new ProgressDialog(fragmentContext);
 				pDialog.setMessage("Loading SubReddits ...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(false);
 				pDialog.show();
-			}
-			else
+			} else
 				storiesListView.addFooterView(footer, null, false);
 		}
 
@@ -218,25 +212,23 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		/**
 		 * After completing background task Dismiss the progress dialog
 		 * **/
-		protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) 
-		{
+		protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) {
 			loadingMore = false;
 			subRedditsList.addAll(subRedditsList.size(), listOfSubReddits);
-			
+
 			final int positionToSave = storiesListView.getFirstVisiblePosition();
-			if(pDialog != null){
+			if (pDialog != null) {
 				pDialog.dismiss();
 				pDialog = null;
-			}
-			else 
+			} else
 				storiesListView.removeFooterView(footer);
-			
+
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
 					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext, R.layout.fragment_all_subreddit, subRedditsList);
 					storiesListView.setAdapter(adapter);
 					storiesListView.setSelection(positionToSave);
-				
+
 				}
 			});
 			super.onPostExecute(listOfSubReddits);

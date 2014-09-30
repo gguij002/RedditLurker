@@ -78,6 +78,7 @@ public class FrontPageFragment extends Fragment implements OnScrollListener
 					Intent nextActivity = new Intent(context, ActivityStoryContent.class);
 					nextActivity.putExtra("url", subReddit.url);
 					nextActivity.putExtra("name", subReddit.subreddit);
+					nextActivity.putExtra("permalink", subReddit.permalink);
 					startActivity(nextActivity);
 				}
 			});

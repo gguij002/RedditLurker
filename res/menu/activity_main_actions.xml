@@ -14,31 +14,42 @@
 	      android:hint="@string/search_hint"
 	      android:label="@string/app_name"
 	      android:showAsAction="always"
-	      android:actionViewClass="android.widget.SearchView"/>
+	      android:actionViewClass="android.widget.SearchView"
+	      android:visible="false"/>
 	
 	 <item android:id="@+id/action_fav"
 	      android:icon="@android:drawable/btn_star_big_off"
           android:title="@string/action_search"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="ifRoom"
+          android:visible="false" />
 	 
 	 <item android:id="@+id/action_save_image"
 	      android:icon="@drawable/ic_action_save_floppy"
           android:title="Save Image"
-          android:showAsAction="collapseActionView" />
+          android:showAsAction="collapseActionView"
+          android:visible="false" />
 	 
 	 <item android:id="@+id/action_copy_url"
 	      android:icon="@drawable/ic_action_copy_url"
           android:title="Copy Link"
-          android:showAsAction="collapseActionView" />
+          android:showAsAction="collapseActionView"
+          android:visible="false" />
 	 
 	 <item android:id="@+id/action_open_in_browser"
 	      android:title="Open In Browser"
-          android:showAsAction="collapseActionView" />
+          android:showAsAction="collapseActionView"
+          android:visible="false" />
+	 
+	 <item android:id="@+id/action_view_comments"
+	      android:title="View Comments"
+          android:showAsAction="collapseActionView"
+          android:visible="false" />
 	 
 	  <item android:id="@+id/action_share_menu"
           android:title="Share"
           android:showAsAction="ifRoom"
           android:actionProviderClass="android.widget.ShareActionProvider"
+          android:visible="false"
           />
 
 </menu>

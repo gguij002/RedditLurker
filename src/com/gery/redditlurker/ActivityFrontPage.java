@@ -35,9 +35,9 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 	Long offset = 20L;
 	private boolean loadingMore;
 	// List Items
-	
+
 	public List<StoryInfo> storieList;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,7 +45,7 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 		storieList = new ArrayList<StoryInfo>();
 
 		setContentView(R.layout.activity_subreddit);
-		
+
 		new LoadStories(this, "").execute();
 
 		// get the action bar
@@ -56,7 +56,7 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 
 		setOnItemClickListener(this);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -64,20 +64,19 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 
 		MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
 		itemSearch.setVisible(false);
-		
+
 		MenuItem itemFav = menu.findItem(R.id.action_fav);
 		itemFav.setVisible(false);
-		
+
 		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
 		copyUrl.setVisible(false);
-		
+
 		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
 		itemSaveImage.setVisible(false);
-		
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	
 	private void setOnItemClickListener(final Context context) {
 		final ListView storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
@@ -87,14 +86,13 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 				Intent nextActivity = new Intent(context, ActivityStoryContent.class);
 				nextActivity.putExtra("url", subReddit.url);
 				nextActivity.putExtra("name", subReddit.subreddit);
+				nextActivity.putExtra("permalink", subReddit.permalink);
 				startActivity(nextActivity);
 			}
 		});
 		storiesListView.setOnScrollListener(this);
 	}
 
-
-	
 	@Override
 	public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		this.currentFirstVisibleItem = firstVisibleItem;
@@ -148,7 +146,6 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 				@Override
 				public void onCancel(DialogInterface dialog) {
 					onBackPressed();
-					// ****cleanup code****
 				}
 			});
 			dialog.setMessage("Loading Stories...");
@@ -180,7 +177,6 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 				listOfStories.add(item);
 			}
 
-		
 			return listOfStories;
 		}
 
@@ -195,15 +191,14 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 		/**
 		 * After completing background task Dismiss the progress dialog
 		 * **/
-		protected void onPostExecute(final List<StoryInfo> storiesInfoList) 
-		{
+		protected void onPostExecute(final List<StoryInfo> storiesInfoList) {
 			loadingMore = false;
 			if (storiesInfoList == null)
 				return;
 			storieList.addAll(storieList.size(), storiesInfoList);
-			
+
 			dialog.dismiss();
-			
+
 			final ListView storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
 			final int positionToSave = storiesListView.getFirstVisiblePosition();
 			// updating UI from Background Thread

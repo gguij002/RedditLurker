@@ -3,12 +3,10 @@ package com.gery.redditlurker;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.protocol.HTTP;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import com.gery.database.RedditRSSReader;
-import com.gery.database.SubRedditsDataSource;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -29,10 +27,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+
+import com.gery.database.RedditRSSReader;
+import com.gery.database.SubRedditsDataSource;
 
 public class ActivitySubRedditChannel extends Activity implements OnScrollListener {
 	// List Items
@@ -90,7 +91,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		this.ReCreateSubReddit(intent);
 		setHeaderBarThumb(subReddit.imageBitMap);
 
-		setTitle("LurkR: " + subReddit.display_name);
+		setTitle(subReddit.display_name);
 
 		new LoadStories(this, subReddit.url).execute();
 	}
@@ -174,25 +175,10 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_main_actions, menu);
-		MenuItem item = menu.findItem(R.id.action_fav);
+		MenuItem itemFav = menu.findItem(R.id.action_fav);
+		itemFav.setVisible(true);
 
-		setFavoriteButton(item);
-
-		MenuItem itemSearch = menu.findItem(R.id.action_search_widget);
-		itemSearch.setVisible(false);
-		
-		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
-		itemSaveImage.setVisible(false);
-		
-		MenuItem copyUrl = menu.findItem(R.id.action_copy_url);
-		copyUrl.setVisible(false);
-		
-		MenuItem openInBrowser = menu.findItem(R.id.action_open_in_browser);
-		openInBrowser.setVisible(false);
-		
-		MenuItem itemShare = menu.findItem(R.id.action_share_menu);
-		itemShare.setVisible(false);
-		
+		setFavoriteButton(itemFav);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -226,6 +212,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 					Intent nextActivity = new Intent(context, ActivityStoryContent.class);
 					nextActivity.putExtra("url", subReddit.url);
 					nextActivity.putExtra("imageBitMap", headerBarThumb);
+					nextActivity.putExtra("permalink", subReddit.permalink);
 					nextActivity.putExtra("name", ActivitySubRedditChannel.this.subReddit.display_name);
 					startActivity(nextActivity);
 				}
