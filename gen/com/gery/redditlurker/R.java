@@ -38,28 +38,21 @@ public final class R {
     public static final class drawable {
         public static final int ic_action_copy_url=0x7f020000;
         public static final int ic_action_save_floppy=0x7f020001;
-        public static final int ic_action_save_white=0x7f020002;
-        public static final int ic_action_search=0x7f020003;
-        public static final int ic_chat_image=0x7f020004;
-        public static final int ic_comments_image=0x7f020005;
-        public static final int ic_delete_image=0x7f020006;
-        public static final int ic_delete_image_1=0x7f020007;
-        public static final int ic_delete_image_new=0x7f020008;
-        public static final int ic_downs_image=0x7f020009;
-        public static final int ic_favorite_gaby=0x7f02000a;
-        public static final int ic_favorite_gaby_full=0x7f02000b;
-        public static final int ic_favorite_gaby_larger=0x7f02000c;
-        public static final int ic_favorite_off_new=0x7f02000d;
-        public static final int ic_favorite_on_gaby=0x7f02000e;
-        public static final int ic_favorite_yellow=0x7f02000f;
-        public static final int ic_go_button=0x7f020010;
-        public static final int ic_launcher=0x7f020011;
-        public static final int ic_launcherd=0x7f020012;
-        public static final int ic_nsfw_image=0x7f020013;
-        public static final int ic_save_image=0x7f020014;
-        public static final int ic_search_button=0x7f020015;
-        public static final int ic_ups_image=0x7f020016;
-        public static final int ic_ups_image_arror=0x7f020017;
+        public static final int ic_action_search=0x7f020002;
+        public static final int ic_comments_image=0x7f020003;
+        public static final int ic_delete_image=0x7f020004;
+        public static final int ic_delete_image_1=0x7f020005;
+        public static final int ic_delete_image_new=0x7f020006;
+        public static final int ic_favorite_off_new=0x7f020007;
+        public static final int ic_favorite_on_gaby=0x7f020008;
+        public static final int ic_favorite_yellow=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
+        public static final int ic_launcherd=0x7f02000b;
+        public static final int ic_nsfw_image=0x7f02000c;
+        public static final int ic_save_image=0x7f02000d;
+        public static final int ic_search_button=0x7f02000e;
+        public static final int ic_ups_image=0x7f02000f;
+        public static final int ic_ups_image_arror=0x7f020010;
     }
     public static final class id {
         public static final int action_copy_url=0x7f0a001d;
