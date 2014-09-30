@@ -237,13 +237,16 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 			} else
 				storiesListView.removeFooterView(footer);
 
-			final int positionToSave = storiesListView.getFirstVisiblePosition();
+			final int index = storiesListView.getFirstVisiblePosition();
+			View v = storiesListView.getChildAt(0);
+			final int top = (v == null) ? 0 : v.getTop();
+
 			// updating UI from Background Thread
 			runOnUiThread(new Runnable() {
 				public void run() {
 					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext, R.layout.fragment_all_subreddit, subRedditsList);
 					storiesListView.setAdapter(adapter);
-					storiesListView.setSelection(positionToSave);
+					storiesListView.setSelectionFromTop(index, top);
 				}
 			});
 			super.onPostExecute(listOfSubReddits);

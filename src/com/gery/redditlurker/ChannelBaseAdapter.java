@@ -56,6 +56,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 			holder.title = (TextView) convertView.findViewById(R.id.story_title1);
 			holder.author = (TextView) convertView.findViewById(R.id.author_textview);
 			holder.ups = (TextView) convertView.findViewById(R.id.ups_text_view);
+			holder.NSFW = (TextView) convertView.findViewById(R.id.nsfw_text_view);
 			holder.comments = (Button) convertView.findViewById(R.id.comments_button);
 			holder.thumbView = (ImageView) convertView.findViewById(R.id.story_thumb_view1);
 			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.progressBar_channel_image);
@@ -69,6 +70,12 @@ public class ChannelBaseAdapter extends BaseAdapter {
 		holder.title.setText(storyInfo.title);
 		holder.author.setText(storyInfo.getCreated_UTC_formatted() + " by " + storyInfo.author);
 		holder.ups.setText("Up: " + storyInfo.ups);
+		
+		if(storyInfo.over_18)
+			holder.NSFW.setVisibility(View.VISIBLE);//Set Visible
+		else
+			holder.NSFW.setVisibility(View.GONE);//Set Visible
+		
 		holder.comments.setText(storyInfo.num_comments + "");
 		holder.comments.setOnClickListener(new OnClickListener() {
 			@Override
@@ -123,6 +130,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 		public Button comments;
 		public ImageView thumbView;
 		public TextView ups;
+		public TextView NSFW;
 		public ProgressBar progressBar;
 	}
 

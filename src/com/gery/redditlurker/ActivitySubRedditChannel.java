@@ -382,7 +382,10 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			storieList.addAll(storieList.size(), storiesInfoList);
 			
 			storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
-			final int positionToSave = storiesListView.getFirstVisiblePosition();
+			
+			final int index = storiesListView.getFirstVisiblePosition();
+			View v = storiesListView.getChildAt(0);
+			final int top = (v == null) ? 0 : v.getTop();
 			
 			if(dialog != null){
 				dialog.dismiss();
@@ -395,7 +398,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 				public void run() {
 					ChannelBaseAdapter var = new ChannelBaseAdapter(getApplicationContext(), storieList);
 					storiesListView.setAdapter(var);
-					storiesListView.setSelection(positionToSave);
+					storiesListView.setSelectionFromTop(index, top);
 				}
 			});
 			super.onPostExecute(storiesInfoList);

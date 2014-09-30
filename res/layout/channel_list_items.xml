@@ -46,8 +46,25 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/story_title1"
             android:layout_marginTop="1dip"
-            android:layout_toRightOf="@+id/story_thumb_view1"
+            android:layout_toRightOf="@+id/nsfw_text_view"
             android:text="Up: 123"
+            android:textColor="@color/genre"
+            android:textSize="@dimen/rating"
+             />
+        
+        
+        <!-- NSFW -->
+                <TextView
+            android:id="@+id/nsfw_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/story_title1"
+            android:layout_marginTop="1dip"
+            android:layout_marginRight="3dip"
+            android:layout_toRightOf="@+id/story_thumb_view1"
+            android:text="NSFW"
+           	android:visibility="gone"
+            android:textColor="@android:color/holo_red_dark"
             android:textSize="@dimen/rating"
              />
 

@@ -216,18 +216,21 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 			loadingMore = false;
 			subRedditsList.addAll(subRedditsList.size(), listOfSubReddits);
 
-			final int positionToSave = storiesListView.getFirstVisiblePosition();
 			if (pDialog != null) {
 				pDialog.dismiss();
 				pDialog = null;
 			} else
 				storiesListView.removeFooterView(footer);
+			
+			final int index = storiesListView.getFirstVisiblePosition();
+			View v = storiesListView.getChildAt(0);
+			final int top = (v == null) ? 0 : v.getTop();
 
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
 					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext, R.layout.fragment_all_subreddit, subRedditsList);
 					storiesListView.setAdapter(adapter);
-					storiesListView.setSelection(positionToSave);
+					storiesListView.setSelectionFromTop(index, top);
 
 				}
 			});
