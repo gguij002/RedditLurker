@@ -70,12 +70,12 @@ public class ChannelBaseAdapter extends BaseAdapter {
 		holder.title.setText(storyInfo.title);
 		holder.author.setText(storyInfo.getCreated_UTC_formatted() + " by " + storyInfo.author);
 		holder.ups.setText("Up: " + storyInfo.ups);
-		
-		if(storyInfo.over_18)
-			holder.NSFW.setVisibility(View.VISIBLE);//Set Visible
+
+		if (storyInfo.over_18)
+			holder.NSFW.setVisibility(View.VISIBLE);// Set Visible
 		else
-			holder.NSFW.setVisibility(View.GONE);//Set Visible
-		
+			holder.NSFW.setVisibility(View.GONE);// Set Visible
+
 		holder.comments.setText(storyInfo.num_comments + "");
 		holder.comments.setOnClickListener(new OnClickListener() {
 			@Override
@@ -115,9 +115,7 @@ public class ChannelBaseAdapter extends BaseAdapter {
 					}
 				});
 			}
-		}
-		else
-		{
+		} else {
 			holder.thumbView.setImageResource(R.drawable.ic_launcher);
 		}
 

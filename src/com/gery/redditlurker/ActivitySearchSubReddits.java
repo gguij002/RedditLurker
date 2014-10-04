@@ -12,12 +12,9 @@ import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +23,8 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
@@ -41,7 +40,6 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 	// List Items
 
 	public List<SubRedditInfo> subRedditsList;
-	private ProgressDialog pDialog;
 	public AllSubRedditCustomBaseAdapter adapter;
 	private String searchQuery;
 	private ListView storiesListView;
@@ -50,11 +48,10 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_all_subreddit);
 		subRedditsList = new ArrayList<SubRedditInfo>();
-		storiesListView = (ListView) findViewById(R.id.all_subreddit_list);
 		footer = LayoutInflater.from(this).inflate(R.layout.footer_loader, null);
 
-		setContentView(R.layout.fragment_all_subreddit);
 		handleIntent(getIntent());
 
 		if (Connection.isNetworkConnected(this)) {
@@ -75,7 +72,7 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 	private void handleIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			searchQuery = intent.getStringExtra(SearchManager.QUERY);
-			setTitle("SubReddits:Search " + searchQuery);
+			setTitle("SubReddits: " + searchQuery);
 		}
 	}
 
@@ -152,10 +149,12 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 	 * */
 	class LoadSubReddits extends AsyncTask<String, String, List<SubRedditInfo>> {
 		private Context fragmentContext;
+		private ProgressBar progressBar;
 
 		public LoadSubReddits(Context context) {
 			this.fragmentContext = context;
 			loadingMore = true;
+			progressBar = (ProgressBar) findViewById(R.id.progressBar_load_subs_all);
 		}
 
 		/**
@@ -164,19 +163,7 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (subRedditsList.isEmpty()) {
-				pDialog = new ProgressDialog(fragmentContext);
-				pDialog.setCancelable(true);
-				pDialog.setOnCancelListener(new OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						onBackPressed();
-						// ****cleanup code****
-					}
-				});
-				pDialog.setMessage("Loading Stories...");
-				pDialog.show();
-			} else
+			if (!subRedditsList.isEmpty())
 				storiesListView.addFooterView(footer, null, false);
 
 		}
@@ -228,14 +215,17 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 		 * **/
 		protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) {
 			loadingMore = false;
+
+			if (!subRedditsList.isEmpty()) {
+				storiesListView.removeFooterView(footer);
+			}
+			progressBar.setVisibility(View.GONE);
+
 			subRedditsList.addAll(subRedditsList.size(), listOfSubReddits);
 			storiesListView = (ListView) findViewById(R.id.all_subreddit_list);
 
-			if (pDialog != null) {
-				pDialog.dismiss();
-				pDialog = null;
-			} else
-				storiesListView.removeFooterView(footer);
+			TextView emptyText = (TextView) findViewById(android.R.id.empty);
+			storiesListView.setEmptyView(emptyText);
 
 			final int index = storiesListView.getFirstVisiblePosition();
 			View v = storiesListView.getChildAt(0);

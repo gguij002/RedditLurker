@@ -14,13 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.gery.database.Connection;
 import com.gery.database.SubRedditsDataSource;
-import com.gery.database.Timer;
 
 public class EnteredSubRedditsFragment extends Fragment {
 	public List<SubRedditInfo> subRedditsList;
@@ -38,9 +38,7 @@ public class EnteredSubRedditsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		ActivityContext = inflater.getContext();
-		Timer.StartTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
 		new LoadSubRedditsFromDB(ActivityContext).execute();
-		Timer.EndTimer("EnteredSubRedditsFragment.OnCreate()-LoadSubRedditsFromDB");
 
 		rootView = inflater.inflate(R.layout.fragment_entered_subreddit, container, false);
 		setOnItemClickListener(ActivityContext);
@@ -102,9 +100,8 @@ public class EnteredSubRedditsFragment extends Fragment {
 			srDataSource = new SubRedditsDataSource(ActivityContext);
 			srDataSource.open();
 
-			Timer.StartTimer("doInBackground.srDataSource.getAllSubReddit()");
 			List<SubRedditInfo> values = srDataSource.getAllSubReddit();
-			Timer.EndTimer("doInBackground.srDataSource.getAllSubReddit()");
+
 			srDataSource.close();
 			return values;
 		}
@@ -115,12 +112,12 @@ public class EnteredSubRedditsFragment extends Fragment {
 		}
 
 		protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) {
-			Timer.StartTimer("onPostExecute");
-
 			subRedditsList.clear();
 			subRedditsList.addAll(listOfSubReddits);
 
 			final ListView storiesListView = (ListView) rootView.findViewById(R.id.entered_subreddit_list);
+			TextView emptyText = (TextView) rootView.findViewById(android.R.id.empty);
+			storiesListView.setEmptyView(emptyText);
 			// final int positionToSave =
 			// storiesListView.getFirstVisiblePosition();
 			// updating UI from Background Thread
@@ -133,7 +130,6 @@ public class EnteredSubRedditsFragment extends Fragment {
 				}
 			});
 			super.onPostExecute(listOfSubReddits);
-			Timer.EndTimer("onPostExecute");
 		}
 	}
 

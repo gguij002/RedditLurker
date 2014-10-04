@@ -63,7 +63,7 @@
             android:layout_centerInParent="true"
             android:layout_marginRight="1dp"
             android:background="@null"
-            android:src="@drawable/ic_favorite_on_gaby" />
+            android:src="@drawable/ic_favorite_yellow" />
 
         <ProgressBar
             android:id="@+id/progressBar_allsub_image"

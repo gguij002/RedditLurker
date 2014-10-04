@@ -1,5 +1,7 @@
 package com.gery.redditlurker;
 
+
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
@@ -40,7 +43,6 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 
 	public AllSubRedditCustomBaseAdapter adapter;
 	public List<SubRedditInfo> subRedditsList;
-	private ProgressDialog pDialog;
 	private View rootView;
 	Context context;
 	private View footer;
@@ -145,10 +147,12 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 	 * */
 	class LoadSubReddits extends AsyncTask<String, String, List<SubRedditInfo>> {
 		private Context fragmentContext;
+		private ProgressBar progressBar;
 
 		public LoadSubReddits(Context context) {
 			this.fragmentContext = context;
 			loadingMore = true;
+			progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar_load_subs_all);
 		}
 
 		/**
@@ -158,13 +162,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		protected void onPreExecute() {
 			super.onPreExecute();
 
-			if (subRedditsList.isEmpty()) {
-				pDialog = new ProgressDialog(fragmentContext);
-				pDialog.setMessage("Loading SubReddits ...");
-				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(false);
-				pDialog.show();
-			} else
+			if (!subRedditsList.isEmpty())
 				storiesListView.addFooterView(footer, null, false);
 		}
 
@@ -214,14 +212,16 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		 * **/
 		protected void onPostExecute(final List<SubRedditInfo> listOfSubReddits) {
 			loadingMore = false;
+
+			if (!subRedditsList.isEmpty()) {
+				storiesListView.removeFooterView(footer);
+			}
+			progressBar.setVisibility(View.GONE);
+
+			if (listOfSubReddits == null)
+				return;
 			subRedditsList.addAll(subRedditsList.size(), listOfSubReddits);
 
-			if (pDialog != null) {
-				pDialog.dismiss();
-				pDialog = null;
-			} else
-				storiesListView.removeFooterView(footer);
-			
 			final int index = storiesListView.getFirstVisiblePosition();
 			View v = storiesListView.getChildAt(0);
 			final int top = (v == null) ? 0 : v.getTop();

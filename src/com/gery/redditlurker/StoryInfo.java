@@ -31,7 +31,6 @@ public class StoryInfo {
 	public String permalink;
 	private Double created_utc;
 	JSONObject jsonObject;
-	
 
 	public StoryInfo(JSONObject jObject) {
 		this.jsonObject = jObject;
@@ -65,18 +64,18 @@ public class StoryInfo {
 	}
 
 	public String getCreated_UTC_formatted() {
-		
+
 		long l = Math.round(created_utc * 1000.00);
 		Date d = new Date(l);
 		String format = "yyyy/MM/dd HH:mm:ss";
-		SimpleDateFormat sdf = new SimpleDateFormat (format);
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 		Date gmtTime = new Date(sdf.format(d));
-		
+
 		Date fromGmt = new Date(gmtTime.getTime() + TimeZone.getDefault().getOffset(d.getTime()));
-		
+
 		PrettyTime p = new PrettyTime();
-		
+
 		String prettyDate = p.format(fromGmt);
 		return prettyDate;
 	}

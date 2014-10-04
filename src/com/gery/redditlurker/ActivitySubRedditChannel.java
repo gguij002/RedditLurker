@@ -11,8 +11,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -27,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ProgressBar;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -56,12 +55,11 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		storieList = new ArrayList<StoryInfo>();
+		setContentView(R.layout.activity_subreddit);
 		storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
 		footer = LayoutInflater.from(this).inflate(R.layout.footer_loader, null);
-		
-		handleIntent(getIntent());
 
-		setContentView(R.layout.activity_subreddit);
+		handleIntent(getIntent());
 
 		// get the action bar
 		ActionBar actionBar = getActionBar();
@@ -133,8 +131,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		if (subReddit.favorite) { // Its fav, Add to DB
 			if (this.storieList != null)// && !this.storieList.isEmpty()
 			{
-				if (!srDataSource.isRawSubRedditExist(subReddit.name)) 
-				{
+				if (!srDataSource.isRawSubRedditExist(subReddit.name)) {
 					new LoadSubReddit(this, this.storieList.get(0).subreddit).execute();
 					subReddit.favorite = true;
 					srDataSource.addSubRedditToDB(subReddit);
@@ -201,28 +198,27 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				
+
 				StoryInfo subReddit = (StoryInfo) storieList.get(position);
-				if(isYoutubeVid(subReddit.url))
-				{
+				if (isYoutubeVid(subReddit.url)) {
 					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(subReddit.url)));
-				}
-				else
-				{
+				} else {
 					Intent nextActivity = new Intent(context, ActivityStoryContent.class);
 					nextActivity.putExtra("url", subReddit.url);
 					nextActivity.putExtra("imageBitMap", headerBarThumb);
 					nextActivity.putExtra("permalink", subReddit.permalink);
 					nextActivity.putExtra("name", ActivitySubRedditChannel.this.subReddit.display_name);
+					nextActivity.putExtra("subRedditId", subReddit.subreddit_id);
 					startActivity(nextActivity);
 				}
 			}
 		});
 		storiesListView.setOnScrollListener(this);
 	}
+
 	private boolean isYoutubeVid(String url) {
-		
-		return 	url.contains("youtube.com") || url.contains("youtu.be");
+
+		return url.contains("youtube.com") || url.contains("youtu.be");
 	}
 
 	@Override
@@ -280,15 +276,15 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			// Create List Of Subreddit
 			JSONObject subRedditsJSON = new RedditRSSReader(REDDIT_SUBREDDITS_URL).execute();
 			JSONObject data = (JSONObject) subRedditsJSON.get("data");
-			
+
 			SubRedditInfo item = new SubRedditInfo(data).execute();
 			item.favorite = true;
 			subReddit = item;
 			return item;
 		}
-		
+
 		private String URLCreate() {
-			return "http://www.reddit.com/r/" + subRedditName+ "/about.json";
+			return "http://www.reddit.com/r/" + subRedditName + "/about.json";
 		}
 
 		protected void onPostExecute(final SubRedditInfo subRedditInfo) {
@@ -302,13 +298,12 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	 * */
 	class LoadStories extends AsyncTask<String, String, List<StoryInfo>> {
 		private String subRedditChannel;
-		private Context context;
-		ProgressDialog dialog;
+		private ProgressBar progressBar;
 
 		public LoadStories(Context context, String subReddit) {
-			this.context = context;
 			subRedditChannel = subReddit;
 			loadingMore = true;
+			progressBar = (ProgressBar) findViewById(R.id.progressBar_load_subs);
 		}
 
 		/**
@@ -317,23 +312,8 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			
-			if(storieList.isEmpty()){
-				dialog = new ProgressDialog(context);
-				dialog.setCancelable(true);
-				dialog.setOnCancelListener(new OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						onBackPressed();
-						// ****cleanup code****
-					}
-				});
-				dialog.setMessage("Loading Stories...");
-				dialog.show();
-			}
-			else
+			if (!storieList.isEmpty())
 				storiesListView.addFooterView(footer, null, false);
-
 		}
 
 		/**
@@ -374,26 +354,25 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		/**
 		 * After completing background task Dismiss the progress dialog
 		 * **/
-		protected void onPostExecute(final List<StoryInfo> storiesInfoList) 
-		{
+		protected void onPostExecute(final List<StoryInfo> storiesInfoList) {
 			loadingMore = false;
+
+			if (!storieList.isEmpty()) {
+				storiesListView.removeFooterView(footer);
+			}
+			progressBar.setVisibility(View.GONE);
+
 			if (storiesInfoList == null)
 				return;
+
 			storieList.addAll(storieList.size(), storiesInfoList);
-			
+
 			storiesListView = (ListView) findViewById(R.id.subreddit_channel_list);
-			
+
 			final int index = storiesListView.getFirstVisiblePosition();
 			View v = storiesListView.getChildAt(0);
 			final int top = (v == null) ? 0 : v.getTop();
-			
-			if(dialog != null){
-				dialog.dismiss();
-				dialog = null;
-			}
-			else 
-				storiesListView.removeFooterView(footer);
-			
+
 			runOnUiThread(new Runnable() {
 				public void run() {
 					ChannelBaseAdapter var = new ChannelBaseAdapter(getApplicationContext(), storieList);

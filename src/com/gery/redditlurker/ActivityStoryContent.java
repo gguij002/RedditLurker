@@ -6,11 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import java.util.concurrent.ExecutionException;
+
+import org.json.simple.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
@@ -21,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -37,6 +40,11 @@ import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
+import com.gery.database.RedditRSSReader;
+import com.gery.database.SubRedditsDataSource;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
 public class ActivityStoryContent extends Activity {
 	private WebView webView;
 	private String url;
@@ -44,6 +52,8 @@ public class ActivityStoryContent extends Activity {
 	private Bitmap storyImageBitmap = null;
 	private String permalink;
 	private String displayName;
+	private String subRedditId;
+	private SubRedditInfo sub;
 
 	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState) {
@@ -142,6 +152,7 @@ public class ActivityStoryContent extends Activity {
 		url = intent.getStringExtra("url");
 		permalink = intent.getStringExtra("permalink");
 		displayName = intent.getStringExtra("name");
+		subRedditId = intent.getStringExtra("subRedditId");
 		setHeaderBarThumb(intent.getByteArrayExtra("imageBitMap"));
 		setTitle(displayName);
 	}
@@ -208,6 +219,11 @@ public class ActivityStoryContent extends Activity {
 		MenuItem itemViewCommewnts = menu.findItem(R.id.action_view_comments);
 		itemViewCommewnts.setVisible(true);
 
+		MenuItem itemMakeSubRedditFav = menu.findItem(R.id.action_make_subreddit_fav);
+		itemMakeSubRedditFav.setVisible(false);
+
+		itemMakeSubRedditFav.setTitle("Favorite: " + displayName);
+
 		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
 
 		if (isImage()) {
@@ -266,6 +282,36 @@ public class ActivityStoryContent extends Activity {
 			startActivity(browserIntent);
 			return true;
 		}
+		case R.id.action_make_subreddit_fav: {
+			SubRedditsDataSource srDataSource = new SubRedditsDataSource(this);
+			srDataSource.open();
+			if (!srDataSource.isRawSubRedditExist(subRedditId)) {
+				try {
+					sub = new LoadSubReddit(this, displayName).execute().get();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+				final ImageView holder = new ImageView(this);
+
+				Picasso.with(this).load(sub.header_img).into(holder, new Callback() {
+					@Override
+					public void onSuccess() {
+						sub.imageBitMap = getImageBitmap(holder);
+					}
+
+					@Override
+					public void onError() {
+						// Set Error Image
+					}
+				});
+				srDataSource.addSubRedditToDB(sub);
+				Toast.makeText(getApplicationContext(), displayName + " is now Favorite", Toast.LENGTH_SHORT).show();
+			}
+			srDataSource.close();
+			return true;
+		}
 		case R.id.action_copy_url: {
 			ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 			ClipData clip = ClipData.newPlainText("simple text", url);
@@ -277,4 +323,49 @@ public class ActivityStoryContent extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
+	// Load Channel To Store on DB
+	class LoadSubReddit extends AsyncTask<String, String, SubRedditInfo> {
+		private String subRedditName;
+		private Context context;
+		private ProgressDialog pDialogChannel;
+
+		public LoadSubReddit(Context context, String subRedditName) {
+			this.subRedditName = subRedditName;
+			this.context = context;
+		}
+
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialogChannel = new ProgressDialog(context);
+			pDialogChannel.setMessage("Saving Favorite SubReddit ...");
+			pDialogChannel.setIndeterminate(false);
+			pDialogChannel.setCancelable(false);
+			pDialogChannel.show();
+		}
+
+		protected SubRedditInfo doInBackground(String... args) {
+			// "http://reddit.com/r/reddits.rss?limit=[limit]&after=[after]";
+			final String REDDIT_SUBREDDITS_URL = URLCreate();
+			System.out.println("REDDIT_SUBREDDITS_URL: " + REDDIT_SUBREDDITS_URL);
+
+			// Create List Of Subreddit
+			JSONObject subRedditsJSON = new RedditRSSReader(REDDIT_SUBREDDITS_URL).execute();
+			JSONObject data = (JSONObject) subRedditsJSON.get("data");
+
+			SubRedditInfo item = new SubRedditInfo(data).execute();
+			item.favorite = true;
+			return item;
+		}
+
+		private String URLCreate() {
+			return "http://www.reddit.com/r/" + subRedditName + "/about.json";
+		}
+
+		protected void onPostExecute(final SubRedditInfo subRedditInfo) {
+			pDialogChannel.dismiss();
+			super.onPostExecute(subRedditInfo);
+		}
+	}
+
 }

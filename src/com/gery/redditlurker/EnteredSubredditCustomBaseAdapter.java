@@ -53,10 +53,11 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
+		final SubRedditInfo subReddit = list.get(position);
 		holder.deleteButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				SubRedditInfo subReddit = list.get(position);
+
 				list.remove(position);
 
 				SubRedditsDataSource srDataSource = new SubRedditsDataSource(parent.getContext());
@@ -73,14 +74,16 @@ public class EnteredSubredditCustomBaseAdapter extends BaseAdapter {
 		if (header_title_text != null && !header_title_text.isEmpty())
 			holder.linkText.setText(header_title_text);
 		else
-			holder.linkText.setText(list.get(position).display_name);
+			holder.linkText.setText(subReddit.display_name);
 
-		String link = list.get(position).url;
+		String link = subReddit.url;
 		holder.displayName.setText(link.substring(0, link.length() - 1));
 
-		Bitmap image_bits = list.get(position).imageBitMap;
+		Bitmap image_bits = subReddit.imageBitMap;
 		if (image_bits != null)
 			holder.thumbView.setImageBitmap(image_bits);
+		else
+			holder.thumbView.setImageResource(R.drawable.ic_launcher);
 
 		return convertView;
 	}

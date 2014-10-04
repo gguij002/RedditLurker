@@ -12,6 +12,7 @@
 
         <ImageView
             android:id="@+id/story_thumb_view1"
+            
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"

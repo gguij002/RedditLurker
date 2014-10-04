@@ -87,6 +87,7 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 				nextActivity.putExtra("url", subReddit.url);
 				nextActivity.putExtra("name", subReddit.subreddit);
 				nextActivity.putExtra("permalink", subReddit.permalink);
+				nextActivity.putExtra("subRedditId", subReddit.subreddit_id);
 				startActivity(nextActivity);
 			}
 		});

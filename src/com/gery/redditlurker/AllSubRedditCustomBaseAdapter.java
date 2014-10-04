@@ -116,10 +116,9 @@ public class AllSubRedditCustomBaseAdapter extends ArrayAdapter<SubRedditInfo> {
 					}
 				});
 			}
-		}
-		else
+		} else
 			holder.thumbView.setImageResource(R.drawable.ic_launcher);
-		
+
 		return convertView;
 	}
 

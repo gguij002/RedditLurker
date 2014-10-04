@@ -104,7 +104,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case R.id.action_search_widget:
-			item.getActionView().findViewById(id.action_search_widget);
+			item.getActionView().findViewById(R.id.action_search_widget);
 			goToSubReddit();
 			return true;
 			// case android.R.id.home:

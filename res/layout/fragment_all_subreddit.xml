@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
- 
+
     <ListView
         android:id="@+id/all_subreddit_list"
         android:layout_width="fill_parent"
-        android:focusable="true"
-        android:layout_height="wrap_content" />
- 
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        
+        android:layout_alignParentLeft="false"
+        android:layout_centerInParent="true"
+        android:text="There doesn't seem to be anything here"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_load_subs_all"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="false"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="2dp"
+        android:visible="true" />
+
+</RelativeLayout>

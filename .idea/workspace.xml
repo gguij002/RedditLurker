@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidDesignerProfile">
+    <option name="fullProfile">
+      <profile>
+        <option name="device" value="[None]" />
+        <option name="theme" value="AppTheme" />
+      </profile>
+    </option>
+    <option name="selection" value="[Full]" />
+  </component>
+  <component name="AndroidLayoutPreviewToolWindow">
+    <option name="state">
+      <GlobalState />
+    </option>
+  </component>
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8e675399-be12-468a-a827-51ef92525fa4" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/RedditLurker.apk" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/classes.dex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/dexedLibs/android-support-v4-2c31cb99405efb7e9d92445388527354.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/dexedLibs/json_simple-1.1-5adf8fafc9be804e3c5e13b281365f5a.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/dexedLibs/picasso-2.3.4-03d7eb7311366afef7313766b7993348.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/dexedLibs/prettytime-3.2.5.Final-25dd1f0e62f687dc21d5b5f5983444fa.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/dexedLibs/volley-443965fb465aaf4bc96abb92800e581c.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_action_copy_url.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_action_save_floppy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_action_save_white.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_action_search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_chat_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_comments_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_delete_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_delete_image_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_delete_image_new.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_downs_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_favorite_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_favorite_gaby_full.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_favorite_gaby_larger.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_favorite_off_new.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_favorite_on_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_favorite_yellow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_go_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_launcherd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_nsfw_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_save_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_search_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_ups_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-hdpi/ic_ups_image_arror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_action_copy_url.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_action_save_floppy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_action_save_white.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_action_search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_chat_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_comments_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_delete_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_delete_image_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_delete_image_new.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_downs_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_favorite_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_favorite_gaby_full.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_favorite_gaby_larger.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_favorite_off_new.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_favorite_on_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_favorite_yellow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_go_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_launcherd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_nsfw_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_save_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_search_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_ups_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-mdpi/ic_ups_image_arror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_action_copy_url.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_action_save_floppy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_action_save_white.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_action_search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_chat_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_comments_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_delete_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_delete_image_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_delete_image_new.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_downs_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_favorite_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_favorite_gaby_full.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_favorite_gaby_larger.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_favorite_off_new.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_favorite_on_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_favorite_yellow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_go_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_launcherd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_nsfw_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_save_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_search_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_ups_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xhdpi/ic_ups_image_arror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_action_copy_url.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_action_save_floppy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_action_save_white.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_action_search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_chat_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_comments_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_delete_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_delete_image_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_delete_image_new.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_downs_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_favorite_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_favorite_gaby_full.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_favorite_gaby_larger.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_favorite_off_new.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_favorite_on_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_favorite_yellow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_go_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_launcherd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_nsfw_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_save_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_search_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_ups_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/res/crunch/drawable-xxhdpi/ic_ups_image_arror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/resources.ap_" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ic_action_save_floppy-web.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ic_delete_image-web.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ic_delete_image_1-web.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ic_favorite_on_gaby-web.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ic_launcherd-web.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ic_search_button-web.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ic_ups_image-web.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ic_ups_image_arror-web.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/ic_action_save_floppy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/ic_action_search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/ic_delete_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/ic_delete_image_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/ic_favorite_on_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/ic_launcherd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/ic_search_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/ic_ups_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-hdpi/ic_ups_image_arror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ic_action_save_floppy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ic_action_search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ic_delete_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ic_delete_image_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ic_favorite_on_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ic_launcherd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ic_search_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ic_ups_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-mdpi/ic_ups_image_arror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/ic_action_save_floppy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/ic_action_search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/ic_delete_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/ic_delete_image_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/ic_favorite_on_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/ic_launcherd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/ic_search_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/ic_ups_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xhdpi/ic_ups_image_arror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/ic_action_save_floppy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/ic_action_search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/ic_delete_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/ic_delete_image_1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/ic_favorite_on_gaby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/ic_launcherd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/ic_search_button.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/ic_ups_image.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/drawable-xxhdpi/ic_ups_image_arror.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/DownloadImageTask.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/GifWebView.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.classpath" afterPath="$PROJECT_DIR$/.classpath" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/ActivityFrontPage.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/ActivityFrontPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/ActivitySearchSubReddits.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/ActivitySearchSubReddits.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/ActivityStoryContent.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/ActivityStoryContent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/ActivitySubRedditChannel.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/ActivitySubRedditChannel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/AllSubRedditCustomBaseAdapter.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/AllSubRedditCustomBaseAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/AllSubRedditsFragment.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/AllSubRedditsFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/AndroidManifest.xml" afterPath="$PROJECT_DIR$/bin/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/gery/redditlurker/BuildConfig.java" afterPath="$PROJECT_DIR$/gen/com/gery/redditlurker/BuildConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/ChannelBaseAdapter.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/ChannelBaseAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/database/Connection.java" afterPath="$PROJECT_DIR$/src/com/gery/database/Connection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/EnteredSubRedditsFragment.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/EnteredSubRedditsFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/EnteredSubredditCustomBaseAdapter.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/EnteredSubredditCustomBaseAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/FrontPageFragment.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/FrontPageFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/MainActivity.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/gery/redditlurker/R.java" afterPath="$PROJECT_DIR$/gen/com/gery/redditlurker/R.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/StoryInfo.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/StoryInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/redditlurker/SubRedditInfo.java" afterPath="$PROJECT_DIR$/src/com/gery/redditlurker/SubRedditInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/database/SubRedditsDataSource.java" afterPath="$PROJECT_DIR$/src/com/gery/database/SubRedditsDataSource.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/gery/database/Timer.java" afterPath="$PROJECT_DIR$/src/com/gery/database/Timer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_comments_webview.xml" afterPath="$PROJECT_DIR$/res/layout/activity_comments_webview.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_image_display.xml" afterPath="$PROJECT_DIR$/res/layout/activity_image_display.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/res/layout/activity_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/menu/activity_main_actions.xml" afterPath="$PROJECT_DIR$/res/menu/activity_main_actions.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_story_content.xml" afterPath="$PROJECT_DIR$/res/layout/activity_story_content.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_subreddit.xml" afterPath="$PROJECT_DIR$/res/layout/activity_subreddit.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/all_aubreddit_list_item.xml" afterPath="$PROJECT_DIR$/res/layout/all_aubreddit_list_item.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/channel_list_items.xml" afterPath="$PROJECT_DIR$/res/layout/channel_list_items.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/entered_subreddit_list_item.xml" afterPath="$PROJECT_DIR$/res/layout/entered_subreddit_list_item.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/footer_loader.xml" afterPath="$PROJECT_DIR$/res/layout/footer_loader.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/fragment_all_subreddit.xml" afterPath="$PROJECT_DIR$/res/layout/fragment_all_subreddit.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/fragment_entered_subreddit.xml" afterPath="$PROJECT_DIR$/res/layout/fragment_entered_subreddit.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/video_player.xml" afterPath="$PROJECT_DIR$/res/layout/video_player.xml" />
+    </list>
+    <ignored path="RedditLurker.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <breakpoint_rules converted="true" />
+    <ui_properties converted="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="RedditLurker" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="channel_list_items.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/channel_list_items.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1995">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ActivityCommentsWebView.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/gery/redditlurker/ActivityCommentsWebView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.112443775" vertical-offset="0" max-vertical-offset="1950">
+              <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="40" />
+              <folding>
+                <element signature="e#1313#1464#0" expanded="true" />
+                <element signature="e#1459#1460#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="all_aubreddit_list_item.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/all_aubreddit_list_item.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.6153846" vertical-offset="0" max-vertical-offset="1290">
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="10" />
+    <option name="y" value="22" />
+    <option name="width" value="1660" />
+    <option name="height" value="937" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gery" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redditlurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gery" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RedditLurker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="recentsLimit" value="5" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunManager" selected="Android Application.RedditLurker">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="false" name="RedditLurker" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="RedditLurker" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <RunnerSettings RunnerId="AndroidDebugRunner" />
+      <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Android Application.RedditLurker" />
+    </list>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" myUseAcceleration="nothing">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8e675399-be12-468a-a827-51ef92525fa4" name="Default" comment="" />
+      <created>1412377575824</created>
+      <updated>1412377575824</updated>
+      <workItem from="1412379509975" duration="428000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="428000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="10" y="22" width="1660" height="937" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32961586" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32961586" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951808" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19930875" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22590362" sideWeight="0.6707466" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/res/layout/channel_list_items.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1995">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/gery/redditlurker/ActivityCommentsWebView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1635">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding>
+            <element signature="e#1313#1464#0" expanded="true" />
+            <element signature="e#1459#1460#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/channel_list_items.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/channel_list_items.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/all_aubreddit_list_item.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.6153846" vertical-offset="0" max-vertical-offset="1290">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/gery/redditlurker/ActivityCommentsWebView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.112443775" vertical-offset="0" max-vertical-offset="1950">
+          <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="40" />
+          <folding>
+            <element signature="e#1313#1464#0" expanded="true" />
+            <element signature="e#1459#1460#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Android</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>junit-4.11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>RedditLurker</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+
