@@ -1,7 +1,5 @@
 package com.gery.redditlurker;
 
-
-
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,6 @@ import com.gery.database.Connection;
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -231,10 +228,9 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 					adapter = new AllSubRedditCustomBaseAdapter(fragmentContext, R.layout.fragment_all_subreddit, subRedditsList);
 					storiesListView.setAdapter(adapter);
 					storiesListView.setSelectionFromTop(index, top);
-
 				}
 			});
-			super.onPostExecute(listOfSubReddits);
+			super.onPostExecute(subRedditsList);
 		}
 	}
 

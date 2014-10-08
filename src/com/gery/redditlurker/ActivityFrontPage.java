@@ -110,10 +110,6 @@ public class ActivityFrontPage extends Activity implements OnScrollListener {
 	private void isScrollCompleted(Context context) {
 		if (this.currentVisibleItemCount > 0 && this.currentScrollState == SCROLL_STATE_IDLE
 				&& this.totalItemCount == (currentFirstVisibleItem + currentVisibleItemCount)) {
-			/***
-			 * In this way I detect if there's been a scroll which has completed
-			 ***/
-			/*** do the work for load more Stories! ***/
 			if (!loadingMore) {
 				loadingMore = true;
 				new LoadStories(this, "").execute();

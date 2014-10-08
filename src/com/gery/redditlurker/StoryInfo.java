@@ -7,6 +7,7 @@ import java.util.TimeZone;
 import org.json.simple.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 
 public class StoryInfo {
@@ -14,6 +15,7 @@ public class StoryInfo {
 	public String title;
 	public String domain;
 	public boolean clicked;
+	public boolean visited;
 	public String author;
 	public boolean over_18;
 	public String thumbnail;
@@ -40,6 +42,7 @@ public class StoryInfo {
 		this.title = (String) jsonObject.get("title");
 		this.domain = (String) jsonObject.get("domain");
 		this.clicked = (Boolean) jsonObject.get("clicked");
+		this.visited = (Boolean) jsonObject.get("visited");
 		this.author = (String) jsonObject.get("author");
 		this.over_18 = (Boolean) jsonObject.get("over_18");
 		this.thumbnail = (String) jsonObject.get("thumbnail");
@@ -63,6 +66,7 @@ public class StoryInfo {
 		return Character.toUpperCase(line.charAt(0)) + line.substring(1);
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	public String getCreated_UTC_formatted() {
 
 		long l = Math.round(created_utc * 1000.00);
@@ -70,6 +74,7 @@ public class StoryInfo {
 		String format = "yyyy/MM/dd HH:mm:ss";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		@SuppressWarnings("deprecation")
 		Date gmtTime = new Date(sdf.format(d));
 
 		Date fromGmt = new Date(gmtTime.getTime() + TimeZone.getDefault().getOffset(d.getTime()));

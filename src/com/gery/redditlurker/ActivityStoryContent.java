@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -68,13 +69,7 @@ public class ActivityStoryContent extends Activity {
 			setProgressBarIndeterminateVisibility(true);
 			final ImageView imageView = (ImageView) findViewById(R.id.image_viewer);
 
-			// final ProgressBar progressBar = (ProgressBar)
-			// findViewById(R.id.progressBar);
-
-			// This line shows progressBar again for recycled view
-			// progressBar.setVisibility(View.VISIBLE);
-
-			Picasso.with(this).load(url).into(imageView, new Callback() {
+			Picasso.with(this).load(url).fit().centerInside().into(imageView, new Callback() {
 				@Override
 				public void onSuccess() {
 					setProgressBarIndeterminateVisibility(false);
@@ -95,6 +90,9 @@ public class ActivityStoryContent extends Activity {
 			webView = (WebView) findViewById(R.id.story_content_webview_view);
 			WebSettings webSettings = webView.getSettings();
 			webSettings.setJavaScriptEnabled(true);
+			webSettings.setLoadWithOverviewMode(true);
+			webSettings.setUseWideViewPort(true);
+			webSettings.setBuiltInZoomControls(true);
 			webView.setWebChromeClient(new WebChromeClient() {
 			});
 

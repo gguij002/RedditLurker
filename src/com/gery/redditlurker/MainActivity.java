@@ -1,8 +1,6 @@
 package com.gery.redditlurker;
 
 import com.gery.database.SubRedditsDataSource;
-import com.gery.redditlurker.R.id;
-
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;

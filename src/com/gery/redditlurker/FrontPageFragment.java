@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -25,6 +24,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.gery.database.Connection;
 import com.gery.database.RedditRSSReader;
+import com.gery.database.SubRedditsDataSource;
 
 public class FrontPageFragment extends Fragment implements OnScrollListener {
 	// List Items
@@ -41,6 +41,7 @@ public class FrontPageFragment extends Fragment implements OnScrollListener {
 	private View rootView;
 	private View footer = null;
 	private ListView storiesListView = null;
+	private ChannelBaseAdapter adapter;
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -65,6 +66,18 @@ public class FrontPageFragment extends Fragment implements OnScrollListener {
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
 	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Update();
+	}
+
 
 	private void setOnItemClickListener(final Context context) {
 		final ListView storiesListView = (ListView) rootView.findViewById(R.id.subreddit_channel_list);
@@ -191,13 +204,21 @@ public class FrontPageFragment extends Fragment implements OnScrollListener {
 			// updating UI from Background Thread
 			getActivity().runOnUiThread(new Runnable() {
 				public void run() {
-					ChannelBaseAdapter var = new ChannelBaseAdapter(context, storieList);
-					storiesListView.setAdapter(var);
+					adapter = new ChannelBaseAdapter(context, storieList);
+					storiesListView.setAdapter(adapter);
 					storiesListView.setSelectionFromTop(index, top);
 				}
 			});
 			super.onPostExecute(storiesInfoList);
 		}
+	}
+
+	public void Update() {
+		if (this.adapter != null && storieList != null) {
+			adapter = new ChannelBaseAdapter(context, storieList);
+			this.adapter.notifyDataSetChanged();
+		}
+		
 	}
 
 }

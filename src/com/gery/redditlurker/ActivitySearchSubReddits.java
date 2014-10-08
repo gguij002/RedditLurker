@@ -176,12 +176,16 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 			final String REDDIT_SUBREDDITS_URL = URLCreate(offset.intValue());
 			System.out.println("REDDIT_SUBREDDITS_URL: " + REDDIT_SUBREDDITS_URL);
 			List<SubRedditInfo> listOfSubReddits = new ArrayList<SubRedditInfo>();
-
-			// Create List Of Subreddits
-			JSONObject subRedditsJSON = new RedditRSSReader(REDDIT_SUBREDDITS_URL).execute();
-			JSONObject data = (JSONObject) subRedditsJSON.get("data");
-			JSONArray listOfSubredditsRaw = (JSONArray) data.get("children");
-
+			JSONArray listOfSubredditsRaw = new JSONArray();
+			try{
+				// Create List Of Subreddits
+				JSONObject subRedditsJSON = new RedditRSSReader(REDDIT_SUBREDDITS_URL).execute();
+				JSONObject data = (JSONObject) subRedditsJSON.get("data");
+				listOfSubredditsRaw = (JSONArray) data.get("children");
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 			SubRedditsDataSource dataSource = new SubRedditsDataSource(fragmentContext);
 			dataSource.open();
 			List<String> subRedditsIdsFromDb = dataSource.getAllSubRedditsID();

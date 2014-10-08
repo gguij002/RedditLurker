@@ -43,12 +43,28 @@
 
         <TextView
             android:id="@+id/ups_text_view"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/story_title1"
+            android:layout_below="@+id/story_title1"
             android:layout_marginTop="1dip"
             android:layout_toRightOf="@+id/nsfw_text_view"
+            android:layout_marginRight="3dip"
             android:text="Up: 123"
+            android:textColor="@color/genre"
+            android:textSize="@dimen/rating"
+             />
+        
+         <!-- Sauce -->
+
+        <TextView
+            android:id="@+id/source_text_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/story_title1"
+            android:layout_toRightOf="@+id/ups_text_view"
+            android:layout_toLeftOf="@+id/comments_button"
+            android:layout_marginTop="1dip"
+            android:text="(i.imgur.com)"
             android:textColor="@color/genre"
             android:textSize="@dimen/rating"
              />
@@ -59,7 +75,7 @@
             android:id="@+id/nsfw_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/story_title1"
+            android:layout_below="@+id/story_title1"
             android:layout_marginTop="1dip"
             android:layout_marginRight="3dip"
             android:layout_toRightOf="@+id/story_thumb_view1"
