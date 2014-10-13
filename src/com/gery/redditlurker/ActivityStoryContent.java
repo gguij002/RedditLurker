@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -31,6 +32,7 @@ import android.provider.MediaStore.Images;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -40,6 +42,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
+import android.widget.ZoomButtonsController;
 
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
@@ -64,52 +67,37 @@ public class ActivityStoryContent extends Activity {
 		this.handleIntent(getIntent());
 		this.webView = new WebView(this);
 
-		if (isImage()) {
-			setContentView(R.layout.activity_image_display);
-			setProgressBarIndeterminateVisibility(true);
-			final ImageView imageView = (ImageView) findViewById(R.id.image_viewer);
+		setContentView(R.layout.activity_story_content);
+		setProgressBarIndeterminateVisibility(true);
+		webView = (WebView) findViewById(R.id.story_content_webview_view);
+		WebSettings webSettings = webView.getSettings();
+		webSettings.setJavaScriptEnabled(true);
 
-			Picasso.with(this).load(url).fit().centerInside().into(imageView, new Callback() {
-				@Override
-				public void onSuccess() {
-					setProgressBarIndeterminateVisibility(false);
-					// progressBar.setVisibility(View.GONE);
-					storyImageBitmap = getImageBitmap(imageView);
-				}
+		// new
+		webSettings.setLoadsImagesAutomatically(true);
+		webView.setBackgroundColor(Color.TRANSPARENT);
+		webView.getSettings().setUseWideViewPort(true);
+		webView.setScrollbarFadingEnabled(true);
+		webView.setInitialScale(1);
 
-				@Override
-				public void onError() {
-					// Set Error Image
-				}
-			});
+		webSettings.setLoadWithOverviewMode(true);
+		webSettings.setUseWideViewPort(true);
 
-		} else {
+		webSettings.setBuiltInZoomControls(true);
+		webSettings.setDisplayZoomControls(false);
+		webSettings.setSupportZoom(true);
 
-			setContentView(R.layout.activity_story_content);
-			setProgressBarIndeterminateVisibility(true);
-			webView = (WebView) findViewById(R.id.story_content_webview_view);
-			WebSettings webSettings = webView.getSettings();
-			webSettings.setJavaScriptEnabled(true);
-			webSettings.setLoadWithOverviewMode(true);
-			webSettings.setUseWideViewPort(true);
-			webSettings.setBuiltInZoomControls(true);
-			webView.setWebChromeClient(new WebChromeClient() {
-			});
+		webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+		webView.setWebChromeClient(new WebChromeClient() {
+		});
 
-			// webSettings.setBuiltInZoomControls(true);
-			// webSettings.setAllowContentAccess(true);
-			// webSettings.setLoadsImagesAutomatically(true);
-			// webSettings.setLoadWithOverviewMode(true);
-			// webSettings.setSupportZoom(true);
-			// webSettings.setUseWideViewPort(true);
-			webView.setWebViewClient(new WebViewClient() {
-				@Override
-				public void onPageFinished(WebView view, String url) {
-					setProgressBarIndeterminateVisibility(false);
-				}
-			});
-			webView.loadUrl(formatURL(url));
-		}
+		webView.setWebViewClient(new WebViewClient() {
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				setProgressBarIndeterminateVisibility(false);
+			}
+		});
+		webView.loadUrl(formatURL(url));
 	}
 
 	private Bitmap getImageBitmap(ImageView v) {
@@ -130,6 +118,7 @@ public class ActivityStoryContent extends Activity {
 	public void onDestroy() {
 		if (imageBitmap != null)
 			imageBitmap.recycle();
+
 		super.onDestroy();
 	}
 
@@ -225,8 +214,7 @@ public class ActivityStoryContent extends Activity {
 		MenuItem itemSaveImage = menu.findItem(R.id.action_save_image);
 
 		if (isImage()) {
-			itemSaveImage.setVisible(true);// Change to true after testings
-
+			itemSaveImage.setVisible(true);
 		}
 
 		MenuItem itemShare = menu.findItem(R.id.action_share_menu);
