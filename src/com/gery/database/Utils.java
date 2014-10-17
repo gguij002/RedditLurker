@@ -2,6 +2,7 @@ package com.gery.database;
 
 import java.util.Calendar;
 
+import com.gery.redditlurker.MainActivity;
 import com.gery.redditlurker.R;
 
 import android.app.Activity;
@@ -15,7 +16,7 @@ import android.net.NetworkInfo;
 
 public class Utils {
 
-	private static int sTheme;
+	public static int sTheme;
 
 	public final static int THEME_LIGHT = 0;
 	public final static int THEME_DARK = 1;
@@ -54,7 +55,12 @@ public class Utils {
 	    am.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 1000, // one second
 	            PendingIntent.getActivity(activity, 0, activity.getIntent(), PendingIntent.FLAG_ONE_SHOT
 	                    | PendingIntent.FLAG_CANCEL_CURRENT));
-	    activity.finish();
+	    System.exit(0);
+	}
+	
+	public static int getPrefTheme(Activity activity)
+	{
+		return prefs.getInt("id", 100);
 	}
 	
 	public static int selectPrefTheme(Activity activity)
@@ -68,7 +74,7 @@ public class Utils {
 	 * Set the theme of the Activity, and restart it by creating a new Activity
 	 * of the same type.
 	 */
-	public static void changeToTheme(Activity activity, int theme) {
+	private static void changeToTheme(Activity activity, int theme) {
 		sTheme = theme;
 		activity.finish();
 		activity.startActivity(new Intent(activity, activity.getClass()));
@@ -81,12 +87,15 @@ public class Utils {
 
 		case THEME_LIGHT:
 			activity.setTheme(R.style.LightTheme);
+			activity.getApplication().setTheme(R.style.LightTheme);
 			break;
 		case THEME_DARK:
 			activity.setTheme(R.style.DarkTheme);
+			activity.getApplication().setTheme(R.style.DarkTheme);
 			break;
 		case THEME_BASE:
 			activity.setTheme(R.style.AppBaseTheme);
+			activity.getApplication().setTheme(R.style.AppBaseTheme);
 			break;
 		}
 	}

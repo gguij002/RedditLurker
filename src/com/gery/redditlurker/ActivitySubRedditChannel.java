@@ -257,6 +257,9 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		
 		MenuItem changeTheme = menu.findItem(R.id.action_theme_question);
 		changeTheme.setVisible(true);
+		
+		MenuItem sort = menu.findItem(R.id.action_sort_menu);
+		sort.setVisible(true);
 
 		setFavoriteButton(itemFav);
 		return super.onCreateOptionsMenu(menu);

@@ -32,7 +32,7 @@
         android:visible="false"/>
     <item
         android:id="@+id/action_sort_menu"
-        android:icon="@drawable/ic_sort_menu"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
         android:showAsAction="always"
         android:title="Sort"
         android:visible="false"/>
