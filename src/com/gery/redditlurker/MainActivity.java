@@ -164,7 +164,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		     	        break;
 		             }
 		        	dialog.dismiss();
-		         	restartSelf();
+		         	Utils.restartSelf(MainActivity.this);
 		            break;
 
 		        case DialogInterface.BUTTON_NEGATIVE:

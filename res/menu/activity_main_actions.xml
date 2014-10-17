@@ -27,7 +27,7 @@
         android:visible="false"/>
     <item
         android:id="@+id/action_fav"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/action_search"
         android:visible="false"/>
     <item

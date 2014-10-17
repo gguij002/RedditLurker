@@ -1,8 +1,12 @@
 package com.gery.database;
 
+import java.util.Calendar;
+
 import com.gery.redditlurker.R;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,6 +47,14 @@ public class Utils {
 	{
 		sTheme = selectPrefTheme(activity);
 		onActivityCreateSetTheme(activity);
+	}
+	
+	public static void restartSelf(Activity activity) {
+	    AlarmManager am = (AlarmManager)activity.getSystemService(Context.ALARM_SERVICE);
+	    am.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 1000, // one second
+	            PendingIntent.getActivity(activity, 0, activity.getIntent(), PendingIntent.FLAG_ONE_SHOT
+	                    | PendingIntent.FLAG_CANCEL_CURRENT));
+	    activity.finish();
 	}
 	
 	public static int selectPrefTheme(Activity activity)

@@ -9,8 +9,10 @@ import org.json.simple.parser.JSONParser;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -31,6 +33,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.gery.database.RedditRSSReader;
@@ -166,6 +169,16 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 				item.setIcon(android.R.drawable.btn_star_big_on);
 			}
 			return true;
+			
+		case R.id.action_theme_question:
+		{
+			final View anchor = findViewById(R.id.action_fav);
+			PopupMenu popupMenu = new PopupMenu(this, anchor);
+			popupMenu.setOnMenuItemClickListener(this);
+			popupMenu.getMenuInflater().inflate(R.menu.themes_menu, popupMenu.getMenu());
+			popupMenu.show();
+			return true;
+		}
 		case R.id.action_sort_menu:
 		{
 //			//Context wrapper = new ContextThemeWrapper(this, R.style.AppBaseTheme);
@@ -181,22 +194,57 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		}
 	}
 	
-	public boolean onMenuItemClick(MenuItem item) {
+	public boolean onMenuItemClick(final MenuItem item) {
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        switch (which){
+		        case DialogInterface.BUTTON_POSITIVE:
+		        	 switch (item.getItemId())
+		             {
+		     	        case R.id.action_theme_dark:
+		     	        	Utils.savePrefTheme(ActivitySubRedditChannel.this, Utils.THEME_DARK);
+		     	        break;
+		     	        case R.id.action_theme_light:
+		     	        	Utils.savePrefTheme(ActivitySubRedditChannel.this, Utils.THEME_LIGHT);
+		     	        break;
+		     	        case R.id.action_theme_mixed:
+		     	        	Utils.savePrefTheme(ActivitySubRedditChannel.this, Utils.THEME_BASE);
+		     	        break;
+		             }
+		        	dialog.dismiss();
+		         	Utils.restartSelf(ActivitySubRedditChannel.this);
+		            break;
 
-		switch (item.getItemId()) {
-
-		case R.id.item_hot:
-			Toast.makeText(this, "Comedy Clicked", Toast.LENGTH_SHORT).show();
-			return true;
-		case R.id.item_new:
-			Toast.makeText(this, "Movies Clicked", Toast.LENGTH_SHORT).show();
-			return true;
-		case R.id.item_top:
-			Toast.makeText(this, "Music Clicked", Toast.LENGTH_SHORT).show();
-			return true;
-		default:
-			return false;
-		}
+		        case DialogInterface.BUTTON_NEGATIVE:
+		        	 dialog.dismiss();
+		            break;
+		        }
+		    }
+		};
+		
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Restart Alert");
+		builder.setMessage("Need to restart application to change theme\nContinue?").setPositiveButton("Yes Restart", dialogClickListener)
+		    .setNegativeButton("No", dialogClickListener).show();
+		
+		return false;
+//
+//		switch (item.getItemId()) {
+//
+//		case R.id.item_hot:
+//			Toast.makeText(this, "Comedy Clicked", Toast.LENGTH_SHORT).show();
+//			return true;
+//		case R.id.item_new:
+//			Toast.makeText(this, "Movies Clicked", Toast.LENGTH_SHORT).show();
+//			return true;
+//		case R.id.item_top:
+//			Toast.makeText(this, "Music Clicked", Toast.LENGTH_SHORT).show();
+//			return true;
+//		default:
+//			return false;
+//		}
 	}
 
 	
@@ -207,8 +255,8 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		MenuItem itemFav = menu.findItem(R.id.action_fav);
 		itemFav.setVisible(true);
 		
-//		MenuItem sort = menu.findItem(R.id.action_sort_menu);
-//		sort.setVisible(true);
+		MenuItem changeTheme = menu.findItem(R.id.action_theme_question);
+		changeTheme.setVisible(true);
 
 		setFavoriteButton(itemFav);
 		return super.onCreateOptionsMenu(menu);
