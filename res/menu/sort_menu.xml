@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+<item
+        android:id="@+id/item_hot"
+        android:showAsAction="ifRoom|withText"
+        android:title="Hot"
+        android:visible="true"
+        />
+    <item
+        android:id="@+id/item_new"
+        android:showAsAction="ifRoom|withText"
+        android:title="New"
+        android:visible="true"
+        />
+    <item
+        android:id="@+id/item_top"
+        android:showAsAction="ifRoom|withText"
+        android:title="Top"
+        android:visible="true"
+          />
+    
+</menu>

@@ -35,7 +35,6 @@
             android:layout_toLeftOf="@+id/comments_button"
             android:layout_toRightOf="@+id/story_thumb_view1"
             android:text="This is a place holder for this text field that will be populated later on "
-            android:textColor="@android:color/black"
             android:textSize="@dimen/title"
             android:textStyle="bold" />
 

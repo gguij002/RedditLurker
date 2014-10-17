@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,9 +23,8 @@ import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.gery.database.Connection;
+import com.gery.database.Utils;
 import com.gery.database.RedditRSSReader;
-import com.gery.database.SubRedditsDataSource;
 
 public class FrontPageFragment extends Fragment implements OnScrollListener {
 	// List Items
@@ -57,7 +57,7 @@ public class FrontPageFragment extends Fragment implements OnScrollListener {
 
 		footer = LayoutInflater.from(context).inflate(R.layout.footer_loader, null);
 
-		if (Connection.isNetworkConnected(context)) {
+		if (Utils.isNetworkConnected(context)) {
 			new LoadStories(context, "").execute();
 		} else {
 			Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
@@ -66,7 +66,7 @@ public class FrontPageFragment extends Fragment implements OnScrollListener {
 		setOnItemClickListener(inflater.getContext());
 		return rootView;
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -78,22 +78,29 @@ public class FrontPageFragment extends Fragment implements OnScrollListener {
 		Update();
 	}
 
-
 	private void setOnItemClickListener(final Context context) {
 		final ListView storiesListView = (ListView) rootView.findViewById(R.id.subreddit_channel_list);
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 				StoryInfo subReddit = (StoryInfo) storieList.get(position);
-				Intent nextActivity = new Intent(context, ActivityStoryContent.class);
-				nextActivity.putExtra("url", subReddit.url);
-				nextActivity.putExtra("name", subReddit.subreddit);
-				nextActivity.putExtra("permalink", subReddit.permalink);
-				nextActivity.putExtra("subRedditId", subReddit.subreddit_id);
-				startActivity(nextActivity);
+				if (isYoutubeVid(subReddit.url)) {
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(subReddit.url)));
+				} else {
+					Intent nextActivity = new Intent(context, ActivityStoryContent.class);
+					nextActivity.putExtra("url", subReddit.url);
+					nextActivity.putExtra("name", subReddit.subreddit);
+					nextActivity.putExtra("permalink", subReddit.permalink);
+					nextActivity.putExtra("subRedditId", subReddit.subreddit_id);
+					startActivity(nextActivity);
+				}
 			}
 		});
 		storiesListView.setOnScrollListener(this);
+	}
+
+	private boolean isYoutubeVid(String url) {
+		return url.contains("youtube.com") || url.contains("youtu.be");
 	}
 
 	@Override
@@ -218,7 +225,7 @@ public class FrontPageFragment extends Fragment implements OnScrollListener {
 			adapter = new ChannelBaseAdapter(context, storieList);
 			this.adapter.notifyDataSetChanged();
 		}
-		
+
 	}
 
 }

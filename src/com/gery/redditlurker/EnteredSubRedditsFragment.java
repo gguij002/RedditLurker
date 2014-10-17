@@ -19,7 +19,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.gery.database.Connection;
+import com.gery.database.Utils;
 import com.gery.database.SubRedditsDataSource;
 
 public class EnteredSubRedditsFragment extends Fragment {
@@ -50,7 +50,7 @@ public class EnteredSubRedditsFragment extends Fragment {
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				if (Connection.isNetworkConnected(context)) {
+				if (Utils.isNetworkConnected(context)) {
 					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 					Intent nextActivity = new Intent(context, ActivitySubRedditChannel.class);
 					nextActivity.putExtra("subRedditJSON", subReddit.getJsonObjectAsString());

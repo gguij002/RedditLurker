@@ -1,59 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <!-- Search / will display always 
+
+    <!--
+    Search / will display always 
     <item android:id="@+id/action_search"
           android:icon="@drawable/ic_action_search"
           android:title="@string/action_search"
           android:showAsAction="ifRoom"/>
-          -->
-    
+    -->
+
+
     <!-- Search Widget -->
-	<item android:id="@+id/action_search_widget"
-	      android:icon="@android:drawable/ic_menu_search"
-	      android:title="@string/action_search"
-	      android:hint="@string/search_hint"
-	      android:label="@string/app_name"
-	      android:showAsAction="always"
-	      android:actionViewClass="android.widget.SearchView"
-	      android:visible="false"/>
-	
-	 <item android:id="@+id/action_fav"
-	      
-          android:title="@string/action_search"
-          android:showAsAction="ifRoom"
-          android:visible="false" />
-	 
-	 <item android:id="@+id/action_save_image"
-	      android:title="Save Image"
-          android:showAsAction="collapseActionView"
-          android:visible="false" />
-	 
-	 <item android:id="@+id/action_copy_url"
-	      android:icon="@drawable/ic_action_copy_url"
-          android:title="Copy Link"
-          android:showAsAction="collapseActionView"
-          android:visible="false" />
-	 
-	 <item android:id="@+id/action_open_in_browser"
-	      android:title="Open In Browser"
-          android:showAsAction="collapseActionView"
-          android:visible="false" />
-	 
-	 <item android:id="@+id/action_view_comments"
-	      android:title="View Comments"
-          android:showAsAction="collapseActionView"
-          android:visible="false" />
-	 
-	  <item android:id="@+id/action_make_subreddit_fav"
-	      android:title="Make SubReddit Favorite"
-          android:showAsAction="collapseActionView"
-          android:visible="false" />
-	 
-	  <item android:id="@+id/action_share_menu"
-          android:title="Share"
-          android:showAsAction="ifRoom"
-          android:actionProviderClass="android.widget.ShareActionProvider"
-          android:visible="false"
-          />
+	 <item
+        android:id="@+id/action_search_widget"
+        android:actionViewClass="android.widget.SearchView"
+        android:hint="@string/search_hint"
+        android:icon="@android:drawable/ic_menu_search"
+        android:label="@string/app_name"
+        android:showAsAction="always"
+        android:title="@string/action_search"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_theme_question"
+        android:showAsAction="collapseActionView"
+        android:title="Change Theme"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_fav"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_search"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_sort_menu"
+        android:icon="@drawable/ic_sort_menu"
+        android:showAsAction="always"
+        android:title="Sort"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_save_image"
+        android:showAsAction="collapseActionView"
+        android:title="Save Image"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_copy_url"
+        android:icon="@drawable/ic_action_copy_url"
+        android:showAsAction="collapseActionView"
+        android:title="Copy Link"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_open_in_browser"
+        android:showAsAction="collapseActionView"
+        android:title="Open In Browser"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_view_comments"
+        android:showAsAction="collapseActionView"
+        android:title="View Comments"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_make_subreddit_fav"
+        android:showAsAction="collapseActionView"
+        android:title="Make SubReddit Favorite"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_share_menu"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:showAsAction="ifRoom"
+        android:title="Share"
+        android:visible="false"/>
 
 </menu>

@@ -1,5 +1,7 @@
 package com.gery.redditlurker;
 
+import com.gery.database.Utils;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
@@ -28,6 +30,7 @@ public class ActivityCommentsWebView extends Activity {
 
 	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState) {
+		Utils.setPrefTheme(this);
 		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 

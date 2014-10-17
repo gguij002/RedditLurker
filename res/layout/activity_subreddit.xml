@@ -8,11 +8,11 @@
         android:layout_alignParentTop="false"
         android:layout_alignParentLeft="false"
   	    android:layout_width="fill_parent"
-  	    
+  	    android:layout_height="wrap_content" 
         android:focusable="true"
          android:divider="@color/list_divider"
         android:dividerHeight="1dp"
-        android:layout_height="wrap_content" 
+        
     />
     
       <ProgressBar

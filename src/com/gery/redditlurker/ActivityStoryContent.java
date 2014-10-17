@@ -32,20 +32,17 @@ import android.provider.MediaStore.Images;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
-import android.widget.ZoomButtonsController;
-
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
+import com.gery.database.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -61,6 +58,7 @@ public class ActivityStoryContent extends Activity {
 
 	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState) {
+		Utils.setPrefTheme(this);
 		getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 

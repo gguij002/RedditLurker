@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gery.redditlurker"
-    android:versionCode="103"
-    android:versionName="1.0.3" >
+    android:versionCode="105"
+    android:versionName="1.0.5" >
 
     <uses-permission android:name="android.permission.INTERNET" ></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -17,13 +17,13 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_3"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppBaseTheme" >
 
         <!-- Search results activity -->
         <activity
             android:name=".ActivitySubRedditChannel"
             android:parentActivityName="com.gery.redditlurker.MainActivity"
-            android:screenOrientation="portrait" >
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -37,21 +37,21 @@
         <activity
             android:name=".ActivityCommentsWebView"
             android:parentActivityName="com.gery.redditlurker.ActivitySubRedditChannel"
-            android:screenOrientation="portrait" >
+            android:configChanges="orientation|screenSize" >
         </activity>
         
          <!-- Front Page activity-->
         <activity
             android:name=".ActivityFrontPage"
             android:parentActivityName="com.gery.redditlurker.MainActivity"
-            android:screenOrientation="portrait" >
+            android:configChanges="orientation|screenSize" >
         </activity>
         
           <!-- SEARCH Subreddits activity-->
         <activity
             android:name=".ActivitySearchSubReddits"
             android:parentActivityName="com.gery.redditlurker.MainActivity"
-            android:screenOrientation="portrait" >
+            android:configChanges="orientation|screenSize" >
              <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -66,13 +66,13 @@
         <activity
             android:name=".ActivityStoryContent"
             android:parentActivityName="com.gery.redditlurker.ActivitySubRedditChannel"
-            android:screenOrientation="portrait" >
+            android:configChanges="orientation|screenSize" >
         </activity>
         
         <activity
             android:name="com.gery.redditlurker.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:configChanges="orientation|screenSize" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".ActivitySearchSubReddits" />

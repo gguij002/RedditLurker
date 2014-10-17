@@ -7,7 +7,7 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.gery.database.Connection;
+import com.gery.database.Utils;
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 import android.app.ActionBar;
@@ -47,6 +47,7 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Utils.setPrefTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_all_subreddit);
 		subRedditsList = new ArrayList<SubRedditInfo>();
@@ -54,7 +55,7 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 
 		handleIntent(getIntent());
 
-		if (Connection.isNetworkConnected(this)) {
+		if (Utils.isNetworkConnected(this)) {
 			new LoadSubReddits(this).execute();
 		} else {
 			Toast.makeText(this, "No Internet Connection Found", Toast.LENGTH_LONG).show();
@@ -108,7 +109,7 @@ public class ActivitySearchSubReddits extends Activity implements OnScrollListen
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				if (Connection.isNetworkConnected(context)) {
+				if (Utils.isNetworkConnected(context)) {
 					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 					Intent nextActivity = new Intent(context, ActivitySubRedditChannel.class);
 					nextActivity.putExtra("subRedditJSON", subReddit.getJsonObjectAsString());

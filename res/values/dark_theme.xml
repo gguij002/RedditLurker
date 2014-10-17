@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <style name="DarkTheme" parent="android:Theme.Holo">
+        <item name="android:textColor">@android:color/white</item>
+        
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+</resources>

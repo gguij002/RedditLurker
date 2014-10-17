@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.gery.database.Connection;
+import com.gery.database.Utils;
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 
@@ -60,7 +60,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		footer = LayoutInflater.from(context).inflate(R.layout.footer_loader, null);
 		storiesListView.addFooterView(footer, null, false);
 
-		if (Connection.isNetworkConnected(context)) {
+		if (Utils.isNetworkConnected(context)) {
 			new LoadSubReddits(context).execute();
 		} else {
 			Toast.makeText(context, "No Internet Connection Found", Toast.LENGTH_LONG).show();
@@ -103,7 +103,7 @@ public class AllSubRedditsFragment extends Fragment implements OnScrollListener 
 		storiesListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-				if (Connection.isNetworkConnected(context)) {
+				if (Utils.isNetworkConnected(context)) {
 					SubRedditInfo subReddit = (SubRedditInfo) subRedditsList.get(position);
 					Intent nextActivity = new Intent(context, ActivitySubRedditChannel.class);
 					nextActivity.putExtra("subRedditJSON", subReddit.getJsonObjectAsString());

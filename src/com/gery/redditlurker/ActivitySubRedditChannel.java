@@ -25,16 +25,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.ProgressBar;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
+import com.gery.database.Utils;
 
-public class ActivitySubRedditChannel extends Activity implements OnScrollListener {
+public class ActivitySubRedditChannel extends Activity implements OnScrollListener, OnMenuItemClickListener {
 	// List Items
 	int currentFirstVisibleItem = 0;
 	int currentVisibleItemCount = 0;
@@ -53,6 +56,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Utils.setPrefTheme(this);
 		super.onCreate(savedInstanceState);
 		storieList = new ArrayList<StoryInfo>();
 		setContentView(R.layout.activity_subreddit);
@@ -161,19 +165,50 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 				subReddit.favorite = true;
 				item.setIcon(android.R.drawable.btn_star_big_on);
 			}
-
 			return true;
+		case R.id.action_sort_menu:
+		{
+//			//Context wrapper = new ContextThemeWrapper(this, R.style.AppBaseTheme);
+//			final View sortView = findViewById(item.getItemId());
+//			PopupMenu popupMenu = new PopupMenu(this, sortView);
+//			popupMenu.setOnMenuItemClickListener(this);
+//			popupMenu.inflate(R.menu.sort_menu);
+//			popupMenu.show();
+//			return true;
+		}
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	public boolean onMenuItemClick(MenuItem item) {
 
+		switch (item.getItemId()) {
+
+		case R.id.item_hot:
+			Toast.makeText(this, "Comedy Clicked", Toast.LENGTH_SHORT).show();
+			return true;
+		case R.id.item_new:
+			Toast.makeText(this, "Movies Clicked", Toast.LENGTH_SHORT).show();
+			return true;
+		case R.id.item_top:
+			Toast.makeText(this, "Music Clicked", Toast.LENGTH_SHORT).show();
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_main_actions, menu);
 		MenuItem itemFav = menu.findItem(R.id.action_fav);
 		itemFav.setVisible(true);
+		
+//		MenuItem sort = menu.findItem(R.id.action_sort_menu);
+//		sort.setVisible(true);
 
 		setFavoriteButton(itemFav);
 		return super.onCreateOptionsMenu(menu);
@@ -217,7 +252,6 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	}
 
 	private boolean isYoutubeVid(String url) {
-
 		return url.contains("youtube.com") || url.contains("youtu.be");
 	}
 
@@ -375,7 +409,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 
 			runOnUiThread(new Runnable() {
 				public void run() {
-					ChannelBaseAdapter var = new ChannelBaseAdapter(getApplicationContext(), storieList);
+					ChannelBaseAdapter var = new ChannelBaseAdapter(ActivitySubRedditChannel.this, storieList);
 					storiesListView.setAdapter(var);
 					storiesListView.setSelectionFromTop(index, top);
 				}

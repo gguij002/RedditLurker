@@ -26,14 +26,14 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f060000;
-        public static final int activity_vertical_margin=0x7f060001;
-        public static final int buttonsText=0x7f060006;
-        public static final int genre=0x7f060004;
-        public static final int rating=0x7f060003;
-        public static final int thumbs=0x7f060007;
-        public static final int title=0x7f060002;
-        public static final int year=0x7f060005;
+        public static final int activity_horizontal_margin=0x7f070000;
+        public static final int activity_vertical_margin=0x7f070001;
+        public static final int buttonsText=0x7f070006;
+        public static final int genre=0x7f070004;
+        public static final int rating=0x7f070003;
+        public static final int thumbs=0x7f070007;
+        public static final int title=0x7f070002;
+        public static final int year=0x7f070005;
     }
     public static final class drawable {
         public static final int ic_action_copy_url=0x7f020000;
@@ -45,16 +45,22 @@ public final class R {
         public static final int ic_launcher_3=0x7f020006;
         public static final int ic_nsfw_image=0x7f020007;
         public static final int ic_save_image=0x7f020008;
+        public static final int ic_sort_menu=0x7f020009;
     }
     public static final class id {
-        public static final int action_copy_url=0x7f0a001f;
-        public static final int action_fav=0x7f0a001d;
-        public static final int action_make_subreddit_fav=0x7f0a0022;
-        public static final int action_open_in_browser=0x7f0a0020;
-        public static final int action_save_image=0x7f0a001e;
+        public static final int action_copy_url=0x7f0a0021;
+        public static final int action_fav=0x7f0a001e;
+        public static final int action_make_subreddit_fav=0x7f0a0024;
+        public static final int action_open_in_browser=0x7f0a0022;
+        public static final int action_save_image=0x7f0a0020;
         public static final int action_search_widget=0x7f0a001c;
-        public static final int action_share_menu=0x7f0a0023;
-        public static final int action_view_comments=0x7f0a0021;
+        public static final int action_share_menu=0x7f0a0025;
+        public static final int action_sort_menu=0x7f0a001f;
+        public static final int action_theme_dark=0x7f0a002a;
+        public static final int action_theme_light=0x7f0a0029;
+        public static final int action_theme_mixed=0x7f0a002b;
+        public static final int action_theme_question=0x7f0a001d;
+        public static final int action_view_comments=0x7f0a0023;
         public static final int all_sub_favorite_image_button=0x7f0a000a;
         public static final int all_sub_relative_layout=0x7f0a0006;
         public static final int all_subreddit_list=0x7f0a0019;
@@ -67,6 +73,9 @@ public final class R {
         public static final int entered_subreddit_list=0x7f0a001b;
         public static final int entered_subreddit_thumb_view=0x7f0a0015;
         public static final int image_viewer=0x7f0a0001;
+        public static final int item_hot=0x7f0a0026;
+        public static final int item_new=0x7f0a0027;
+        public static final int item_top=0x7f0a0028;
         public static final int nsfw_text_view=0x7f0a0011;
         public static final int pager=0x7f0a0002;
         public static final int progressBar_allsub_image=0x7f0a000b;
@@ -99,14 +108,16 @@ public final class R {
     }
     public static final class menu {
         public static final int activity_main_actions=0x7f090000;
+        public static final int sort_menu=0x7f090001;
+        public static final int themes_menu=0x7f090002;
     }
     public static final class string {
-        public static final int action_search=0x7f070003;
-        public static final int action_settings=0x7f070001;
-        public static final int app_name=0x7f070000;
-        public static final int hello_world=0x7f070002;
-        public static final int search_hint=0x7f070004;
-        public static final int subreddit_thumbview_desc=0x7f070005;
+        public static final int action_search=0x7f080003;
+        public static final int action_settings=0x7f080001;
+        public static final int app_name=0x7f080000;
+        public static final int hello_world=0x7f080002;
+        public static final int search_hint=0x7f080004;
+        public static final int subreddit_thumbview_desc=0x7f080005;
     }
     public static final class style {
         /** 
@@ -130,11 +141,15 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f060002;
+        /**  All customizations that are NOT specific to a particular API-level can go here. 
+         */
+        public static final int DarkTheme=0x7f060000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
+        public static final int LightTheme=0x7f060001;
+        public static final int PopupMenu=0x7f060003;
     }
     public static final class xml {
         public static final int searchable=0x7f040000;
