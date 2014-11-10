@@ -19,5 +19,16 @@
         android:title="Top"
         android:visible="true"
           />
-    
+     <item
+        android:id="@+id/item_controversial"
+        android:showAsAction="ifRoom|withText"
+        android:title="Controversial"
+        android:visible="true"
+          />
+      <item
+        android:id="@+id/item_rising"
+        android:showAsAction="ifRoom|withText"
+        android:title="Rising"
+        android:visible="true"
+          />
 </menu>

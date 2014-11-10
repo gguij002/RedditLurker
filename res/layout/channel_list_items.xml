@@ -109,7 +109,7 @@
             android:layout_marginRight="5dp"
             android:background="@android:color/transparent"
             android:drawablePadding="0dp"
-            android:drawableStart="@drawable/ic_comments_image"
+            android:drawableStart="@android:drawable/sym_action_chat"
             android:text="1.3k"
             android:textColor="#74b9d8"
             android:textSize="@dimen/buttonsText" />

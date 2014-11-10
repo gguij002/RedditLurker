@@ -2,7 +2,6 @@ package com.gery.database;
 
 import java.util.Calendar;
 
-import com.gery.redditlurker.MainActivity;
 import com.gery.redditlurker.R;
 
 import android.app.Activity;

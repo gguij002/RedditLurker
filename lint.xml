@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+    <issue id="DefaultLocale">
+        <ignore path="src/com/gery/redditlurker/ActivitySubRedditChannel.java" />
+    </issue>
     <issue id="ValidFragment">
         <ignore path="src/com/gery/redditlurker/TabsPagerAdapter.java" />
     </issue>

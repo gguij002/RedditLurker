@@ -56,9 +56,9 @@ public final class R {
         public static final int action_search_widget=0x7f0a001c;
         public static final int action_share_menu=0x7f0a0025;
         public static final int action_sort_menu=0x7f0a001f;
-        public static final int action_theme_dark=0x7f0a002a;
-        public static final int action_theme_light=0x7f0a0029;
-        public static final int action_theme_mixed=0x7f0a002b;
+        public static final int action_theme_dark=0x7f0a002c;
+        public static final int action_theme_light=0x7f0a002b;
+        public static final int action_theme_mixed=0x7f0a002d;
         public static final int action_theme_question=0x7f0a001d;
         public static final int action_view_comments=0x7f0a0023;
         public static final int all_sub_favorite_image_button=0x7f0a000a;
@@ -73,8 +73,10 @@ public final class R {
         public static final int entered_subreddit_list=0x7f0a001b;
         public static final int entered_subreddit_thumb_view=0x7f0a0015;
         public static final int image_viewer=0x7f0a0001;
+        public static final int item_controversial=0x7f0a0029;
         public static final int item_hot=0x7f0a0026;
         public static final int item_new=0x7f0a0027;
+        public static final int item_rising=0x7f0a002a;
         public static final int item_top=0x7f0a0028;
         public static final int nsfw_text_view=0x7f0a0011;
         public static final int pager=0x7f0a0002;

@@ -7,6 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,8 +35,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
-
 import com.gery.database.RedditRSSReader;
 import com.gery.database.SubRedditsDataSource;
 import com.gery.database.Utils;
@@ -55,7 +54,9 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 	SubRedditInfo subReddit = null;
 	private byte[] headerBarThumb;
 	private ListView storiesListView;
+	ChannelBaseAdapter adapter;
 	private View footer;
+	private String sort = "hot";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +97,8 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 		this.ReCreateSubReddit(intent);
 		setHeaderBarThumb(subReddit.imageBitMap);
 
-		setTitle(subReddit.display_name);
+		this.getActionBar().setTitle(subReddit.display_name);
+		this.getActionBar().setSubtitle(sort.toUpperCase());
 
 		new LoadStories(this, subReddit.url).execute();
 	}
@@ -169,9 +171,8 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 				item.setIcon(android.R.drawable.btn_star_big_on);
 			}
 			return true;
-			
-		case R.id.action_theme_question:
-		{
+
+		case R.id.action_theme_question: {
 			final View anchor = findViewById(R.id.action_fav);
 			PopupMenu popupMenu = new PopupMenu(this, anchor);
 			popupMenu.setOnMenuItemClickListener(this);
@@ -179,85 +180,104 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			popupMenu.show();
 			return true;
 		}
-		case R.id.action_sort_menu:
-		{
-//			//Context wrapper = new ContextThemeWrapper(this, R.style.AppBaseTheme);
-//			final View sortView = findViewById(item.getItemId());
-//			PopupMenu popupMenu = new PopupMenu(this, sortView);
-//			popupMenu.setOnMenuItemClickListener(this);
-//			popupMenu.inflate(R.menu.sort_menu);
-//			popupMenu.show();
-//			return true;
+		case R.id.action_sort_menu: {
+			final View sortView = findViewById(item.getItemId());
+			PopupMenu popupMenu = new PopupMenu(this, sortView);
+			popupMenu.setOnMenuItemClickListener(this);
+			popupMenu.inflate(R.menu.sort_menu);
+			popupMenu.show();
+			return true;
 		}
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	public boolean onMenuItemClick(final MenuItem item) {
-		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-		    @Override
-		    public void onClick(DialogInterface dialog, int which) {
-		        switch (which){
-		        case DialogInterface.BUTTON_POSITIVE:
-		        	 switch (item.getItemId())
-		             {
-		     	        case R.id.action_theme_dark:
-		     	        	Utils.savePrefTheme(ActivitySubRedditChannel.this, Utils.THEME_DARK);
-		     	        break;
-		     	        case R.id.action_theme_light:
-		     	        	Utils.savePrefTheme(ActivitySubRedditChannel.this, Utils.THEME_LIGHT);
-		     	        break;
-		     	        case R.id.action_theme_mixed:
-		     	        	Utils.savePrefTheme(ActivitySubRedditChannel.this, Utils.THEME_BASE);
-		     	        break;
-		             }
-		        	dialog.dismiss();
-		         	Utils.restartSelf(ActivitySubRedditChannel.this);
-		            break;
 
-		        case DialogInterface.BUTTON_NEGATIVE:
-		        	 dialog.dismiss();
-		            break;
-		        }
-		    }
+	private boolean handleSortClick(final MenuItem item) {
+
+		switch (item.getItemId()) 
+		{
+			case R.id.item_hot:
+				setSortAndLoad("hot");
+				return true;
+			case R.id.item_new:
+				setSortAndLoad("new");
+				return true;
+			case R.id.item_top:
+				setSortAndLoad("top");
+				return true;
+			case R.id.item_controversial:
+				setSortAndLoad("controversial");
+				return true;
+			case R.id.item_rising:
+				setSortAndLoad("rising");
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	private void setSortAndLoad(String sort) {
+		this.sort = sort;
+		storieList.clear();
+		new LoadStories(this, subReddit.url).execute();
+		this.getActionBar().setSubtitle(sort.toUpperCase());
+		adapter.notifyDataSetChanged();
+	}
+
+	public boolean onMenuItemClick(final MenuItem item) {
+		int itemId = item.getItemId();
+		if (itemId == R.id.item_hot || itemId == R.id.item_new || 
+			itemId == R.id.item_top || itemId == R.id.item_controversial || 
+			itemId == R.id.item_rising) {
+			return handleSortClick(item);
+		}
+
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+				case DialogInterface.BUTTON_POSITIVE:
+					switch (item.getItemId()) {
+					case R.id.action_theme_dark:
+						Utils.savePrefTheme(ActivitySubRedditChannel.this, Utils.THEME_DARK);
+						break;
+					case R.id.action_theme_light:
+						Utils.savePrefTheme(ActivitySubRedditChannel.this, Utils.THEME_LIGHT);
+						break;
+					case R.id.action_theme_mixed:
+						Utils.savePrefTheme(ActivitySubRedditChannel.this, Utils.THEME_BASE);
+						break;
+					}
+					dialog.dismiss();
+					Utils.restartSelf(ActivitySubRedditChannel.this);
+					break;
+
+				case DialogInterface.BUTTON_NEGATIVE:
+					dialog.dismiss();
+					break;
+				}
+			}
 		};
-		
-		
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Restart Alert");
 		builder.setMessage("Need to restart application to change theme\nContinue?").setPositiveButton("Yes Restart", dialogClickListener)
-		    .setNegativeButton("No", dialogClickListener).show();
-		
+				.setNegativeButton("No", dialogClickListener).show();
+
 		return false;
-//
-//		switch (item.getItemId()) {
-//
-//		case R.id.item_hot:
-//			Toast.makeText(this, "Comedy Clicked", Toast.LENGTH_SHORT).show();
-//			return true;
-//		case R.id.item_new:
-//			Toast.makeText(this, "Movies Clicked", Toast.LENGTH_SHORT).show();
-//			return true;
-//		case R.id.item_top:
-//			Toast.makeText(this, "Music Clicked", Toast.LENGTH_SHORT).show();
-//			return true;
-//		default:
-//			return false;
-//		}
 	}
 
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_main_actions, menu);
 		MenuItem itemFav = menu.findItem(R.id.action_fav);
 		itemFav.setVisible(true);
-		
+
 		MenuItem changeTheme = menu.findItem(R.id.action_theme_question);
 		changeTheme.setVisible(true);
-		
+
 		MenuItem sort = menu.findItem(R.id.action_sort_menu);
 		sort.setVisible(true);
 
@@ -399,6 +419,9 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			super.onPreExecute();
 			if (!storieList.isEmpty())
 				storiesListView.addFooterView(footer, null, false);
+			else {
+				progressBar.setVisibility(View.VISIBLE);
+			}
 		}
 
 		/**
@@ -433,7 +456,7 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 			if (storieList.size() > 0)
 				after = storieList.get(storieList.size() - 1).name;
 
-			return "http://www.reddit.com" + subReddit + ".json" + "?limit=" + offset + "&after=" + after;
+			return "http://www.reddit.com" + subReddit + sort + ".json" + "?limit=" + offset + "&after=" + after;
 		}
 
 		/**
@@ -460,8 +483,8 @@ public class ActivitySubRedditChannel extends Activity implements OnScrollListen
 
 			runOnUiThread(new Runnable() {
 				public void run() {
-					ChannelBaseAdapter var = new ChannelBaseAdapter(ActivitySubRedditChannel.this, storieList);
-					storiesListView.setAdapter(var);
+					adapter = new ChannelBaseAdapter(ActivitySubRedditChannel.this, storieList);
+					storiesListView.setAdapter(adapter);
 					storiesListView.setSelectionFromTop(index, top);
 				}
 			});

@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ import com.gery.database.SubRedditsDataSource;
 import com.gery.database.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class ActivityStoryContent extends Activity {
 	private WebView webView;
@@ -55,6 +57,8 @@ public class ActivityStoryContent extends Activity {
 	private String displayName;
 	private String subRedditId;
 	private SubRedditInfo sub;
+	// make sure to set Target as strong reference
+		private Target loadtarget;
 
 	@SuppressLint("SetJavaScriptEnabled")
 	public void onCreate(Bundle savedInstanceState) {
@@ -145,8 +149,39 @@ public class ActivityStoryContent extends Activity {
 	private boolean isImage() {
 		return (url.endsWith(".jpg") || url.endsWith("png"));
 	}
+	
+	
 
-	private void saveImageToGallery() {
+	public void loadBitmap(String url) {
+
+	    if (loadtarget == null) loadtarget = new Target() {
+	        @Override
+	        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+	            // do something with the Bitmap
+	            handleLoadedBitmap(bitmap);
+	        }
+
+			@Override
+			public void onBitmapFailed(Drawable arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onPrepareLoad(Drawable arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+	    };
+
+	    Picasso.with(this).load(url).into(loadtarget);
+	}
+
+	public void handleLoadedBitmap(Bitmap b) {
+	    saveImageToGallery(b);
+	}
+
+	private void saveImageToGallery(Bitmap bitmap) {
 		OutputStream output;
 
 		// Find the SD Card path
@@ -161,8 +196,9 @@ public class ActivityStoryContent extends Activity {
 		try {
 			output = new FileOutputStream(file);
 			// Compress into png format image from 0% - 100%
-			if (storyImageBitmap != null) {
-				storyImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+			if (bitmap != null) {
+				
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
 				output.flush();
 				output.close();
 			}
@@ -243,7 +279,7 @@ public class ActivityStoryContent extends Activity {
 			return true;
 		}
 		case R.id.action_save_image: {
-			this.saveImageToGallery();
+			this.loadBitmap(url);
 			return true;
 		}
 		case R.id.action_view_comments: {
